@@ -84,7 +84,7 @@ module.exports = yeoman.Base.extend({
           var path = this.destinationPath(this.directoryPath + this.appsFolders[i]+'/.yo-rc.json');
           var fileData = this.fs.readJSON(path);
           var config = fileData['generator-jhipster'];
-          if(config.applicationType === 'microservice' || this.appsFolders[i]==='jhipster-registry' || this.appsFolders[i] === 'registry') {
+          if(!fileData['generator-m-ionic'] && config.applicationType === 'microservice' || this.appsFolders[i]==='jhipster-registry' || this.appsFolders[i] === 'registry') {
             this.appsFolders.splice(i,1);
             i--;
           }
@@ -159,6 +159,7 @@ module.exports = yeoman.Base.extend({
 
       // this.log('appConfigs=' + JSON.stringify(this.appConfig));
       this.log('jhipsterHome=' + jhipsterHome);
+      this.appConfig.jhipsterHome = jhipsterHome;
       this.log('baseName=' + this.baseName);
       this.log('packageName=' + this.packageName);
       this.log('angularAppName=' + this.angularAppName);
@@ -173,7 +174,8 @@ module.exports = yeoman.Base.extend({
       config.answers.appName = this.baseName;
       config.answers.appModule = this.baseName;
       config.answers.appId = this.packageName;
-      var finalConfig = {'generator-m-ionic': config};
+      
+      var finalConfig = {'generator-m-ionic': config, 'generator-jhipster': this.appConfig};
       fse.writeJson('.yo-rc.json', finalConfig, function(){
          //once the .yo-rc.json is written, call 'yo m ionic'
          done();
