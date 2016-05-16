@@ -196,9 +196,33 @@ module.exports = yeoman.Base.extend({
       done();
     },
     copyJhipsterFiles: function () {
+      this.spawnCommand('mkdir', 'app/main/jhipster');
       // copy interceptors, state handlers, and set up a login $ionicModal
       //set up authentication
-      this.log('authenticationType=' + this.authenticationType);
+
+      fse.copy(this.jhipsterHome + '/src/main/webapp/app/blocks', './app/main/jhipster/blocks', function (err) {
+        if (err) return console.error(err);
+        console.log('success!')
+      });
+      fse.copy(this.jhipsterHome + '/src/main/webapp/app/services', './app/main/jhipster/services', function (err) {
+        if (err) return console.error(err);
+        console.log('success!')
+      });
+
+      var items = walk('app/main/jhipster');
+      for(var i = 0; i < items.length; i++) {
+        try {
+          jhipsterUtils.replaceContent({
+            file: items[i],
+            pattern: '\''+this.angularAppName+'\'',
+            content: '\'main\'',
+            regex: false
+          }, this);
+        } catch (e) {
+          this.log(chalk.yellow('\nUnable to find ') + filePath + chalk.yellow(' or missing required pattern. File rewrite failed.\n') + e);
+        }
+        this.log(items[i])
+      }
 
       // copy over other files (home, user management, audits, settings, password)
 
