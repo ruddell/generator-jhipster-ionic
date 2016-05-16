@@ -159,6 +159,14 @@ module.exports = yeoman.Base.extend({
   // },
 
   writing: {
+    initCordova: function () {
+      var done = this.async();
+      this.spawnCommand('cordova', ['create', '.'])
+        .on('close', function () {
+        done();
+      });
+    },
+
     writeTemplates : function () {
       var done = this.async();
       this.baseName = this.appConfig.baseName;
