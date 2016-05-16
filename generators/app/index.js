@@ -4,12 +4,11 @@ var chalk = require('chalk');
 var shelljs = require('shelljs');
 var packagejs = require(__dirname + '/../../package.json');
 var fse = require('fs-extra');
-
+var jhipsterUtils = require(__dirname+ '/../../node_modules/generator-jhipster/generators/util.js');
 // Stores JHipster variables
 var jhipsterVar = {moduleName: 'ionic'};
 
 // Stores JHipster functions
-var jhipsterFunc = {};
 
 module.exports = yeoman.Base.extend({
 
@@ -26,17 +25,6 @@ module.exports = yeoman.Base.extend({
       this.log(chalk.white('Files will be generated in folder: ' + chalk.yellow(this.destinationRoot())));
 
       this.configAnswers = this.fs.readJSON('.yo-rc.json');
-    },
-    compose: function (args) {
-      // this.composeWith('jhipster:modules',
-      //   {
-      //     options: {
-      //       jhipsterVar: jhipsterVar,
-      //       jhipsterFunc: jhipsterFunc
-      //     }
-      //   }
-      //   this.options.testmode ? {local: require.resolve('generator-jhipster/modules')} : null
-      // );
     }
   },
 
@@ -171,7 +159,7 @@ module.exports = yeoman.Base.extend({
       var done = this.async();
       this.baseName = this.appConfig.baseName;
       this.packageName = this.appConfig.packageName;
-      this.angularAppName = this.appConfig.baseName;
+      this.angularAppName = snakeToCamel(this.appConfig.baseName) + 'App';
 
       this.searchEngine = this.appConfig.searchEngine;
       this.authenticationType = this.appConfig.authenticationType;
@@ -244,3 +232,19 @@ module.exports = yeoman.Base.extend({
     // this.log('You\'re all set!  Run \'gulp watch\'');
   }
 });
+
+function snakeToCamel(s){
+  return s.replace(/(\-\w)/g, function(m){return m[1].toUpperCase();});
+}
+var walk = function(dir) {
+  var results = []
+  var list = fse.readdirSync(dir)
+  list.forEach(function(file) {
+    file = dir + '/' + file
+    var stat = fse.statSync(file)
+    if (stat && stat.isDirectory()) results = results.concat(walk(file))
+    else results.push(file)
+  })
+  return results
+}
+
