@@ -3,6 +3,7 @@ var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var shelljs = require('shelljs');
 var packagejs = require(__dirname + '/../../package.json');
+var fse = require('fs-extra');
 
 // Stores JHipster variables
 var jhipsterVar = {moduleName: 'ionic'};
@@ -143,6 +144,7 @@ module.exports = yeoman.Base.extend({
 
   writing: {
     writeTemplates : function () {
+      var done = this.async();
       this.baseName = this.appConfig.baseName;
       this.packageName = this.appConfig.packageName;
       this.angularAppName = this.appConfig.baseName;
@@ -164,14 +166,26 @@ module.exports = yeoman.Base.extend({
       // this.log('enableSocialSignIn=' + this.enableSocialSignIn); todo deal with this
       this.log('applicationType=' + this.applicationType);
 
-      //set bower home
-      this.template('.bowercc', '.bowercc', this, {});
+      // create m-ionic's .yo-rc.json based on the JHipster project
+      this.template('m-ionic.yo-rc', '.yo-rc.json', this, {});
+      var fileData = this.fs.readJSON('.yo-rc.json');
+      var config = fileData['generator-m-ionic'];
+      config.answers.appName = this.baseName;
+      config.answers.appModule = this.baseName;
+      config.answers.appId = this.packageName;
+      var finalConfig = {'generator-m-ionic': config};
+      fse.writeJson('.yo-rc.json', finalConfig, function(){
+         //once the .yo-rc.json is written, call 'yo m ionic'
+         done();
 
-      //set up ionic.project for CORS
+      });
+
+      // set up ionic.project for CORS
       this.log('serverPort=' + this.serverPort);
 
       //set up authentication
       this.log('authenticationType=' + this.authenticationType);
+
       // copy interceptors, state handlers, and set up a login $ionicModal
 
       //  copy over other files (home, user management, audits, settings, password)
@@ -179,6 +193,11 @@ module.exports = yeoman.Base.extend({
       //  generate entities from the entity JSON files
       //  if microservice, add the microservice name to the beginning of the API in the service
 
+    },
+    generateIonic: function(){
+      var done = this.async();
+      this.spawnCommandSync('yo', ['m-ionic', '--skip-welcome-message','--skip-sdk']);
+      done();
     }
   },
 

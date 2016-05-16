@@ -1,0 +1,25 @@
+{
+  "generator-m-ionic": {
+    "answers": {
+      "appName": "ionic",
+      "appId": "comp.company.project",
+      "ionicCss": false,
+      "bowerPackages": [
+        "angular-resource#^1.5.5",
+        "ngstorage#^0.3.10",
+        "angular-cookies#^1.5.5"
+      ],
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "plugins": [
+        "cordova-plugin-device",
+        "cordova-plugin-dialogs",
+        "ionic-plugin-keyboard"
+      ],
+      "appModule": "ionic",
+      "ecosystems": []
+    }
+  }
+}

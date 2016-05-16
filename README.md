@@ -9,11 +9,11 @@ The goal of this module is to generate an entire Ionic frontend from an existing
 Currently under development.
 # Prerequisites
 - JHipster ([Installing JHipster](https://jhipster.github.io/installation.html))
-- Ionic and Cordova ([Installing Ionic](http://ionicframework.com/getting-started/))
+- M-Ionic ([Installing M-Ionic](https://github.com/mwaylabs/generator-m-ionic/blob/master/docs/start/installation_prerequisites.md))
 
 To install everything needed, run:
 ```bash
- npm install -g cordova ionic generator-jhipster yo bower gulp
+ npm install -g generator-jhipster generator-m-ionic cordova ionic yo bower gulp
 ```
 This module also requires an existing JHipster project to generate the corresponding frontend and entities.
 

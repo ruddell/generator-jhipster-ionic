@@ -26,10 +26,5 @@ describe('JHipster generator ionic', function () {
         .on('end', done);
     });
 
-    it('generate .bowercc file', function () {
-      assert.file([
-        '.bowercc'
-      ]);
-    });
   });
 });
