@@ -220,6 +220,10 @@ module.exports = yeoman.Base.extend({
       //  generate entities from the entity JSON files
       //  if microservice, add the microservice name to the beginning of the API in the service
 
+    },
+    finishCordova: function () {
+      // todo add the mobile platforms to cordova
+
     }
   },
 

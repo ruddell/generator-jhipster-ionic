@@ -37,8 +37,15 @@ From a new directory:
 ```bash
 yo jhipster-ionic
 ```
-Follow the promts and enter the path to your JHipster's root directory (where the .yo-rc.json 
+Follow the prompts and enter the path to your JHipster's root directory (where the .yo-rc.json 
 can be found).  Entity pages will also be generated from JSON files found in the `.jhipster ` folder.
+
+# Thanks To
+
+- JHipster
+- M-Ionic
+- JHipster Module Generator
+- Original JHipster Docker-Compose Module
 
 # License
 
