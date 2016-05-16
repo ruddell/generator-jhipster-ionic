@@ -24,6 +24,8 @@ module.exports = yeoman.Base.extend({
       this.log(chalk.white.bold('                            http://jhipster.github.io\n'));
       this.log(chalk.white('Welcome to the JHipster Ionic Generator '));
       this.log(chalk.white('Files will be generated in folder: ' + chalk.yellow(this.destinationRoot())));
+
+      this.configAnswers = this.fs.readJSON('.yo-rc.json');
     },
     compose: function (args) {
       // this.composeWith('jhipster:modules',
@@ -41,6 +43,12 @@ module.exports = yeoman.Base.extend({
   prompting: {
     askForPath: function() {
       var done = this.async();
+      //the project exists
+      if(this.configAnswers !== undefined && this.configAnswers['generator-jhipster'] && this.configAnswers['generator-m-ionic']){
+        done();
+        return;
+      }
+
 
       var prompts = [{
         type: 'input',
@@ -79,12 +87,12 @@ module.exports = yeoman.Base.extend({
       this.prompt(prompts, function (props) {
         this.directoryPath = props.directoryPath;
 
-        //Removing microservice apps and registry from appsFolders
+        //Removing ionic apps, microservice apps and registry from appsFolders
         for(var i = 0; i < this.appsFolders.length; i++) {
           var path = this.destinationPath(this.directoryPath + this.appsFolders[i]+'/.yo-rc.json');
           var fileData = this.fs.readJSON(path);
           var config = fileData['generator-jhipster'];
-          if(!fileData['generator-m-ionic'] && config.applicationType === 'microservice' || this.appsFolders[i]==='jhipster-registry' || this.appsFolders[i] === 'registry') {
+          if(fileData['generator-m-ionic'] || config.applicationType === 'microservice' || this.appsFolders[i]==='jhipster-registry' || this.appsFolders[i] === 'registry') {
             this.appsFolders.splice(i,1);
             i--;
           }
@@ -99,6 +107,14 @@ module.exports = yeoman.Base.extend({
   askForApps: function() {
     if(this.abort) return;
     var done = this.async();
+
+    //this means that data was loaded from .yo-rc.json
+    if(this.appsFolders === undefined) {
+      this.appConfig = this.configAnswers['generator-jhipster'];
+      this.jhipsterHome = this.configAnswers['generator-jhipster'].jhipsterHome;
+      done();
+      return;
+    }
 
     var prompts = [{
       type: 'checkbox',
@@ -119,7 +135,7 @@ module.exports = yeoman.Base.extend({
       var path = this.destinationPath(this.directoryPath + this.appsFolders[0]+'/.yo-rc.json');
       var fileData = this.fs.readJSON(path);
       this.appConfig = fileData['generator-jhipster'];
-
+      this.jhipsterHome = this.directoryPath + this.appsFolders[0];
       done();
     }.bind(this));
   },
@@ -155,11 +171,8 @@ module.exports = yeoman.Base.extend({
       this.enableSocialSignIn = this.appConfig.enableSocialSignIn;
       this.applicationType = this.appConfig.applicationType;
 
-      var jhipsterHome = this.directoryPath + this.appsFolders[0];
-
-      // this.log('appConfigs=' + JSON.stringify(this.appConfig));
-      this.log('jhipsterHome=' + jhipsterHome);
-      this.appConfig.jhipsterHome = jhipsterHome;
+      this.log('jhipsterHome=' + this.jhipsterHome);
+      this.appConfig.jhipsterHome = this.jhipsterHome;
       this.log('baseName=' + this.baseName);
       this.log('packageName=' + this.packageName);
       this.log('angularAppName=' + this.angularAppName);
@@ -174,40 +187,39 @@ module.exports = yeoman.Base.extend({
       config.answers.appName = this.baseName;
       config.answers.appModule = this.baseName;
       config.answers.appId = this.packageName;
-      
+
       var finalConfig = {'generator-m-ionic': config, 'generator-jhipster': this.appConfig};
       fse.writeJson('.yo-rc.json', finalConfig, function(){
          //once the .yo-rc.json is written, call 'yo m ionic'
          done();
-
       });
-
-      // set up ionic.project for CORS
-      this.log('serverPort=' + this.serverPort);
-
-      //set up authentication
-      this.log('authenticationType=' + this.authenticationType);
-
-      // copy interceptors, state handlers, and set up a login $ionicModal
-
-      //  copy over other files (home, user management, audits, settings, password)
-
-      //  generate entities from the entity JSON files
-      //  if microservice, add the microservice name to the beginning of the API in the service
-
     },
-    generateIonic: function(){
+    generateIonic: function () {
       var done = this.async();
       this.spawnCommandSync('yo', ['m-ionic', '--skip-welcome-message','--skip-sdk']);
       done();
+    },
+    copyJhipsterFiles: function () {
+      // copy interceptors, state handlers, and set up a login $ionicModal
+      //set up authentication
+      this.log('authenticationType=' + this.authenticationType);
+
+      // copy over other files (home, user management, audits, settings, password)
+
+
+    },
+    generateEntityFiles: function () {
+      //  generate entities from the entity JSON files
+      //  if microservice, add the microservice name to the beginning of the API in the service
+
     }
   },
 
   install: function () {
-    this.installDependencies();
+    // this.installDependencies();
   },
 
   end: function () {
-    this.log('End of ionic generator');
+    this.log('You\'re all set!  Run \'gulp watch\' and \'ionic serve\' (use this tab) to have live-reload with CORS support');
   }
 });
