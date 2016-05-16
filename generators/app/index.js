@@ -163,8 +163,8 @@ module.exports = yeoman.Base.extend({
       var done = this.async();
       this.spawnCommand('cordova', ['create', '.'])
         .on('close', function () {
-        done();
-      });
+          done();
+        });
     },
 
     writeTemplates : function () {
@@ -198,8 +198,8 @@ module.exports = yeoman.Base.extend({
 
       var finalConfig = {'generator-m-ionic': config, 'generator-jhipster': this.appConfig};
       fse.writeJson('.yo-rc.json', finalConfig, function(){
-         //once the .yo-rc.json is written, call 'yo m ionic'
-         done();
+        //once the .yo-rc.json is written, call 'yo m ionic'
+        done();
       });
     },
     generateIonic: function () {
@@ -228,10 +228,19 @@ module.exports = yeoman.Base.extend({
   },
 
   install: function () {
+
     // this.installDependencies();
   },
 
   end: function () {
-    this.log('You\'re all set!  Run \'gulp watch\' and \'ionic serve\' (use this tab) to have live-reload with CORS support');
+    var done = this.async();
+    var fileData = this.fs.readJSON('.yo-rc.json');
+    var config = fileData['generator-m-ionic'];
+    var finalConfig = {'generator-m-ionic': config, 'generator-jhipster': this.appConfig};
+    fse.writeJson('.yo-rc.json', finalConfig, function(){
+      //once the .yo-rc.json is written, call 'yo m ionic'
+      done();
+    });
+    // this.log('You\'re all set!  Run \'gulp watch\'');
   }
 });
