@@ -8,7 +8,7 @@ angular.module('main')
 
     function logout () {
       Auth.logout();
-      $state.go('main.home');
+      $state.go('home');
     }
 
   });

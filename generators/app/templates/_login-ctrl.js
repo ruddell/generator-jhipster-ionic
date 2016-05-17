@@ -22,7 +22,7 @@ function LoginCtrl ($log, $scope, $rootScope, $window, $state, $timeout, Auth, $
 
   function hideModal () {
     vm.modal.hide();
-    $state.go('main.home');
+    $state.go('home');
 
   }
   // $timeout(function () {angular.element('#username').focus();});

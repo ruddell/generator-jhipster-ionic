@@ -230,6 +230,12 @@ module.exports = yeoman.Base.extend({
       fse.copy(this.jhipsterHome + '/src/main/webapp/content/images/hipster2x.png', './app/main/assets/images/hipster2x.png', {});
       fse.copy(this.jhipsterHome + '/src/main/webapp/content/images/logo-jhipster.png', './app/main/assets/images/logo-jhipster.png', {});
 
+      //remove list, list-detail, and debug
+      fse.remove('app/main/controllers/debug-ctrl.js');
+      fse.remove('app/main/services/main-serv.js');
+      fse.remove('app/main/templates/debug.html');
+      fse.remove('app/main/templates/list.html');
+      fse.remove('app/main/templates/list-detail.html');
 
       // copy over other files (home, user management, audits, settings, password)
 

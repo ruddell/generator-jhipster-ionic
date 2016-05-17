@@ -16,6 +16,6 @@ function LoginService ($state) {
   return service;
 
   function open () {
-    $state.go('main.login');
+    $state.go('login');
   }
 }

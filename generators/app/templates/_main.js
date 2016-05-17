@@ -31,7 +31,8 @@ angular.module('main', [
           ]
         }
       })
-      .state('main.login', {
+      .state('login', {
+        parent: 'main',
         url: '/login',
         data: {
           authorities: []
@@ -43,7 +44,8 @@ angular.module('main', [
           }
         }
       })
-      .state('main.home', {
+      .state('home', {
+        parent: 'main',
         url: '/home',
         data: {
           authorities: []
@@ -52,42 +54,6 @@ angular.module('main', [
           'pageContent': {
             templateUrl: 'main/templates/home.html',
             controller: 'HomeCtrl as vm'
-          }
-        }
-      })
-      .state('main.list', {
-        url: '/list',
-        data: {
-          authorities: []
-        },
-        views: {
-          'pageContent': {
-            templateUrl: 'main/templates/list.html',
-            // controller: '<someCtrl> as ctrl'
-          }
-        }
-      })
-      .state('main.listDetail', {
-        url: '/list/detail',
-        data: {
-          authorities: []
-        },
-        views: {
-          'pageContent': {
-            templateUrl: 'main/templates/list-detail.html',
-            // controller: '<someCtrl> as ctrl'
-          }
-        }
-      })
-      .state('main.debug', {
-        url: '/debug',
-        data: {
-          authorities: []
-        },
-        views: {
-          'pageContent': {
-            templateUrl: 'main/templates/debug.html',
-            controller: 'DebugCtrl as ctrl'
           }
         }
       });
