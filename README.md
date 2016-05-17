@@ -6,7 +6,7 @@
 
 The goal of this module is to generate an  M-Ionic frontend from an existing JHipster project.  
 
-v1.0.0 generates and wires all of the required files for accounts (login, register, settings, password change/reset).   It also sets up a CORS proxy through gulp to allow your app to connect to a running JHipster project on a different port. 
+v1.1.1 generates and wires all of the required files for accounts (login, register, settings, password change/reset).   It also sets up a CORS proxy through gulp to allow your app to connect to a running JHipster project on a different port. 
  
 Session, OAuth, and JWT authentication are fully functional, Social Login is not implemented yet.  Translation is untested.
 
@@ -37,7 +37,7 @@ npm update -g generator-jhipster-ionic
 # Usage
 From a completely empty directory: 
 ```bash
-yo jhipster-ionic
+yo jhipster-ionic --force
 ```
 Follow the prompts and enter the path to your JHipster project's root directory (where the .yo-rc.json 
 can be found).  A Cordova project and an M-Ionic front-end will be generated.  JHipster files will then be copied and formatted into the Ionic project.
@@ -66,12 +66,11 @@ To run the app on a device/emulator:
 gulp --cordova 'run ios --device'
 ```
 
-__In v1.0.0 you will need to change the URLs to point at a running JHipster project when deploying to a device or emulator__
-
 # To Do
 - Entity CRUD Pages
 - Admin Pages
 - Re-enable ESLint - app folder is ignored in .eslintignore
+- Rewrite files as they are copied instead of prompting the user to overwrite them (reason --force is in the initial command).
 
 # Thanks To
 
