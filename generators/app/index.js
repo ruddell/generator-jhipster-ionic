@@ -207,15 +207,7 @@ module.exports = yeoman.Base.extend({
         if (err) return console.error(err);
         console.log('success!')
       });
-      fse.copy(this.jhipsterHome + '/src/main/webapp/app/blocks', './app/main/jhipster/blocks', {filter: function(name){
-        var split = name.split('/');
-        var n = split[split.length - 1];
-        if(n != 'localstorage.config.js' && n != 'uib-pager.config.js' && n != 'uib-pagination.config.js') {
-          return true;
-        }else{
-          return false
-        }
-      }}, function (err) {
+      fse.copy(this.jhipsterHome + '/src/main/webapp/app/blocks', './app/main/jhipster/blocks', function (err) {
         if (err) return console.error(err);
         console.log('success!');
         done();
@@ -265,10 +257,19 @@ module.exports = yeoman.Base.extend({
           angularAppName: snakeToCamel(this.baseName)
         }
       );
-      this.fs.copy(
-        this.templatePath('_http.config.js'),
-        this.destinationPath('app/main/jhipster/blocks/config/http.config.js')
-      );
+      //custom statehandler with pagetitle removed.
+      this.template('_state.handler.js', 'app/main/jhipster/blocks/handlers/state.handler.js');
+
+      //adding login and home state, authorities, authenticate for side-menu
+      this.template('_main.js', 'app/main/main.js');
+      this.template('_login-service.js', 'app/main/services/login-service.js');
+      this.template('_login-ctrl.js', 'app/main/controllers/login-ctrl.js');
+      this.template('_login.html', 'app/main/templates/login.html');
+      this.template('_menu-ctrl.js', 'app/main/controllers/menu-ctrl.js');
+      this.template('_menu.html', 'app/main/templates/menu.html');
+
+      this.template('_home-ctrl.js', 'app/main/controllers/home-ctrl.js');
+      this.template('_home.html', 'app/main/templates/home.html');
 
     },
     generateEntityFiles: function () {

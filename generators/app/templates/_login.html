@@ -1,0 +1,35 @@
+<ion-modal-view>
+  <ion-header-bar class="bar bar-header bar-positive">
+    <h1 class="title">Sign In</h1>
+    <button class="button button-clear button-primary" ng-click="vm.hideModal()">Cancel</button>
+  </ion-header-bar>
+  <ion-content class="padding">
+    <div class="list">
+
+      <label class="item item-input">
+        <span class="input-label">Login</span>
+        <input type="text" class="form-control" id="username" placeholder="Your username" ng-model="vm.username">
+      </label>
+
+      <label class="item item-input">
+        <span class="input-label">Password</span>
+        <input type="password" class="form-control" id="password" placeholder="Your password" ng-model="vm.password">
+      </label>
+      <div class="item item-toggle">
+      Remember Me
+      <label class="toggle toggle-positive">
+        <input type="checkbox" id="rememberMe" ng-model="vm.rememberMe" checked>
+        <div class="track">
+          <div class="handle"></div>
+        </div>
+      </label>
+      </div>
+      <button class="button button-full button-positive" ng-click="vm.login($event)">Login</button>
+    </div>
+
+    <a class="alert-link" href="" ng-click="vm.requestResetPassword()">Forgot Password?</a>
+    <br />
+    <a class="alert-link" href="" ng-click="vm.register()">Register a new account</a>
+
+  </ion-content>
+</ion-modal-view>
