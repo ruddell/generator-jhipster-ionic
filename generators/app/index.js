@@ -324,9 +324,9 @@ module.exports = yeoman.Base.extend({
 
     //  copy styles into main.scss
       fse.readFile(this.templatePath('_styles.scss'), 'utf8', function (err, data) {
-        console.log(data) // => hello!
+        // console.log(data) // => css!
         fse.appendFile('app/main/styles/main.scss', data, function (err) {
-          console.log(err) // => null
+          // console.log(err) // => no error!
         })
       })
     },

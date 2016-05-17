@@ -20,10 +20,6 @@ function LoginCtrl ($log, $ionicHistory, $scope, $rootScope, $window, $state, $t
   vm.rememberMe = true;
   vm.username = null;
 
-  $ionicHistory.nextViewOptions({
-    disableBack: true
-  });
-
   function hideModal () {
     vm.modal.hide();
     $state.go('home');
@@ -85,5 +81,9 @@ function LoginCtrl ($log, $ionicHistory, $scope, $rootScope, $window, $state, $t
         vm.modal.show();
       });
     }
+
+    $ionicHistory.nextViewOptions({
+      disableBack: true
+    });
   });
 }
