@@ -342,6 +342,8 @@ module.exports = yeoman.Base.extend({
 
   install: function () {
 
+    this.template('gulp/_eslintignore', '.eslintignore');
+
   //replace with bower that has JQuery at the top
     this.fs.copyTpl(
       this.templatePath('_bower.json'),
