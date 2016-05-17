@@ -296,7 +296,9 @@ module.exports = yeoman.Base.extend({
       this.template('_home-ctrl.js', 'app/main/controllers/home-ctrl.js');
       this.template('_home.html', 'app/main/templates/home.html');
 
-      this.template('_register.html', 'app/main/jhipster/account/register/register.html');
+      this.template('account/_register.html', 'app/main/jhipster/account/register/register.html');
+      this.template('account/_activate.html', 'app/main/jhipster/account/activate/activate.html');
+      this.template('account/_password.html', 'app/main/jhipster/account/password/password.html');
 
       //remove default urlRouterProvider
       jhipsterUtils.replaceContent({
