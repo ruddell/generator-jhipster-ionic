@@ -196,35 +196,19 @@ module.exports = yeoman.Base.extend({
       done();
     },
     copyJhipsterFiles: function () {
-     var done = this.async();
-     var done2 = this.async();
-     var done3 = this.async();
+      var done = this.async();
       this.spawnCommand('mkdir', 'app/main/jhipster');
       // copy interceptors, state handlers, and set up a login $ionicModal
       //set up authentication
 
-      fse.copy(this.jhipsterHome + '/src/main/webapp/app/app.constants.js', './app/main/jhipster/app.constants.js', function (err) {
-        if (err) return console.error(err);
-        console.log('success!')
-      });
-      fse.copy(this.jhipsterHome + '/src/main/webapp/app/blocks', './app/main/jhipster/blocks', function (err) {
-        if (err) return console.error(err);
-        console.log('success!');
-        done();
-      });
-
-      fse.copy(this.jhipsterHome + '/src/main/webapp/app/components', './app/main/jhipster/components', {filter: function (name) {
+      fse.copySync(this.jhipsterHome + '/src/main/webapp/app/app.constants.js', './app/main/jhipster/app.constants.js');
+      fse.copySync(this.jhipsterHome + '/src/main/webapp/app/blocks', './app/main/jhipster/blocks');
+      fse.copySync(this.jhipsterHome + '/src/main/webapp/app/components', './app/main/jhipster/components', {filter: function (name) {
         return (name.indexOf('login') == -1);
-      }}, function (err) {
-        if (err) return console.error(err);
-        console.log('success!')
-        done2();
-      });
-      fse.copy(this.jhipsterHome + '/src/main/webapp/app/services', './app/main/jhipster/services', function (err) {
-        if (err) return console.error(err);
-        console.log('success!')
-        done3();
-      });
+      }});
+      fse.copySync(this.jhipsterHome + '/src/main/webapp/app/services', './app/main/jhipster/services')
+      fse.copySync(this.jhipsterHome + '/src/main/webapp/app/account', './app/main/jhipster/account');
+      done();
 
       fse.copy(this.jhipsterHome + '/src/main/webapp/content/images/hipster.png', './app/main/assets/images/hipster.png', {});
       fse.copy(this.jhipsterHome + '/src/main/webapp/content/images/hipster2x.png', './app/main/assets/images/hipster2x.png', {});
@@ -256,12 +240,22 @@ module.exports = yeoman.Base.extend({
         } catch (e) {
           this.log(chalk.yellow('\nUnable to find ') + filePath + chalk.yellow(' or missing required pattern. File rewrite failed.\n') + e);
         }
+        try {
+          jhipsterUtils.replaceContent({
+            file: items[i],
+            pattern: '\'app/account',
+            content: '\'main/jhipster/account',
+            regex: false
+          }, this);
+        } catch (e) {
+          this.log(chalk.yellow('\nUnable to find ') + filePath + chalk.yellow(' or missing required pattern. File rewrite failed.\n') + e);
+        }
       }
       done();
 
     },
     cleanupJhipsterCopy: function () {
-    //  remove uibPagination and localStorage files, add bower items to app.js, run stateHandler in app.js, alter httpConfig to remove cacheBuster
+      //  add bower items to app.js, run stateHandler in app.js, remove default URL from httpConfig  
       this.fs.copyTpl(
         this.templatePath('_app.js'),
         this.destinationPath('app/app.js'), {
@@ -286,6 +280,13 @@ module.exports = yeoman.Base.extend({
         file: 'app/main/jhipster/blocks/config/http.config.js',
         pattern: '$urlRouterProvider.otherwise(\'/\');',
         content: '',
+        regex: false
+      }, this);
+      //add other folders to templates dir so html can be loaded from a JHipster structure
+      jhipsterUtils.replaceContent({
+        file: 'gulpfile.js',
+        pattern: 'templates: [\'app/*/templates/**/*\'],',
+        content: 'templates: [\'app/**/*.html\', \'!app/index.html\', \'!app/bower_components/**/*.html\'],',
         regex: false
       }, this);
     },
