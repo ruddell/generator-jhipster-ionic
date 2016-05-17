@@ -226,6 +226,9 @@ module.exports = yeoman.Base.extend({
         done3();
       });
 
+      fse.copy(this.jhipsterHome + '/src/main/webapp/content/images/hipster.png', './app/main/assets/images/hipster.png', {});
+      fse.copy(this.jhipsterHome + '/src/main/webapp/content/images/hipster2x.png', './app/main/assets/images/hipster2x.png', {});
+      fse.copy(this.jhipsterHome + '/src/main/webapp/content/images/logo-jhipster.png', './app/main/assets/images/logo-jhipster.png', {});
 
 
       // copy over other files (home, user management, audits, settings, password)
