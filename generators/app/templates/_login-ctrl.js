@@ -20,6 +20,10 @@ function LoginCtrl ($log, $ionicHistory, $scope, $rootScope, $window, $state, $t
   vm.rememberMe = true;
   vm.username = null;
 
+  $ionicHistory.nextViewOptions({
+    disableBack: true
+  });
+
   function hideModal () {
     vm.modal.hide();
     $state.go('home');
@@ -27,9 +31,6 @@ function LoginCtrl ($log, $ionicHistory, $scope, $rootScope, $window, $state, $t
   // $timeout(function () {angular.element('#username').focus();});
 
   function cancel () {
-    $ionicHistory.nextViewOptions({
-      disableBack: true
-    });
     vm.credentials = {
       username: null,
       password: null,
@@ -39,10 +40,6 @@ function LoginCtrl ($log, $ionicHistory, $scope, $rootScope, $window, $state, $t
   }
 
   function login (event) {
-    $ionicHistory.nextViewOptions({
-      disableBack: true
-    });
-
     event.preventDefault();
     Auth.login({
       username: vm.username,
@@ -79,11 +76,14 @@ function LoginCtrl ($log, $ionicHistory, $scope, $rootScope, $window, $state, $t
     $state.go('requestReset');
   }
 
-  $ionicModal.fromTemplateUrl('main/templates/login.html', {
-    scope: $scope
-  }).then(function (modal) {
-    vm.modal = modal;
-    vm.modal.show();
+  $scope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
+    if (toState.name == "login"){
+      $ionicModal.fromTemplateUrl('main/templates/login.html', {
+        scope: $scope
+      }).then(function (modal) {
+        vm.modal = modal;
+        vm.modal.show();
+      });
+    }
   });
-
 }
