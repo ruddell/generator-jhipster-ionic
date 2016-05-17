@@ -40,15 +40,15 @@ From a completely empty directory:
 yo jhipster-ionic
 ```
 Follow the prompts and enter the path to your JHipster project's root directory (where the .yo-rc.json 
-can be found).  In the future, entity pages will be generated from JSON files found in the `.jhipster ` folder.
+can be found).  A Cordova project and an M-Ionic front-end will be generated.  JHipster files will then be copied and formatted into the Ionic project.
 
-Currently all jhipster files are copied to the 'app/main/jhipster' folder.  The rest of the app follows [M-Ionic's project structure](https://github.com/mwaylabs/generator-m-ionic/blob/master/docs/start/file_structure.md).
+Currently all JHipster files are copied to the 'app/main/jhipster' folder.  The rest of the app follows [M-Ionic's project structure](https://github.com/mwaylabs/generator-m-ionic/blob/master/docs/start/file_structure.md).
 
 To run your app with live-reload and a CORS proxy, run:
 ```bash
 gulp watch
 ```
-CORS settings can be found in gulp/watching.js.  Endpoints are set up for /oauth and /api. If you are running microservices, 
+CORS settings can be found in gulp/watching.js.  Endpoints are set up for /oauth and /api to http://localhost:8080. If you are running microservices, 
 you will need to add proxy paths for each of the microservice routes.
 
 M-Ionic provides a massive tool set for an ionic app.  For example, cordova commands have a wrapper through gulp.  Check out [M-Ionic's Dev Intro](https://github.com/mwaylabs/generator-m-ionic/blob/master/docs/start/development_intro.md) to see how to use them.
@@ -60,6 +60,7 @@ To run the app on a device/emulator:
 - Set up config.xml
 - Add the platforms you need
   - iOS: Ensure you have the proper provisioning profile
+- Make sure to specify the API url in *constants/env-prod.json* and build with --env=prod to inject the URL into all files contacting the API.
 - Run the cordova command (use the wrapper to build the project before deploying it)
 ```bash
 gulp --cordova 'run ios --device'
@@ -70,8 +71,7 @@ __In v1.0.0 you will need to change the URLs to point at a running JHipster proj
 # To Do
 - Entity CRUD Pages
 - Admin Pages
-- Re-enable ESLint
-- Simplify testing on a device
+- Re-enable ESLint - app folder is ignored in .eslintignore
 
 # Thanks To
 
