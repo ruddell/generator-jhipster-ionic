@@ -192,7 +192,7 @@ module.exports = yeoman.Base.extend({
     },
     generateIonic: function () {
       var done = this.async();
-      this.spawnCommandSync('yo', ['m-ionic', '--skip-welcome-message','--skip-sdk']);
+      this.spawnCommandSync('yo', ['m-ionic', '--force', '--skip-welcome-message','--skip-sdk']);
       done();
     },
     copyJhipsterFiles: function () {
@@ -213,7 +213,9 @@ module.exports = yeoman.Base.extend({
         done();
       });
 
-      fse.copy(this.jhipsterHome + '/src/main/webapp/app/components', './app/main/jhipster/components', function (err) {
+      fse.copy(this.jhipsterHome + '/src/main/webapp/app/components', './app/main/jhipster/components', {filter: function (name) {
+        return (name.indexOf('login') == -1);
+      }}, function (err) {
         if (err) return console.error(err);
         console.log('success!')
         done2();
@@ -271,6 +273,12 @@ module.exports = yeoman.Base.extend({
       this.template('_home-ctrl.js', 'app/main/controllers/home-ctrl.js');
       this.template('_home.html', 'app/main/templates/home.html');
 
+      jhipsterUtils.replaceContent({
+        file: 'app/main/jhipster/blocks/config/http.config.js',
+        pattern: '$urlRouterProvider.otherwise(\'/\');',
+        content: '',
+        regex: false
+      }, this);
     },
     generateEntityFiles: function () {
       //  generate entities from the entity JSON files

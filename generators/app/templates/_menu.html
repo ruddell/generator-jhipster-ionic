@@ -33,7 +33,7 @@
     <!-- menu content -->
     <ion-content ng-switch="vm.isAuthenticated()">
       <ion-list>
-        <ion-item menu-close ui-sref="main.list">
+        <ion-item menu-close ui-sref="main.home">
           Home
         </ion-item>
         <ion-item ng-switch-when="false" menu-close ng-click="vm.login()">
