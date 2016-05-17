@@ -166,15 +166,15 @@ module.exports = yeoman.Base.extend({
       this.serverPort = this.appConfig.serverPort;
       this.enableSocialSignIn = this.appConfig.enableSocialSignIn;
       this.applicationType = this.appConfig.applicationType;
-
-      this.log('jhipsterHome=' + this.jhipsterHome);
       this.appConfig.jhipsterHome = this.jhipsterHome;
-      this.log('baseName=' + this.baseName);
-      this.log('packageName=' + this.packageName);
-      this.log('angularAppName=' + this.angularAppName);
+
+      // this.log('jhipsterHome=' + this.jhipsterHome);
+      // this.log('baseName=' + this.baseName);
+      // this.log('packageName=' + this.packageName);
+      // this.log('angularAppName=' + this.angularAppName);
       // this.log('searchEngine=' + this.searchEngine); todo deal with this
       // this.log('enableSocialSignIn=' + this.enableSocialSignIn); todo deal with this
-      this.log('applicationType=' + this.applicationType);
+      // this.log('applicationType=' + this.applicationType);
 
       // create m-ionic's .yo-rc.json based on the JHipster project
       this.template('m-ionic.yo-rc', '.yo-rc.json', this, {});
@@ -275,7 +275,7 @@ module.exports = yeoman.Base.extend({
 
     },
     cleanupJhipsterCopy: function () {
-      //  add bower items to app.js, run stateHandler in app.js, remove default URL from httpConfig  
+      //  add bower items to app.js, run stateHandler in app.js, remove default URL from httpConfig
       this.fs.copyTpl(
         this.templatePath('_app.js'),
         this.destinationPath('app/app.js'), {
@@ -318,14 +318,8 @@ module.exports = yeoman.Base.extend({
         regex: false
       }, this);
 
-
-      //add jquery to top of bower
-      jhipsterUtils.replaceContent({
-        file: 'bower.json',
-        pattern: '{\n    "ionic": "~1.3.0",',
-        content: '{\n    "jquery": "2.2.2",\n    "ionic": "~1.3.0",',
-        regex: false
-      }, this);
+    // setup CORS proxies to JHipster default ports
+      this.template('gulp/watching.js', 'gulp/watching.js');
 
     //  copy styles into main.scss
       fse.readFile(this.templatePath('_styles.scss'), 'utf8', function (err, data) {
@@ -348,7 +342,14 @@ module.exports = yeoman.Base.extend({
 
   install: function () {
 
-    // this.installDependencies();
+  //replace with bower that has JQuery at the top
+    this.fs.copyTpl(
+      this.templatePath('_bower.json'),
+      this.destinationPath('bower.json'), {
+        angularAppName: snakeToCamel(this.baseName)
+      }
+    );
+    this.installDependencies();
   },
 
   end: function () {
