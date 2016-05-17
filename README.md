@@ -38,8 +38,12 @@ From a new directory:
 yo jhipster-ionic
 ```
 Follow the prompts and enter the path to your JHipster's root directory (where the .yo-rc.json 
-can be found).  Entity pages will also be generated from JSON files found in the `.jhipster ` folder.
+can be found).  In the future, entity pages will be generated from JSON files found in the `.jhipster ` folder.
 
+To run your app with live-reload and a CORS proxy, use the following config when running gulp:
+```bash
+gulp --proxyPath="/api" --proxyMapTo="http://localhost:8080/api"
+```
 # Thanks To
 
 - JHipster

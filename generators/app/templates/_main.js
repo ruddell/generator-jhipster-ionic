@@ -15,11 +15,11 @@ angular.module('main', [
   .config(function ($stateProvider, $urlRouterProvider) {
 
     // ROUTING with ui.router
-    $urlRouterProvider.otherwise('/main/home');
+    $urlRouterProvider.otherwise('/app/home');
     $stateProvider
     // this state is placed in the <ion-nav-view> in the index.html
-      .state('main', {
-        url: '/main',
+      .state('app', {
+        url: '/app',
         abstract: true,
         templateUrl: 'main/templates/menu.html',
         controller: 'MenuCtrl as vm',
@@ -32,7 +32,7 @@ angular.module('main', [
         }
       })
       .state('login', {
-        parent: 'main',
+        parent: 'app',
         url: '/login',
         data: {
           authorities: []
@@ -45,7 +45,7 @@ angular.module('main', [
         }
       })
       .state('home', {
-        parent: 'main',
+        parent: 'app',
         url: '/home',
         data: {
           authorities: []
