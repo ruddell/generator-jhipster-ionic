@@ -16,13 +16,8 @@
         "angular-aria#1.5.2"
       ],
       "platforms": [
-        "ios",
-        "android"
       ],
       "plugins": [
-        "cordova-plugin-device",
-        "cordova-plugin-dialogs",
-        "ionic-plugin-keyboard"
       ],
       "appModule": "ionic-jhipster",
       "ecosystems": []
