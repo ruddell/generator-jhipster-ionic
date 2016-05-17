@@ -299,6 +299,9 @@ module.exports = yeoman.Base.extend({
       this.template('account/_register.html', 'app/main/jhipster/account/register/register.html');
       this.template('account/_activate.html', 'app/main/jhipster/account/activate/activate.html');
       this.template('account/_password.html', 'app/main/jhipster/account/password/password.html');
+      this.template('account/_settings.html', 'app/main/jhipster/account/settings/settings.html');
+      this.template('account/_reset.request.html', 'app/main/jhipster/account/reset/request/reset.request.html');
+      this.template('account/_reset.finish.html', 'app/main/jhipster/account/reset/finish/reset.finish.html');
 
       //remove default urlRouterProvider
       jhipsterUtils.replaceContent({

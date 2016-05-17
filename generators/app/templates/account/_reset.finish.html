@@ -1,25 +1,35 @@
-<ion-view view-title="Password">
+<ion-view view-title="Reset Finish">
   <ion-content>
     <div class="card">
-      <div class="item item-text-wrap" ng-show="vm.success || vm.error || vm.doNotMatch">
+      <div class="item item-text-wrap" ng-show="vm.success || vm.keyMissing || vm.error || vm.doNotMatch">
+
+        <div class="alert alert-danger" ng-show="vm.keyMissing">
+          <strong>The password reset key is missing.</strong>
+        </div>
+
+        <div class="alert alert-warning" ng-hide="vm.success || vm.keyMissing">
+          <p>Choose a new password</p>
+        </div>
+
+        <div class="alert alert-danger" ng-show="vm.error">
+          <p>Your password couldn't be reset. Remember a password request is only valid for 24 hours.</p>
+        </div>
 
         <div class="alert alert-success" ng-show="vm.success">
-          <strong>Password changed!</strong>
+          <p><strong>Your password has been reset.</strong> Please <a class="alert-link" href="" ng-click="vm.login()">sign in</a>.</p>
         </div>
-        <div class="alert alert-danger" ng-show="vm.error" >
-          <strong>An error has occurred!</strong> The password could not be changed.
-        </div>
+
         <div class="alert alert-danger" ng-show="vm.doNotMatch">
           The password and its confirmation do not match!
         </div>
 
       </div>
-      <div class="list">
-        <form name="form" role="form" novalidate ng-submit="vm.changePassword()" show-validation>
+      <div class="list" ng-show="!vm.success" ng-hide="vm.keyMissing">
+        <form name="form" role="form" novalidate ng-submit="vm.finishReset()" show-validation>
           <label class="item item-input">
             <span class="input-label">New Password</span>
             <input type="password" class="form-control" id="password" name="password" placeholder="New password"
-                   ng-model="vm.password" ng-minlength=4 ng-maxlength=50 required>
+                   ng-model="vm.resetAccount.password" ng-minlength=4 ng-maxlength=50 required>
           </label>
           <div ng-show="form.password.$dirty && form.password.$invalid" class=text-center">
             <p class="help-block"
@@ -37,7 +47,7 @@
           </div>
 
           <div class="text-center">
-            <password-strength-bar password-to-check="vm.password"></password-strength-bar>
+            <password-strength-bar password-to-check="vm.resetAccount.password"></password-strength-bar>
           </div>
 
           <label class="item item-input">
@@ -59,11 +69,9 @@
               Your confirmation password cannot be longer than 50 characters.
             </p>
           </div>
-          <button type="submit" ng-disabled="form.$invalid" class="button button-full button-positive">Save</button>
+          <button type="submit" ng-disabled="form.$invalid" class="button button-full button-positive">Reset Password</button>
         </form>
-
       </div>
     </div>
   </ion-content>
 </ion-view>
-
