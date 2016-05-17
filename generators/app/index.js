@@ -321,6 +321,14 @@ module.exports = yeoman.Base.extend({
         content: '{\n    "jquery": "2.2.2",\n    "ionic": "~1.3.0",',
         regex: false
       }, this);
+
+    //  copy styles into main.scss
+      fse.readFile(this.templatePath('_styles.scss'), 'utf8', function (err, data) {
+        console.log(data) // => hello!
+        fse.appendFile('app/main/styles/main.scss', data, function (err) {
+          console.log(err) // => null
+        })
+      })
     },
     generateEntityFiles: function () {
       //  generate entities from the entity JSON files
