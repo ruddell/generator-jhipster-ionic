@@ -296,6 +296,9 @@ module.exports = yeoman.Base.extend({
       this.template('_home-ctrl.js', 'app/main/controllers/home-ctrl.js');
       this.template('_home.html', 'app/main/templates/home.html');
 
+      this.template('_register.html', 'app/main/jhipster/account/register/register.html');
+
+      //remove default urlRouterProvider
       jhipsterUtils.replaceContent({
         file: 'app/main/jhipster/blocks/config/http.config.js',
         pattern: '$urlRouterProvider.otherwise(\'/\');',
@@ -307,6 +310,15 @@ module.exports = yeoman.Base.extend({
         file: 'gulpfile.js',
         pattern: 'templates: [\'app/*/templates/**/*\'],',
         content: 'templates: [\'app/**/*.html\', \'!app/index.html\', \'!app/bower_components/**/*.html\'],',
+        regex: false
+      }, this);
+
+
+      //add jquery to top of bower
+      jhipsterUtils.replaceContent({
+        file: 'bower.json',
+        pattern: '{\n    "ionic": "~1.3.0",',
+        content: '{\n    "jquery": "2.2.2",\n    "ionic": "~1.3.0",',
         regex: false
       }, this);
     },

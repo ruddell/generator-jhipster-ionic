@@ -4,9 +4,9 @@ angular
   .module('main')
   .controller('LoginCtrl', LoginCtrl);
 
-LoginCtrl.$inject = ['$log', '$scope', '$rootScope', '$window', '$state', '$timeout', 'Auth', '$ionicModal'];
+LoginCtrl.$inject = ['$log', '$ionicHistory', '$scope', '$rootScope', '$window', '$state', '$timeout', 'Auth', '$ionicModal'];
 
-function LoginCtrl ($log, $scope, $rootScope, $window, $state, $timeout, Auth, $ionicModal) {
+function LoginCtrl ($log, $ionicHistory, $scope, $rootScope, $window, $state, $timeout, Auth, $ionicModal) {
   var vm = this;
 
   vm.authenticationError = false;
@@ -23,11 +23,13 @@ function LoginCtrl ($log, $scope, $rootScope, $window, $state, $timeout, Auth, $
   function hideModal () {
     vm.modal.hide();
     $state.go('home');
-
   }
   // $timeout(function () {angular.element('#username').focus();});
 
   function cancel () {
+    $ionicHistory.nextViewOptions({
+      disableBack: true
+    });
     vm.credentials = {
       username: null,
       password: null,
@@ -37,6 +39,10 @@ function LoginCtrl ($log, $scope, $rootScope, $window, $state, $timeout, Auth, $
   }
 
   function login (event) {
+    $ionicHistory.nextViewOptions({
+      disableBack: true
+    });
+
     event.preventDefault();
     Auth.login({
       username: vm.username,
@@ -48,9 +54,6 @@ function LoginCtrl ($log, $scope, $rootScope, $window, $state, $timeout, Auth, $
       if ($state.current.name === 'register' || $state.current.name === 'activate' ||
         $state.current.name === 'finishReset' || $state.current.name === 'requestReset') {
         $state.go('home');
-      }
-      if ($state.current.name === 'stream-live') {
-        $window.location.reload();
       }
 
       // If we're redirected to login, our
