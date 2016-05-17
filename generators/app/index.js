@@ -250,6 +250,26 @@ module.exports = yeoman.Base.extend({
         } catch (e) {
           this.log(chalk.yellow('\nUnable to find ') + filePath + chalk.yellow(' or missing required pattern. File rewrite failed.\n') + e);
         }
+        try {
+          jhipsterUtils.replaceContent({
+            file: items[i],
+            pattern: 'parent: \'account\'',
+            content: 'parent: \'app\'',
+            regex: false
+          }, this);
+        } catch (e) {
+          this.log(chalk.yellow('\nUnable to find ') + filePath + chalk.yellow(' or missing required pattern. File rewrite failed.\n') + e);
+        }
+        try {
+          jhipsterUtils.replaceContent({
+            file: items[i],
+            pattern: 'content@\':',
+            content: 'pageContent\':',
+            regex: false
+          }, this);
+        } catch (e) {
+          this.log(chalk.yellow('\nUnable to find ') + filePath + chalk.yellow(' or missing required pattern. File rewrite failed.\n') + e);
+        }
       }
       done();
 
