@@ -270,6 +270,31 @@ module.exports = yeoman.Base.extend({
         } catch (e) {
           this.log(chalk.yellow('\nUnable to find ') + filePath + chalk.yellow(' or missing required pattern. File rewrite failed.\n') + e);
         }
+
+        //add the config consts to each service
+        try {
+          jhipsterUtils.replaceContent({
+            file: items[i],
+            pattern: '$inject = [\'$resource\'',
+            content: '$inject = [\'$resource\', \'Config\'',
+            regex: false
+          }, this);
+          jhipsterUtils.replaceContent({
+            file: items[i],
+            pattern: '($resource',
+            content: '($resource, Config',
+            regex: false
+          }, this);
+          jhipsterUtils.replaceContent({
+            file: items[i],
+            pattern: '$resource(\'api',
+            content: '$resource(Config.ENV.SERVER_URL + \'api',
+            regex: false
+          }, this);
+        } catch (e) {
+          this.log(chalk.yellow('\nUnable to find ') + filePath + chalk.yellow(' or missing required pattern. File rewrite failed.\n') + e);
+        }
+
       }
       done();
 
@@ -320,6 +345,13 @@ module.exports = yeoman.Base.extend({
 
     // setup CORS proxies to JHipster default ports
       this.template('gulp/watching.js', 'gulp/watching.js');
+    //  setup config constants server urls so that testing on a device is simple
+      this.template('constants/_env-dev.json', 'app/main/constants/env-dev.json');
+      this.template('constants/_env-prod.json', 'app/main/constants/env-prod.json');
+    // fix the two files that use $http instead of resource
+      this.template('http-fix/_auth.jwt.service.js', 'app/main/jhipster/services/auth/auth.jwt.service.js');
+      this.template('http-fix/_profile.service.js', 'app/main/jhipster/services/profiles/profile.service.js');
+
 
     //  copy styles into main.scss
       fse.readFile(this.templatePath('_styles.scss'), 'utf8', function (err, data) {
@@ -348,7 +380,7 @@ module.exports = yeoman.Base.extend({
     this.fs.copyTpl(
       this.templatePath('_bower.json'),
       this.destinationPath('bower.json'), {
-        angularAppName: snakeToCamel(this.baseName)
+        angularAppName: this.baseName
       }
     );
     this.installDependencies();
