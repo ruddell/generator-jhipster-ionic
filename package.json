@@ -1,6 +1,6 @@
 {
   "name": "generator-jhipster-ionic",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Generates an ionic frontend from an existing JHipster project",
   "keywords": [
     "yeoman-generator",

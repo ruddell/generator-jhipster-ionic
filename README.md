@@ -6,7 +6,7 @@
 
 The goal of this module is to generate an  M-Ionic frontend from an existing JHipster project.  
 
-v1.0.0 generates and wires all of the required files for accounts (login, register, settings, password change/reset).   It also sets up a CORS proxy through gulp to allow your app to connect to a running JHipster project on a different port. 
+v1.1.1 generates and wires all of the required files for accounts (login, register, settings, password change/reset).   It also sets up a CORS proxy through gulp to allow your app to connect to a running JHipster project on a different port. 
  
 Session, OAuth, and JWT authentication are fully functional, Social Login is not implemented yet.  Translation is untested.
 
@@ -65,8 +65,6 @@ To run the app on a device/emulator:
 ```bash
 gulp --cordova 'run ios --device'
 ```
-
-__In v1.0.0 you will need to change the URLs to point at a running JHipster project when deploying to a device or emulator__
 
 # To Do
 - Entity CRUD Pages
