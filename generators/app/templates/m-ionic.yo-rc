@@ -1,13 +1,16 @@
 {
   "generator-m-ionic": {
     "answers": {
-      "appName": "ionic",
+      "appName": "ionic-jhipster",
       "appId": "comp.company.project",
       "ionicCss": false,
       "bowerPackages": [
         "angular-resource#^1.5.5",
         "ngstorage#^0.3.10",
-        "angular-cookies#^1.5.5"
+        "angular-cookies#^1.5.5",
+        "angular-aria#1.5.2",
+        "ngInfiniteScroll#1.2.2",
+        "angular-bootstrap#1.2.5"
       ],
       "platforms": [
         "ios",
@@ -18,7 +21,7 @@
         "cordova-plugin-dialogs",
         "ionic-plugin-keyboard"
       ],
-      "appModule": "ionic",
+      "appModule": "ionic-jhipster",
       "ecosystems": []
     }
   }

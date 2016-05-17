@@ -196,19 +196,51 @@ module.exports = yeoman.Base.extend({
       done();
     },
     copyJhipsterFiles: function () {
+     var done = this.async();
+     var done2 = this.async();
+     var done3 = this.async();
       this.spawnCommand('mkdir', 'app/main/jhipster');
       // copy interceptors, state handlers, and set up a login $ionicModal
       //set up authentication
 
-      fse.copy(this.jhipsterHome + '/src/main/webapp/app/blocks', './app/main/jhipster/blocks', function (err) {
+      fse.copy(this.jhipsterHome + '/src/main/webapp/app/app.constants.js', './app/main/jhipster/app.constants.js', function (err) {
         if (err) return console.error(err);
         console.log('success!')
+      });
+      fse.copy(this.jhipsterHome + '/src/main/webapp/app/blocks', './app/main/jhipster/blocks', {filter: function(name){
+        var split = name.split('/');
+        var n = split[split.length - 1];
+        if(n != 'localstorage.config.js' && n != 'uib-pager.config.js' && n != 'uib-pagination.config.js') {
+          return true;
+        }else{
+          return false
+        }
+      }}, function (err) {
+        if (err) return console.error(err);
+        console.log('success!');
+        done();
+      });
+
+      fse.copy(this.jhipsterHome + '/src/main/webapp/app/components', './app/main/jhipster/components', function (err) {
+        if (err) return console.error(err);
+        console.log('success!')
+        done2();
       });
       fse.copy(this.jhipsterHome + '/src/main/webapp/app/services', './app/main/jhipster/services', function (err) {
         if (err) return console.error(err);
         console.log('success!')
+        done3();
       });
 
+
+
+      // copy over other files (home, user management, audits, settings, password)
+
+
+    },
+    replaceModule: function () {
+      var done = this.async();
+      //  replace angularAppName with main
       var items = walk('app/main/jhipster');
       for(var i = 0; i < items.length; i++) {
         try {
@@ -221,11 +253,22 @@ module.exports = yeoman.Base.extend({
         } catch (e) {
           this.log(chalk.yellow('\nUnable to find ') + filePath + chalk.yellow(' or missing required pattern. File rewrite failed.\n') + e);
         }
-        this.log(items[i])
       }
+      done();
 
-      // copy over other files (home, user management, audits, settings, password)
-
+    },
+    cleanupJhipsterCopy: function () {
+    //  remove uibPagination and localStorage files, add bower items to app.js, run stateHandler in app.js, alter httpConfig to remove cacheBuster
+      this.fs.copyTpl(
+        this.templatePath('_app.js'),
+        this.destinationPath('app/app.js'), {
+          angularAppName: snakeToCamel(this.baseName)
+        }
+      );
+      this.fs.copy(
+        this.templatePath('_http.config.js'),
+        this.destinationPath('app/main/jhipster/blocks/config/http.config.js')
+      );
 
     },
     generateEntityFiles: function () {
