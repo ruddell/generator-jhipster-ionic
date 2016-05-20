@@ -197,7 +197,7 @@ module.exports = yeoman.Base.extend({
     },
     copyJhipsterFiles: function () {
       var done = this.async();
-      this.spawnCommand('mkdir', 'app/main/jhipster');
+      // this.spawnCommand('mkdir', 'app/main/jhipster');
       // copy interceptors, state handlers, and set up a login $ionicModal
       //set up authentication
 
