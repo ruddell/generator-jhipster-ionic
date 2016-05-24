@@ -2,11 +2,11 @@
   <ion-content>
     <div class="card">
       <div class="item item-divider">
-        Welcome Home
+        <span translate="home.title">Welcome, Java Hipster!</span>
       </div>
       <div class="item item-text-wrap">
         <div ng-switch="vm.isAuthenticated()">
-          <div class="alert alert-success" ng-switch-when="true">
+          <div class="alert alert-success" ng-switch-when="true" translate="home.logged.message" translate-values="{username: '{{vm.account.login}}'}">
             You are logged in as user "{{vm.account.login}}".
           </div>
 

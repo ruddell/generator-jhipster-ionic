@@ -214,6 +214,74 @@ module.exports = yeoman.Base.extend({
       done();
 
     },
+
+    //copy over custom Ionic/JHipster files such as the frontent.
+    cleanupJhipsterCopy: function () {
+      //  add bower items to app.js, run stateHandler in app.js, remove default URL from httpConfig
+      this.template('m-ionic/_app.js', 'app/app.js', this, {});
+
+      //custom statehandler with pagetitle removed.
+      this.template('jhipster/_state.handler.js', 'app/main/jhipster/blocks/handlers/state.handler.js');
+
+      //adding login and home state, authorities, authenticate for side-menu
+      this.template('m-ionic/_main.js', 'app/main/main.js');
+      this.template('custom/_login-service.js', 'app/main/services/login-service.js');
+      this.template('custom/_login-ctrl.js', 'app/main/controllers/login-ctrl.js');
+      this.template('custom/_login.html', 'app/main/templates/login.html');
+      this.template('custom/_menu-ctrl.js', 'app/main/controllers/menu-ctrl.js');
+      this.template('custom/_menu.html', 'app/main/templates/menu.html');
+
+      this.template('custom/_home-ctrl.js', 'app/main/controllers/home-ctrl.js');
+      this.template('custom/_home.html', 'app/main/templates/home.html', 'stripHtml', {}, true);
+
+      this.template('custom/account/_register.html', 'app/main/jhipster/account/register/register.html');
+      this.template('custom/account/_activate.html', 'app/main/jhipster/account/activate/activate.html');
+      this.template('custom/account/_password.html', 'app/main/jhipster/account/password/password.html');
+      this.template('custom/account/_settings.html', 'app/main/jhipster/account/settings/settings.html');
+      this.template('custom/account/_reset.request.html', 'app/main/jhipster/account/reset/request/reset.request.html');
+      this.template('custom/account/_reset.finish.html', 'app/main/jhipster/account/reset/finish/reset.finish.html');
+
+      //remove default urlRouterProvider
+      jhipsterUtils.replaceContent({
+        file: 'app/main/jhipster/blocks/config/http.config.js',
+        pattern: '$urlRouterProvider.otherwise(\'/\');',
+        content: '',
+        regex: false
+      }, this);
+
+      //remove default urlRouterProvider
+      jhipsterUtils.replaceContent({
+        file: 'app/main/jhipster/blocks/config/http.config.js',
+        pattern: '$urlRouterProvider.otherwise(\'/\');',
+        content: '',
+        regex: false
+      }, this);
+      //add other folders to templates dir so html can be loaded from a JHipster structure
+      jhipsterUtils.replaceContent({
+        file: 'gulpfile.js',
+        pattern: 'templates: [\'app/*/templates/**/*\'],',
+        content: 'templates: [\'app/**/*.html\', \'!app/index.html\', \'!app/bower_components/**/*.html\'],',
+        regex: false
+      }, this);
+
+    // setup CORS proxies to JHipster default ports
+      this.template('m-ionic/gulp/watching.js', 'gulp/watching.js');
+    //  setup config constants server urls so that testing on a device is simple
+      this.template('m-ionic/constants/_env-dev.json', 'app/main/constants/env-dev.json');
+      this.template('m-ionic/constants/_env-prod.json', 'app/main/constants/env-prod.json');
+    // fix the two files that use $http instead of resource
+      this.template('jhipster/_auth.jwt.service.js', 'app/main/jhipster/services/auth/auth.jwt.service.js');
+      this.template('jhipster/_profile.service.js', 'app/main/jhipster/services/profiles/profile.service.js');
+
+
+    //  copy styles into main.scss
+      fse.readFile(this.templatePath('jhipster/_styles.scss'), 'utf8', function (err, data) {
+        // console.log(data) // => css!
+        fse.appendFile('app/main/styles/main.scss', data, function (err) {
+          // console.log(err) // => no error!
+        })
+      })
+    },
     //fixes and wiring for the JHipster code to work correctly in the Ionic project
     jhipsterToIonic: function () {
       var done = this.async();
@@ -293,64 +361,14 @@ module.exports = yeoman.Base.extend({
       done();
 
     },
-    //copy over custom Ionic/JHipster files such as the frontent.
-    cleanupJhipsterCopy: function () {
-      //  add bower items to app.js, run stateHandler in app.js, remove default URL from httpConfig
-      this.template('m-ionic/_app.js', 'app/app.js', this, {});
-
-      //custom statehandler with pagetitle removed.
-      this.template('jhipster/_state.handler.js', 'app/main/jhipster/blocks/handlers/state.handler.js');
-
-      //adding login and home state, authorities, authenticate for side-menu
-      this.template('m-ionic/_main.js', 'app/main/main.js');
-      this.template('custom/_login-service.js', 'app/main/services/login-service.js');
-      this.template('custom/_login-ctrl.js', 'app/main/controllers/login-ctrl.js');
-      this.template('custom/_login.html', 'app/main/templates/login.html');
-      this.template('custom/_menu-ctrl.js', 'app/main/controllers/menu-ctrl.js');
-      this.template('custom/_menu.html', 'app/main/templates/menu.html');
-
-      this.template('custom/_home-ctrl.js', 'app/main/controllers/home-ctrl.js');
-      this.template('custom/_home.html', 'app/main/templates/home.html');
-
-      this.template('account/_register.html', 'app/main/jhipster/account/register/register.html');
-      this.template('account/_activate.html', 'app/main/jhipster/account/activate/activate.html');
-      this.template('account/_password.html', 'app/main/jhipster/account/password/password.html');
-      this.template('account/_settings.html', 'app/main/jhipster/account/settings/settings.html');
-      this.template('account/_reset.request.html', 'app/main/jhipster/account/reset/request/reset.request.html');
-      this.template('account/_reset.finish.html', 'app/main/jhipster/account/reset/finish/reset.finish.html');
-
-      //remove default urlRouterProvider
-      jhipsterUtils.replaceContent({
-        file: 'app/main/jhipster/blocks/config/http.config.js',
-        pattern: '$urlRouterProvider.otherwise(\'/\');',
-        content: '',
-        regex: false
-      }, this);
-      //add other folders to templates dir so html can be loaded from a JHipster structure
-      jhipsterUtils.replaceContent({
-        file: 'gulpfile.js',
-        pattern: 'templates: [\'app/*/templates/**/*\'],',
-        content: 'templates: [\'app/**/*.html\', \'!app/index.html\', \'!app/bower_components/**/*.html\'],',
-        regex: false
-      }, this);
-
-    // setup CORS proxies to JHipster default ports
-      this.template('m-ionic/gulp/watching.js', 'gulp/watching.js');
-    //  setup config constants server urls so that testing on a device is simple
-      this.template('m-ionic/constants/_env-dev.json', 'app/main/constants/env-dev.json');
-      this.template('m-ionic/constants/_env-prod.json', 'app/main/constants/env-prod.json');
-    // fix the two files that use $http instead of resource
-      this.template('jhipster/_auth.jwt.service.js', 'app/main/jhipster/services/auth/auth.jwt.service.js');
-      this.template('jhipster/_profile.service.js', 'app/main/jhipster/services/profiles/profile.service.js');
+    generateTranslationFiles: function () {
+      var done = this.async();
+      //  generate entities from the entity JSON files
+      //  if microservice, add the microservice name to the beginning of the API in the service
+      fse.copySync(this.jhipsterHome + '/src/main/webapp/i18n', './app/i18n');
 
 
-    //  copy styles into main.scss
-      fse.readFile(this.templatePath('jhipster/_styles.scss'), 'utf8', function (err, data) {
-        // console.log(data) // => css!
-        fse.appendFile('app/main/styles/main.scss', data, function (err) {
-          // console.log(err) // => no error!
-        })
-      })
+        done();
     },
     generateEntityFiles: function () {
       //  generate entities from the entity JSON files
@@ -400,4 +418,3 @@ var walk = function(dir) {
   })
   return results
 }
-

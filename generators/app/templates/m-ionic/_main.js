@@ -57,6 +57,12 @@ angular.module('main', [
             templateUrl: 'main/templates/home.html',
             controller: 'HomeCtrl as vm'
           }
+        },
+        resolve: {
+          mainTranslatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate,$translatePartialLoader) {
+            $translatePartialLoader.addPart('home');
+            return $translate.refresh();
+          }]
         }
       });
   });
