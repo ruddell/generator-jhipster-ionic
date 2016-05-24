@@ -224,7 +224,7 @@ module.exports = yeoman.Base.extend({
       this.template('jhipster/_state.handler.js', 'app/main/jhipster/blocks/handlers/state.handler.js');
 
       //adding login and home state, authorities, authenticate for side-menu
-      this.template('m-ionic/_main.js', 'app/main/main.js');
+      copyTemplate('m-ionic/_main.js', 'app/main/main.js', 'stripJs', this, {}, true);
       this.template('custom/_login-service.js', 'app/main/services/login-service.js');
       this.template('custom/_login-ctrl.js', 'app/main/controllers/login-ctrl.js');
       this.template('custom/_login.html', 'app/main/templates/login.html');
@@ -232,7 +232,7 @@ module.exports = yeoman.Base.extend({
       this.template('custom/_menu.html', 'app/main/templates/menu.html');
 
       this.template('custom/_home-ctrl.js', 'app/main/controllers/home-ctrl.js');
-      this.template('custom/_home.html', 'app/main/templates/home.html', 'stripHtml', {}, true);
+      copyTemplate('custom/_home.html', 'app/main/templates/home.html', 'stripHtml', this, {}, true);
 
       this.template('custom/account/_register.html', 'app/main/jhipster/account/register/register.html');
       this.template('custom/account/_activate.html', 'app/main/jhipster/account/activate/activate.html');
@@ -361,13 +361,13 @@ module.exports = yeoman.Base.extend({
       done();
 
     },
-    generateTranslationFiles: function () {
+    copyTranslationFiles: function () {
       var done = this.async();
-      //  generate entities from the entity JSON files
-      //  if microservice, add the microservice name to the beginning of the API in the service
-      fse.copySync(this.jhipsterHome + '/src/main/webapp/i18n', './app/i18n');
-
-
+      if (!this.enableTranslation) {
+        done();
+      } else {
+        fse.copySync(this.jhipsterHome + '/src/main/webapp/i18n', './app/i18n');
+      }
         done();
     },
     generateEntityFiles: function () {
@@ -397,13 +397,16 @@ module.exports = yeoman.Base.extend({
     var config = fileData['generator-m-ionic'];
     var finalConfig = {'generator-m-ionic': config, 'generator-jhipster': this.appConfig};
     fse.writeJson('.yo-rc.json', finalConfig, function(){
-      //once the .yo-rc.json is written, call 'yo m ionic'
       done();
     });
     // this.log('You\'re all set!  Run \'gulp watch\'');
   }
 });
 
+
+//JHipster code from utils.js and generator-base.js
+//todo figure out the proper way to import generator-base rather than copying over
+//yo composing with jhipster requires a .yo-rc.json to already exist which doesn't work here
 function snakeToCamel(s){
   return s.replace(/(\-\w)/g, function(m){return m[1].toUpperCase();});
 }
@@ -418,3 +421,26 @@ var walk = function(dir) {
   })
   return results
 }
+function copyTemplate (source, dest, action, generator, opt, template) {
+
+  var _this = generator || this;
+  var _opt = opt || {};
+  var regex;
+  switch (action) {
+    case 'stripHtml' :
+      regex = /( translate\="([a-zA-Z0-9](\.)?)+")|( translate-values\="\{([a-zA-Z]|\d|\:|\{|\}|\[|\]|\-|\'|\s|\.)*?\}")|( translate-compile)|( translate-value-max\="[0-9\{\}\(\)\|]*")/g;
+      //looks for something like translate="foo.bar.message" and translate-values="{foo: '{{ foo.bar }}'}"
+      jhipsterUtils.copyWebResource(source, dest, regex, 'html', _this, _opt, template);
+      break;
+    case 'stripJs' :
+      regex = /\,[\s\n ]*(resolve)\:[\s ]*[\{][\s\n ]*[a-zA-Z]+\:(\s)*\[[ \'a-zA-Z0-9\$\,\(\)\{\}\n\.\<\%\=\-\>\;\s]*\}\][\s\n ]*\}/g;
+      //looks for something like mainTranslatePartialLoader: [*]
+      jhipsterUtils.copyWebResource(source, dest, regex, 'js', _this, _opt, template);
+      break;
+    case 'copy' :
+      _this.copy(source, dest);
+      break;
+    default:
+      _this.template(source, dest, _this, _opt);
+  }
+};
