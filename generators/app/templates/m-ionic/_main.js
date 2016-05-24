@@ -8,7 +8,9 @@ angular.module('main', [
     'ngResource',
     'ngCookies',
     'ngAria',
-    'ngCacheBuster',
+    'ngCacheBuster', <% if (enableTranslation) { %>
+    'tmh.dynamicLocale',
+    'pascalprecht.translate', <% } %>
     'infinite-scroll'
     // TODO: load other modules selected during generation
   ])

@@ -39,8 +39,7 @@ From a completely empty directory:
 ```bash
 yo jhipster-ionic --force
 ```
-Follow the prompts and enter the path to your JHipster project's root directory (where the .yo-rc.json 
-can be found).  A Cordova project and an M-Ionic front-end will be generated.  JHipster files will then be copied and formatted into the Ionic project.
+Follow the prompts and enter the path to your JHipster project's parent directory.  You will be prompted to choose which JHipster project from which to generate the Ionic project.  A Cordova project and an M-Ionic front-end will be generated.  JHipster files will then be copied and formatted into the Ionic project.
 
 Currently all JHipster files are copied to the 'app/main/jhipster' folder.  The rest of the app follows [M-Ionic's project structure](https://github.com/mwaylabs/generator-m-ionic/blob/master/docs/start/file_structure.md).
 

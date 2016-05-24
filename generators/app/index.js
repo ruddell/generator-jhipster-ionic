@@ -41,7 +41,7 @@ module.exports = yeoman.Base.extend({
       var prompts = [{
         type: 'input',
         name: 'directoryPath',
-        message: 'Where is the JHipster monolith/gateway located ?',
+        message: 'Where is the parent directory of the JHipster monolith/gateway located ?',
         default: '../',
         validate: function (input) {
           var path = this.destinationPath(input);
@@ -128,25 +128,8 @@ module.exports = yeoman.Base.extend({
     }.bind(this));
   },
 
-  // prompting: function () {
-  //   var done = this.async();
-  //
-  //   var prompts = [{
-  //     type: 'input',
-  //     name: 'message',
-  //     message: 'Please put something',
-  //     default: 'hello world!'
-  //   }];
-  //
-  //   this.prompt(prompts, function (props) {
-  //     this.props = props;
-  //     // To access props later use this.props.someOption;
-  //
-  //     done();
-  //   }.bind(this));
-  // },
-
   writing: {
+    //sets up a cordova project if the directory is empty
     initCordova: function () {
       var done = this.async();
       this.spawnCommand('cordova', ['create', '.'])
@@ -155,7 +138,8 @@ module.exports = yeoman.Base.extend({
         });
     },
 
-    writeTemplates : function () {
+    //combines the config of the generator-m-ionic and generator-jhipster projects
+    writeConfig : function () {
       var done = this.async();
       this.baseName = this.appConfig.baseName;
       this.packageName = this.appConfig.packageName;
@@ -182,7 +166,7 @@ module.exports = yeoman.Base.extend({
       // this.log('applicationType=' + this.applicationType);
 
       // create m-ionic's .yo-rc.json based on the JHipster project
-      this.template('m-ionic.yo-rc', '.yo-rc.json', this, {});
+      this.template('m-ionic/m-ionic.yo-rc', '.yo-rc.json', this, {});
       var fileData = this.fs.readJSON('.yo-rc.json');
       var config = fileData['generator-m-ionic'];
       config.answers.appName = this.baseName;
@@ -195,46 +179,49 @@ module.exports = yeoman.Base.extend({
         done();
       });
     },
+    //generates the m-ionic frontend based off of the choices above
     generateIonic: function () {
       var done = this.async();
-      this.spawnCommandSync('yo', ['m-ionic', '--force', '--skip-welcome-message','--skip-sdk']);
+      // this.spawnCommandSync('yo', ['m-ionic', '--force', '--skip-welcome-message','--skip-sdk']);
       done();
     },
+    //copy over jhipster files into the m-ionic frontend
     copyJhipsterFiles: function () {
       var done = this.async();
-      // this.spawnCommand('mkdir', 'app/main/jhipster');
-      // copy interceptors, state handlers, and set up a login $ionicModal
-      //set up authentication
-
+      //copy interceptors, state handlers, and set up a login $ionicModal
       fse.copySync(this.jhipsterHome + '/src/main/webapp/app/app.constants.js', './app/main/jhipster/app.constants.js');
       fse.copySync(this.jhipsterHome + '/src/main/webapp/app/blocks', './app/main/jhipster/blocks');
-      fse.copySync(this.jhipsterHome + '/src/main/webapp/app/components', './app/main/jhipster/components', {filter: function (name) {
-        return (name.indexOf('login') == -1);
-      }});
-      fse.copySync(this.jhipsterHome + '/src/main/webapp/app/services', './app/main/jhipster/services')
+      fse.copySync(this.jhipsterHome + '/src/main/webapp/app/services', './app/main/jhipster/services');
       fse.copySync(this.jhipsterHome + '/src/main/webapp/app/account', './app/main/jhipster/account');
-      done();
+      fse.copySync(this.jhipsterHome + '/src/main/webapp/app/components', './app/main/jhipster/components',
+        //don't copy over login files since we write those ourselves
+        {filter: function (name) {
+          return (name.indexOf('login') == -1);
+        }});
 
+      //copy over JHipster images
       fse.copy(this.jhipsterHome + '/src/main/webapp/content/images/hipster.png', './app/main/assets/images/hipster.png', {});
       fse.copy(this.jhipsterHome + '/src/main/webapp/content/images/hipster2x.png', './app/main/assets/images/hipster2x.png', {});
       fse.copy(this.jhipsterHome + '/src/main/webapp/content/images/logo-jhipster.png', './app/main/assets/images/logo-jhipster.png', {});
 
-      //remove list, list-detail, and debug
+      //remove list, list-detail, and debug controllers/templates from the default m-ionic project
       fse.remove('app/main/controllers/debug-ctrl.js');
       fse.remove('app/main/services/main-serv.js');
       fse.remove('app/main/templates/debug.html');
       fse.remove('app/main/templates/list.html');
       fse.remove('app/main/templates/list-detail.html');
 
-      // copy over other files (home, user management, audits, settings, password)
-
+      done();
 
     },
-    replaceModule: function () {
+    //fixes and wiring for the JHipster code to work correctly in the Ionic project
+    jhipsterToIonic: function () {
       var done = this.async();
-      //  replace angularAppName with main
+      //go through all of the items in the jhipster folder
       var items = walk('app/main/jhipster');
       for(var i = 0; i < items.length; i++) {
+
+        //replace the angular module name with main
         try {
           jhipsterUtils.replaceContent({
             file: items[i],
@@ -245,6 +232,7 @@ module.exports = yeoman.Base.extend({
         } catch (e) {
           this.log(chalk.yellow('\nUnable to find ') + filePath + chalk.yellow(' or missing required pattern. File rewrite failed.\n') + e);
         }
+        //rewrite file paths to match current directory structure
         try {
           jhipsterUtils.replaceContent({
             file: items[i],
@@ -255,6 +243,7 @@ module.exports = yeoman.Base.extend({
         } catch (e) {
           this.log(chalk.yellow('\nUnable to find ') + filePath + chalk.yellow(' or missing required pattern. File rewrite failed.\n') + e);
         }
+        //set parent states to app so that the menu bar is always visible
         try {
           jhipsterUtils.replaceContent({
             file: items[i],
@@ -265,6 +254,7 @@ module.exports = yeoman.Base.extend({
         } catch (e) {
           this.log(chalk.yellow('\nUnable to find ') + filePath + chalk.yellow(' or missing required pattern. File rewrite failed.\n') + e);
         }
+        //replace content@ with pageContent to match m-ionic's view model
         try {
           jhipsterUtils.replaceContent({
             file: items[i],
@@ -275,8 +265,7 @@ module.exports = yeoman.Base.extend({
         } catch (e) {
           this.log(chalk.yellow('\nUnable to find ') + filePath + chalk.yellow(' or missing required pattern. File rewrite failed.\n') + e);
         }
-
-        //add the config consts to each service
+        //add the config consts to anything interacting with the API
         try {
           jhipsterUtils.replaceContent({
             file: items[i],
@@ -304,23 +293,24 @@ module.exports = yeoman.Base.extend({
       done();
 
     },
+    //copy over custom Ionic/JHipster files such as the frontent.
     cleanupJhipsterCopy: function () {
       //  add bower items to app.js, run stateHandler in app.js, remove default URL from httpConfig
-      this.template('_app.js', 'app/app.js', this, {});
+      this.template('m-ionic/_app.js', 'app/app.js', this, {});
 
       //custom statehandler with pagetitle removed.
-      this.template('_state.handler.js', 'app/main/jhipster/blocks/handlers/state.handler.js');
+      this.template('jhipster/_state.handler.js', 'app/main/jhipster/blocks/handlers/state.handler.js');
 
       //adding login and home state, authorities, authenticate for side-menu
-      this.template('_main.js', 'app/main/main.js');
-      this.template('_login-service.js', 'app/main/services/login-service.js');
-      this.template('_login-ctrl.js', 'app/main/controllers/login-ctrl.js');
-      this.template('_login.html', 'app/main/templates/login.html');
-      this.template('_menu-ctrl.js', 'app/main/controllers/menu-ctrl.js');
-      this.template('_menu.html', 'app/main/templates/menu.html');
+      this.template('m-ionic/_main.js', 'app/main/main.js');
+      this.template('custom/_login-service.js', 'app/main/services/login-service.js');
+      this.template('custom/_login-ctrl.js', 'app/main/controllers/login-ctrl.js');
+      this.template('custom/_login.html', 'app/main/templates/login.html');
+      this.template('custom/_menu-ctrl.js', 'app/main/controllers/menu-ctrl.js');
+      this.template('custom/_menu.html', 'app/main/templates/menu.html');
 
-      this.template('_home-ctrl.js', 'app/main/controllers/home-ctrl.js');
-      this.template('_home.html', 'app/main/templates/home.html');
+      this.template('custom/_home-ctrl.js', 'app/main/controllers/home-ctrl.js');
+      this.template('custom/_home.html', 'app/main/templates/home.html');
 
       this.template('account/_register.html', 'app/main/jhipster/account/register/register.html');
       this.template('account/_activate.html', 'app/main/jhipster/account/activate/activate.html');
@@ -345,17 +335,17 @@ module.exports = yeoman.Base.extend({
       }, this);
 
     // setup CORS proxies to JHipster default ports
-      this.template('gulp/watching.js', 'gulp/watching.js');
+      this.template('m-ionic/gulp/watching.js', 'gulp/watching.js');
     //  setup config constants server urls so that testing on a device is simple
-      this.template('constants/_env-dev.json', 'app/main/constants/env-dev.json');
-      this.template('constants/_env-prod.json', 'app/main/constants/env-prod.json');
+      this.template('m-ionic/constants/_env-dev.json', 'app/main/constants/env-dev.json');
+      this.template('m-ionic/constants/_env-prod.json', 'app/main/constants/env-prod.json');
     // fix the two files that use $http instead of resource
-      this.template('http-fix/_auth.jwt.service.js', 'app/main/jhipster/services/auth/auth.jwt.service.js');
-      this.template('http-fix/_profile.service.js', 'app/main/jhipster/services/profiles/profile.service.js');
+      this.template('jhipster/_auth.jwt.service.js', 'app/main/jhipster/services/auth/auth.jwt.service.js');
+      this.template('jhipster/_profile.service.js', 'app/main/jhipster/services/profiles/profile.service.js');
 
 
     //  copy styles into main.scss
-      fse.readFile(this.templatePath('_styles.scss'), 'utf8', function (err, data) {
+      fse.readFile(this.templatePath('jhipster/_styles.scss'), 'utf8', function (err, data) {
         // console.log(data) // => css!
         fse.appendFile('app/main/styles/main.scss', data, function (err) {
           // console.log(err) // => no error!
@@ -375,10 +365,10 @@ module.exports = yeoman.Base.extend({
 
   install: function () {
 
-    this.template('gulp/_eslintignore', '.eslintignore');
+    this.template('m-ionic/gulp/_eslintignore', '.eslintignore');
 
   //replace with bower that has JQuery (and angular-translate if translation is enabled)
-    this.template('_bower.json', 'bower.json', this, {});
+    this.template('jhipster/_bower.json', 'bower.json', this, {});
 
     this.installDependencies();
   },
