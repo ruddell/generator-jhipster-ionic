@@ -159,14 +159,19 @@ module.exports = yeoman.Base.extend({
       var done = this.async();
       this.baseName = this.appConfig.baseName;
       this.packageName = this.appConfig.packageName;
-      this.angularAppName = snakeToCamel(this.appConfig.baseName) + 'App';
-
+      this.angularAppBaseName  = snakeToCamel(this.appConfig.baseName);
+      this.angularAppName = this.angularAppBaseName + 'App';
       this.searchEngine = this.appConfig.searchEngine;
       this.authenticationType = this.appConfig.authenticationType;
       this.serverPort = this.appConfig.serverPort;
       this.enableSocialSignIn = this.appConfig.enableSocialSignIn;
       this.applicationType = this.appConfig.applicationType;
+      this.enableTranslation = this.appConfig.enableTranslation;
+      this.enableWebsocket = this.appConfig.websocket;
       this.appConfig.jhipsterHome = this.jhipsterHome;
+
+      this.jhiPrefix = this.appConfig.jhiPrefix || this.config.get('jhiPrefix') || this.options['jhi-prefix'] || 'jhi';
+      this.jhiPrefixCapitalized = this.jhiPrefix.charAt(0).toUpperCase() + this.jhiPrefix.slice(1);
 
       // this.log('jhipsterHome=' + this.jhipsterHome);
       // this.log('baseName=' + this.baseName);
@@ -301,12 +306,8 @@ module.exports = yeoman.Base.extend({
     },
     cleanupJhipsterCopy: function () {
       //  add bower items to app.js, run stateHandler in app.js, remove default URL from httpConfig
-      this.fs.copyTpl(
-        this.templatePath('_app.js'),
-        this.destinationPath('app/app.js'), {
-          angularAppName: snakeToCamel(this.baseName)
-        }
-      );
+      this.template('_app.js', 'app/app.js', this, {});
+
       //custom statehandler with pagetitle removed.
       this.template('_state.handler.js', 'app/main/jhipster/blocks/handlers/state.handler.js');
 
@@ -376,13 +377,9 @@ module.exports = yeoman.Base.extend({
 
     this.template('gulp/_eslintignore', '.eslintignore');
 
-  //replace with bower that has JQuery at the top
-    this.fs.copyTpl(
-      this.templatePath('_bower.json'),
-      this.destinationPath('bower.json'), {
-        angularAppName: this.baseName
-      }
-    );
+  //replace with bower that has JQuery (and angular-translate if translation is enabled)
+    this.template('_bower.json', 'bower.json', this, {});
+
     this.installDependencies();
   },
 

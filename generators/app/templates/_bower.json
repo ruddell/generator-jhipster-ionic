@@ -13,6 +13,18 @@
     "angular-aria": "1.5.2",
     "ngInfiniteScroll": "1.2.2",
     "angular-bootstrap": "1.2.5",
+    <%_ if (enableTranslation) { _%>
+    "angular-dynamic-locale": "0.1.30",
+    "angular-i18n": "1.5.2",
+    "angular-translate": "2.11.0",
+    "angular-translate-interpolation-messageformat": "2.11.0",
+    "angular-translate-loader-partial": "2.11.0",
+    "angular-translate-storage-cookie": "2.11.0",
+    <%_ } _%>
+    <%_ if (enableWebsocket == 'spring-websocket') { _%>
+    "sockjs-client": "1.0.3",
+    "stomp-websocket": "2.3.4",
+    <%_ } _%>
     "angular-cache-buster": "0.4.3"
   },
   "devDependencies": {
@@ -24,6 +36,6 @@
     "angular-sanitize": "~1.5.0",
     "angular-ui-router": "~0.2.15"
   },
-  "name": "<%= angularAppName %>",
+  "name": "<%= baseName %>",
   "private": true
 }
