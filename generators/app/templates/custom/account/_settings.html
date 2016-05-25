@@ -1,4 +1,5 @@
-<ion-view view-title="{{'global.menu.account.settings' | translate}}">
+<% if (enableTranslation) { %><ion-view view-title="{{'global.menu.account.settings' | translate}}">
+  <% } else { %><ion-view view-title="Settings"><% } %>
   <ion-content>
     <div class="card">
       <div class="item item-text-wrap" ng-show="vm.success || vm.error || vm.errorEmailExists">
@@ -80,11 +81,11 @@
                ng-show="form.email.$error.maxlength" translate="global.messages.validate.email.maxlength">
             Your e-mail cannot be longer than 100 characters.
             </p>
-          </div>
+          </div><% if (enableTranslation) { %>
           <label class="item item-input">
             <span class="input-label" translate="settings.form.language">Language</span>
             <select id="langKey" name="langKey" ng-model="vm.settingsAccount.langKey" ng-controller="JhiLanguageController as languageVm" ng-options="code as (code | findLanguageFromKey) for code in languageVm.languages"></select>
-          </label>
+          </label><% } %>
 
           <button type="submit" ng-disabled="form.$invalid" class="button button-full button-positive" translate="settings.form.button">Save</button>
         </form>

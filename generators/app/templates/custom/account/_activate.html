@@ -1,4 +1,5 @@
-<ion-view view-title="{{'activation.title' | translate}}">
+<% if (enableTranslation) { %><ion-view view-title="{{'activation.title' | translate}}">
+  <% } else { %><ion-view view-title="Activation"><% } %>
   <ion-content>
     <div class="card">
       <div class="item item-text-wrap">

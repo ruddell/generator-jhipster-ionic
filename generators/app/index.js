@@ -230,7 +230,6 @@ module.exports = yeoman.Base.extend({
       copyTemplate('custom/_login.html', 'app/main/templates/login.html', 'stripHtml', this, {}, true);
       this.template('custom/_menu-ctrl.js', 'app/main/controllers/menu-ctrl.js');
       copyTemplate('custom/_menu.html', 'app/main/templates/menu.html', 'stripHtml', this, {}, true);
-
       this.template('custom/_home-ctrl.js', 'app/main/controllers/home-ctrl.js');
       copyTemplate('custom/_home.html', 'app/main/templates/home.html', 'stripHtml', this, {}, true);
 
@@ -240,6 +239,11 @@ module.exports = yeoman.Base.extend({
       copyTemplate('custom/account/_settings.html', 'app/main/jhipster/account/settings/settings.html', 'stripHtml', this, {}, true);
       copyTemplate('custom/account/_reset.request.html', 'app/main/jhipster/account/reset/request/reset.request.html', 'stripHtml', this, {}, true);
       copyTemplate('custom/account/_reset.finish.html', 'app/main/jhipster/account/reset/finish/reset.finish.html', 'stripHtml', this, {}, true);
+
+      //add the $ionicHistory.clearCache() when changing languages to refresh view titles
+      if (this.enableTranslation) {
+        copyTemplate('custom/account/_settings.controller.js', 'app/main/jhipster/account/settings/settings.controller.js', 'stripJs', this, {}, true);
+      }
 
       //remove default urlRouterProvider
       jhipsterUtils.replaceContent({
