@@ -182,7 +182,7 @@ module.exports = yeoman.Base.extend({
     //generates the m-ionic frontend based off of the choices above
     generateIonic: function () {
       var done = this.async();
-      // this.spawnCommandSync('yo', ['m-ionic', '--force', '--skip-welcome-message','--skip-sdk']);
+      this.spawnCommandSync('yo', ['m-ionic', '--force', '--skip-welcome-message','--skip-sdk']);
       done();
     },
     //copy over jhipster files into the m-ionic frontend
@@ -227,9 +227,9 @@ module.exports = yeoman.Base.extend({
       copyTemplate('m-ionic/_main.js', 'app/main/main.js', 'stripJs', this, {}, true);
       this.template('custom/_login-service.js', 'app/main/services/login-service.js');
       this.template('custom/_login-ctrl.js', 'app/main/controllers/login-ctrl.js');
-      this.template('custom/_login.html', 'app/main/templates/login.html');
+      copyTemplate('custom/_login.html', 'app/main/templates/login.html', 'stripHtml', this, {}, true);
       this.template('custom/_menu-ctrl.js', 'app/main/controllers/menu-ctrl.js');
-      this.template('custom/_menu.html', 'app/main/templates/menu.html');
+      copyTemplate('custom/_menu.html', 'app/main/templates/menu.html', 'stripHtml', this, {}, true);
 
       this.template('custom/_home-ctrl.js', 'app/main/controllers/home-ctrl.js');
       copyTemplate('custom/_home.html', 'app/main/templates/home.html', 'stripHtml', this, {}, true);

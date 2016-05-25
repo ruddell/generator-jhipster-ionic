@@ -30,7 +30,10 @@ angular.module('main', [
             function (Auth) {
               return Auth.authorize();
             }
-          ]
+          ]<% if (enableTranslation) { %>,
+          translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
+            $translatePartialLoader.addPart('global');
+          }]<% } %>
         }
       })
       .state('login', {
@@ -44,6 +47,12 @@ angular.module('main', [
             // templateUrl: 'main/services/login/login.html',
             controller: 'LoginCtrl as vm'
           }
+        },
+        resolve: {
+          translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
+            $translatePartialLoader.addPart('login');
+            return $translate.refresh();
+          }]
         }
       })
       .state('home', {
