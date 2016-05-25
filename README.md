@@ -1,14 +1,37 @@
 # generator-jhipster-ionic
 [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
-> Generates an Ionic frontend from an existing JHipster project
+> Generates an Ionic frontend from an existing JHipster project, supports all authentication types and translation.
 
 # Introduction
 
 The goal of this module is to generate an  M-Ionic frontend from an existing JHipster project.  
 
-v1.1.1 generates and wires all of the required files for accounts (login, register, settings, password change/reset).   It also sets up a CORS proxy through gulp to allow your app to connect to a running JHipster project on a different port. 
+###Key Features
+Login, Registration, Settings, Password Change, and Password Reset all function the same as in a regular JHipster 
+application, except with an Ionic frontend.
+
+CORS proxy is set up in gulp/watching.js to forward gulp's live-reload to a running JHipster server.  If the JHipster 
+application is running on port 8080, you should be able to log in from gulp's live-reload.  Default proxies are below.
+
+Gulp Path | Proxies To JHipster
+------------- | -------------
+http://localhost:3000/api  | http://localhost:8080/api
+http://localhost:3000/oauth  | http://localhost:8080/oauth
+
+
  
-Session, OAuth, and JWT authentication are fully functional, Social Login is not implemented yet.  Translation is untested.
+##### Supports:
+- Auth
+  - Session
+  - OAuth
+  - JWT
+- App Types
+  - Monolith
+  - Gateway/Microservices
+- Translation
+#####Untested:
+- Social Login
+- Websockets
 
 # Prerequisites
 - JHipster ([Installing JHipster](https://jhipster.github.io/installation.html))
@@ -39,9 +62,11 @@ From a completely empty directory:
 ```bash
 yo jhipster-ionic --force
 ```
-Follow the prompts and enter the path to your JHipster project's parent directory.  You will be prompted to choose which JHipster project from which to generate the Ionic project.  A Cordova project and an M-Ionic front-end will be generated.  JHipster files will then be copied and formatted into the Ionic project.
+Follow the prompts and enter the path to your JHipster project's parent directory.  Choose the JHipster project from 
+which to generate the Ionic project.  A Cordova project and an M-Ionic front-end are generated in the current directory.
+  JHipster files are then be copied and formatted into the Ionic project.
 
-Currently all JHipster files are copied to the 'app/main/jhipster' folder.  The rest of the app follows [M-Ionic's project structure](https://github.com/mwaylabs/generator-m-ionic/blob/master/docs/start/file_structure.md).
+Currently all JHipster files are copied to the 'app/main/jhipster' folder (except translations, see below).  The rest of the app follows [M-Ionic's project structure](https://github.com/mwaylabs/generator-m-ionic/blob/master/docs/start/file_structure.md).
 
 To run your app with live-reload and a CORS proxy, run:
 ```bash
@@ -50,8 +75,12 @@ gulp watch
 CORS settings can be found in gulp/watching.js.  Endpoints are set up for /oauth and /api to http://localhost:8080. If you are running microservices, 
 you will need to add proxy paths for each of the microservice routes.
 
-M-Ionic provides a massive tool set for an ionic app.  For example, cordova commands have a wrapper through gulp.  Check out [M-Ionic's Dev Intro](https://github.com/mwaylabs/generator-m-ionic/blob/master/docs/start/development_intro.md) to see how to use them.
+M-Ionic provides a massive tool set for an Ionic app.  For example, cordova commands have a wrapper through gulp.  Check out [M-Ionic's Dev Intro](https://github.com/mwaylabs/generator-m-ionic/blob/master/docs/start/development_intro.md) to see how to use them.
 
+
+# Translation
+
+Translations are copied over from the JHipster project into the app/i18n/ folder.  If you update your translations, either manually copy them over or re-run the generator.
 
 # On Device
 
