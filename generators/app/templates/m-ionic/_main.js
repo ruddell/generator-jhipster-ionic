@@ -8,7 +8,9 @@ angular.module('main', [
     'ngResource',
     'ngCookies',
     'ngAria',
-    'ngCacheBuster',
+    'ngCacheBuster', <% if (enableTranslation) { %>
+    'tmh.dynamicLocale',
+    'pascalprecht.translate', <% } %>
     'infinite-scroll'
     // TODO: load other modules selected during generation
   ])
@@ -28,7 +30,10 @@ angular.module('main', [
             function (Auth) {
               return Auth.authorize();
             }
-          ]
+          ]<% if (enableTranslation) { %>,
+          translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
+            $translatePartialLoader.addPart('global');
+          }]<% } %>
         }
       })
       .state('login', {
@@ -42,6 +47,12 @@ angular.module('main', [
             // templateUrl: 'main/services/login/login.html',
             controller: 'LoginCtrl as vm'
           }
+        },
+        resolve: {
+          translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
+            $translatePartialLoader.addPart('login');
+            return $translate.refresh();
+          }]
         }
       })
       .state('home', {
@@ -55,6 +66,12 @@ angular.module('main', [
             templateUrl: 'main/templates/home.html',
             controller: 'HomeCtrl as vm'
           }
+        },
+        resolve: {
+          mainTranslatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate,$translatePartialLoader) {
+            $translatePartialLoader.addPart('home');
+            return $translate.refresh();
+          }]
         }
       });
   });
