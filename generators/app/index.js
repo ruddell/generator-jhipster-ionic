@@ -234,12 +234,12 @@ module.exports = yeoman.Base.extend({
       this.template('custom/_home-ctrl.js', 'app/main/controllers/home-ctrl.js');
       copyTemplate('custom/_home.html', 'app/main/templates/home.html', 'stripHtml', this, {}, true);
 
-      this.template('custom/account/_register.html', 'app/main/jhipster/account/register/register.html');
-      this.template('custom/account/_activate.html', 'app/main/jhipster/account/activate/activate.html');
-      this.template('custom/account/_password.html', 'app/main/jhipster/account/password/password.html');
-      this.template('custom/account/_settings.html', 'app/main/jhipster/account/settings/settings.html');
-      this.template('custom/account/_reset.request.html', 'app/main/jhipster/account/reset/request/reset.request.html');
-      this.template('custom/account/_reset.finish.html', 'app/main/jhipster/account/reset/finish/reset.finish.html');
+      copyTemplate('custom/account/_register.html', 'app/main/jhipster/account/register/register.html', 'stripHtml', this, {}, true);
+      copyTemplate('custom/account/_activate.html', 'app/main/jhipster/account/activate/activate.html', 'stripHtml', this, {}, true);
+      copyTemplate('custom/account/_password.html', 'app/main/jhipster/account/password/password.html', 'stripHtml', this, {}, true);
+      copyTemplate('custom/account/_settings.html', 'app/main/jhipster/account/settings/settings.html', 'stripHtml', this, {}, true);
+      copyTemplate('custom/account/_reset.request.html', 'app/main/jhipster/account/reset/request/reset.request.html', 'stripHtml', this, {}, true);
+      copyTemplate('custom/account/_reset.finish.html', 'app/main/jhipster/account/reset/finish/reset.finish.html', 'stripHtml', this, {}, true);
 
       //remove default urlRouterProvider
       jhipsterUtils.replaceContent({

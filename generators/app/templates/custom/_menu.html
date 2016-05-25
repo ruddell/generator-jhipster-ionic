@@ -37,7 +37,7 @@
           <span translate="global.menu.home">Home</span>
         </ion-item>
         <ion-item ng-switch-when="false" menu-close ng-click="vm.login()">
-          Sign In
+          <span translate="global.menu.account.login">Sign In</span>
         </ion-item>
         <ion-item ng-switch-when="false" menu-close ui-sref="register">
           <span translate="global.menu.account.register">Register</span>
@@ -48,8 +48,8 @@
         <ion-item ng-switch-when="true" menu-close ui-sref="password">
           <span translate="global.menu.account.password">Password</span>
         </ion-item>
-        <ion-item ng-switch-when="true" menu-close ng-click="vm.logout()" translate="global.menu.account.logout">
-          Log Out
+        <ion-item ng-switch-when="true" menu-close ng-click="vm.logout()">
+          <span translate="global.menu.account.logout">Log Out</span>
         </ion-item>
       </ion-list>
     </ion-content>

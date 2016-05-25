@@ -1,4 +1,4 @@
-<ion-view view-title="Home">
+<ion-view view-title="{{'global.menu.home' | translate}}">
   <ion-content>
     <div class="card">
       <div class="item item-divider">
@@ -10,11 +10,11 @@
             You are logged in as user "{{vm.account.login}}".
           </div>
 
-          <div class="alert alert-warning" ng-switch-when="false">
+          <div class="alert alert-warning" ng-switch-when="false" translate="global.messages.info.authenticated" translate-compile>>
             <a class="alert-link" href="" ng-click="vm.login()">Sign in</a>, or try the default accounts:<br/>- Admin (login="admin" and password="admin") <br/>- User (login="user" and password="user").
           </div>
 
-          <div class="alert alert-warning" ng-switch-when="false">
+          <div class="alert alert-warning" ng-switch-when="false" translate="global.messages.info.register" translate-compile>>
             <a class="alert-link" ui-sref="register">Register a new account</a>
           </div>
         </div>
