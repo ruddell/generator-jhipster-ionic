@@ -83,12 +83,13 @@ M-Ionic provides a massive tool set for an Ionic app.  For example, cordova comm
 Translations are copied over from the JHipster project into the app/i18n/ folder.  If you update your translations, either manually copy them over or re-run the generator.
 
 # Websocket
-If your ionic client shows 403 forbidden or "Origin header value 'http://localhost:3000' not allowed." in jhipster application ,then you must configure WebsocketConfiguration.java 
-public void registerStompEndpoints(StompEndpointRegistry registry) {
-    registry.addEndpoint("/websocket/tracker")
-    /*rest of code*/
-    .setAllowedOrigins("*")
-    .withSockJS().setInterceptors(httpSessionHandshakeInterceptor());
+If your ionic client shows 403 forbidden or "Origin header value 'http://localhost:3000' not allowed." in jhipster application ,then you must configure  
+WebsocketConfiguration.java 
+        public void registerStompEndpoints(StompEndpointRegistry registry) {
+                 registry.addEndpoint("/websocket/tracker")
+                 /*rest of code*/
+                .setAllowedOrigins("*")
+                .withSockJS().setInterceptors(httpSessionHandshakeInterceptor());
 }
 # On Device
 
