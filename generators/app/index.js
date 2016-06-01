@@ -286,10 +286,10 @@ module.exports = yeoman.Base.extend({
       this.template('jhipster/_profile.service.js', 'app/main/jhipster/services/profiles/profile.service.js');
       //social login fix
       if (this.enableSocialSignIn) {
-      this.template('jhipster/_social.directive.js', 'app/main/jhipster/account/social/directive/social.directive.js');
-      this.template('jhipster/_social.service.js', 'app/main/jhipster/account/social/social.service.js');
-  }
-      //tracker fix      
+        this.template('jhipster/_social.directive.js', 'app/main/jhipster/account/social/directive/social.directive.js');
+        this.template('jhipster/_social.service.js', 'app/main/jhipster/account/social/social.service.js');
+        }
+      //tracker fix
       this.template('jhipster/_tracker.service.js', 'app/main/jhipster/admin/tracker/tracker.service.js');
     //  copy styles into main.scss
       fse.readFile(this.templatePath('jhipster/_styles.scss'), 'utf8', function (err, data) {
@@ -350,7 +350,7 @@ module.exports = yeoman.Base.extend({
         } catch (e) {
           this.log(chalk.yellow('\nUnable to find ') + filePath + chalk.yellow(' or missing required pattern. File rewrite failed.\n') + e);
         }
-        
+
         try {
           jhipsterUtils.replaceContent({
             file: items[i],
@@ -361,7 +361,7 @@ module.exports = yeoman.Base.extend({
         } catch (e) {
           this.log(chalk.yellow('\nUnable to find ') + filePath + chalk.yellow(' or missing required pattern. File rewrite failed.\n') + e);
         }
-        
+
         //replace content@ with pageContent to match m-ionic's view model
         try {
           jhipsterUtils.replaceContent({
