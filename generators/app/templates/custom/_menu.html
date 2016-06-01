@@ -48,9 +48,11 @@
                 <ion-item ng-switch-when="true" menu-close ui-sref="password">
                     <span translate="global.menu.account.password">Password</span>
                 </ion-item>
+                <% if (enableSocialSignIn) { %>
                 <ion-item ng-switch-when="true" has-authority="ROLE_ADMIN" menu-close ui-sref="jhi-tracker">
                     <span translate="global.menu.admin.tracker">User Tracker</span>
                 </ion-item>
+                <% } %>
                 <ion-item ng-switch-when="true" menu-close ng-click="vm.logout()">
                     <span translate="global.menu.account.logout">Log Out</span>
                 </ion-item>

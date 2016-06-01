@@ -7,13 +7,13 @@
         <div class="list">
             <label class="item item-input">
                 <span class="input-label" translate="global.form.username">Login</span>
-                <input type="text" class="form-control" id="username" placeholder="{{'global.form.username.placeholder'| translate}}"
+                <input type="text" class="form-control" id="username" placeholder="{{'global.form.username.placeholder' | translate}}"
                        ng-model="vm.username">
             </label>
 
             <label class="item item-input">
                 <span class="input-label" translate="login.form.password">Password</span>
-                <input type="password" class="form-control" id="password" placeholder="{{'login.form.password.placeholder'| translate}}"
+                <input type="password" class="form-control" id="password" placeholder="{{'login.form.password.placeholder' | translate}}"
                        ng-model="vm.password">
             </label>
             <div class="item item-toggle">
@@ -31,8 +31,10 @@
         <a class="alert-link" href="" ng-click="vm.requestResetPassword()" translate="login.password.forgot">Forgot Password?</a>
         <br />
         <a class="alert-link" href="" ng-click="vm.register()" translate="global.messages.info.register">Register a new account</a>
+        <% if (enableSocialSignIn) { %>
         <jh-social ng-provider="google"></jh-social>
         <jh-social ng-provider="facebook"></jh-social>
         <jh-social ng-provider="twitter"></jh-social>
+        <% } %>
     </ion-content>
 </ion-modal-view>
