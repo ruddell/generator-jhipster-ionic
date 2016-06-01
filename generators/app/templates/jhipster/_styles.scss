@@ -21,3 +21,24 @@ ul#strength {
  }
 }
 /* end Password strength bar style */
+.header .col{
+    background-color: lightgrey;
+}
+
+.col{
+    border: solid 1px grey;
+    border-bottom-style: none;
+    border-right-style: none;
+}
+
+.col:last-child{
+    border-right: solid 1px grey;
+}
+
+.row:last-child .col{
+    border-bottom: solid 1px grey;
+}
+
+.hidden{
+    display: none;
+}
