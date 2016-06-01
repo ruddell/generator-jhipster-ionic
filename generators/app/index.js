@@ -277,6 +277,7 @@ module.exports = yeoman.Base.extend({
 
     // setup CORS proxies to JHipster default ports
       this.template('m-ionic/gulp/watching.js', 'gulp/watching.js');
+      this.template('m-ionic/gulp/building.js', 'gulp/building.js');
     //  setup config constants server urls so that testing on a device is simple
       this.template('m-ionic/constants/_env-dev.json', 'app/main/constants/env-dev.json');
       this.template('m-ionic/constants/_env-prod.json', 'app/main/constants/env-prod.json');
