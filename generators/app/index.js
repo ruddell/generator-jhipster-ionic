@@ -44,9 +44,10 @@ module.exports = yeoman.Base.extend({
         message: 'Where is the parent directory of the JHipster monolith/gateway located ?',
         default: '../',
         validate: function (input) {
-          var path = this.destinationPath(input);          
+          var path = this.destinationPath(input).trim();
+          path= path.replace(/\/?$/,'/');
           if(shelljs.test('-d', path)) {
-            var files = shelljs.ls('-l',this.destinationPath(input));
+            var files = shelljs.ls('-l',this.destinationPath(input).trim());
             this.appsFolders = [];
 
             files.forEach(function(file) {
@@ -73,7 +74,7 @@ module.exports = yeoman.Base.extend({
       }];
 
       this.prompt(prompts, function (props) {
-        this.directoryPath = props.directoryPath;
+        this.directoryPath = props.directoryPath.trim().replace(/\/?$/,'/');
 
         //Removing ionic apps, microservice apps and registry from appsFolders
         for(var i = 0; i < this.appsFolders.length; i++) {
