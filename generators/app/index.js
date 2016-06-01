@@ -32,7 +32,7 @@ module.exports = yeoman.Base.extend({
     askForPath: function() {
       var done = this.async();
       //the project exists
-      if(this.configAnswers !== undefined && this.configAnswers['generator-jhipster'] && this.configAnswers['generator-m-ionic']){
+      if(this.configAnswers !== undefined && this.configAnswers['generator-jhipster'] && this.configAnswers['generator-jhipster']['jhipsterHome']){
         done();
         return;
       }
@@ -182,7 +182,15 @@ module.exports = yeoman.Base.extend({
     //generates the m-ionic frontend based off of the choices above
     generateIonic: function () {
       var done = this.async();
-      this.spawnCommandSync('yo', ['m-ionic', '--force', '--skip-welcome-message','--skip-sdk']);
+      this.spawnCommandSync('yo', ['m-ionic', '--force', '--skip-install', '--skip-prompts']);
+
+      jhipsterUtils.replaceContent({
+        file: 'app/index.html',
+        pattern: 'myProject',
+        content: this.angularAppBaseName,
+        regex: false
+      }, this);
+
       done();
     },
     //copy over jhipster files into the m-ionic frontend
