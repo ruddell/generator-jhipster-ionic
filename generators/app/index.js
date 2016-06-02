@@ -291,7 +291,13 @@ module.exports = yeoman.Base.extend({
       this.template('m-ionic/constants/_env-prod.json', 'app/main/constants/env-prod.json');
     // fix the two files that use $http instead of resource
     //  todo add auth.session/oauth2.js and remove JhiTracker if no websockets
-      this.template('jhipster/_auth.jwt.service.js', 'app/main/jhipster/services/auth/auth.jwt.service.js');
+      if (this.authenticationType === 'jwt') {
+        this.template('jhipster/_auth.jwt.service.js', 'app/main/jhipster/services/auth/auth.jwt.service.js');
+      } else if (this.authenticationType === 'session') {
+        this.template('jhipster/_auth.session.service.js', 'app/main/jhipster/services/auth/auth.session.service.js');
+      } else if (this.authenticationType === 'oauth2') {
+        this.template('jhipster/_auth.oauth2.service.js', 'app/main/jhipster/services/auth/auth.oauth2.service.js');
+      }
       this.template('jhipster/_profile.service.js', 'app/main/jhipster/services/profiles/profile.service.js');
       //social login fix
       if (this.enableSocialSignIn) {

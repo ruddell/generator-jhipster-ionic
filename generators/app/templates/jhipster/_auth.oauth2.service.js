@@ -6,9 +6,9 @@
         .module('main')
         .factory('AuthServerProvider', AuthServerProvider);
 
-    AuthServerProvider.$inject = ['$http', '$localStorage', 'Base64'];
+    AuthServerProvider.$inject = ['$http', '$localStorage', 'Base64', 'Config'];
 
-    function AuthServerProvider ($http, $localStorage, Base64) {
+    function AuthServerProvider ($http, $localStorage, Base64, Config) {
         var service = {
             getToken: getToken,
             hasValidToken: hasValidToken,
@@ -30,13 +30,13 @@
         function login (credentials) {
             var data = 'username=' +  encodeURIComponent(credentials.username) + '&password=' +
                 encodeURIComponent(credentials.password) + '&grant_type=password&scope=read%20write&' +
-                'client_secret=my-secret-token-to-change-in-production&client_id=jwtapp';
+                'client_secret=my-secret-token-to-change-in-production&client_id=<%= angularAppName.toLowerCase() %>';
 
-            return $http.post('oauth/token', data, {
+            return $http.post(Config.ENV.SERVER_URL + 'oauth/token', data, {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                     'Accept': 'application/json',
-                    'Authorization': 'Basic ' + Base64.encode('jwtapp' + ':' + 'my-secret-token-to-change-in-production')
+                    'Authorization': 'Basic ' + Base64.encode('<%= angularAppName.toLowerCase() %>:' + 'my-secret-token-to-change-in-production')
                 }
             }).success(authSucess);
 
@@ -50,7 +50,7 @@
         }
 
         function logout () {
-            $http.post('api/logout').then(function() {
+            $http.post(Config.ENV.SERVER_URL + 'api/logout').then(function() {
                 delete $localStorage.authenticationToken;
             });
         }

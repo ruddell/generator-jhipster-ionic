@@ -5,9 +5,9 @@
         .module('main')
         .factory('AuthServerProvider', AuthServerProvider);
 
-    AuthServerProvider.$inject = ['$http', '$localStorage', 'Config', 'JhiTrackerService'];
+    AuthServerProvider.$inject = ['$http', '$localStorage', 'Config'<% if (enableWebsocket) { %>, 'JhiTrackerService'<% } %>];
 
-    function AuthServerProvider ($http, $localStorage, Config, JhiTrackerService) {
+    function AuthServerProvider ($http, $localStorage, Config<% if (enableWebsocket) { %>, JhiTrackerService<% } %>) {
         var service = {
             getToken: getToken,
             hasValidToken: hasValidToken,
@@ -41,8 +41,8 @@
             });
         }
 
-        function logout () {
-            JhiTrackerService.disconnect();
+        function logout () {<% if (enableWebsocket) { %>
+            JhiTrackerService.disconnect();<% } %>
             // logout from the server
             $http.post(Config.ENV.SERVER_URL + 'api/logout').success(function (response) {
                 delete $localStorage.authenticationToken;
