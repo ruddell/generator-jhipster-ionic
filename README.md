@@ -25,13 +25,12 @@ http://localhost:3000/oauth  | http://localhost:8080/oauth
   - Session
   - OAuth
   - JWT
+  - Social Login
 - App Types
   - Monolith
   - Gateway/Microservices
-- Translation
-#####Untested:
-- Social Login
-- Websockets
+- Translation:
+- Websockets (see Websocket section for setup)
 
 # Prerequisites
 - JHipster ([Installing JHipster](https://jhipster.github.io/installation.html))
@@ -83,14 +82,16 @@ M-Ionic provides a massive tool set for an Ionic app.  For example, cordova comm
 Translations are copied over from the JHipster project into the app/i18n/ folder.  If you update your translations, either manually copy them over or re-run the generator.
 
 # Websocket
-If your ionic client shows 403 forbidden or "Origin header value 'http://localhost:3000' not allowed." in jhipster application ,then you must configure  
-WebsocketConfiguration.java 
+If your ionic client shows 403 forbidden or "Origin header value 'http://localhost:3000' not allowed." in JHipster application, then you must configure
+   WebsocketConfiguration.java as follows:
+   ```java
         public void registerStompEndpoints(StompEndpointRegistry registry) {
                  registry.addEndpoint("/websocket/tracker")
-                 /*rest of code*/
+                 /*add the line below */
                 .setAllowedOrigins("*")
                 .withSockJS().setInterceptors(httpSessionHandshakeInterceptor());
 }
+```
 # On Device
 
 To run the app on a device/emulator:

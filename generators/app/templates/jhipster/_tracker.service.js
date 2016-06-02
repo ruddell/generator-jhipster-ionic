@@ -6,9 +6,9 @@
         .module('main')
         .factory('JhiTrackerService', JhiTrackerService);
 
-    JhiTrackerService.$inject = ['$rootScope', '$window', '$cookies', '$http', '$q', 'AuthServerProvider','Config'];
+    JhiTrackerService.$inject = ['$rootScope', '$window', '$cookies', '$http', '$q', 'AuthServerProvider', 'Config'];
 
-    function JhiTrackerService ($rootScope, $window, $cookies, $http, $q, AuthServerProvider,Config) {
+    function JhiTrackerService ($rootScope, $window, $cookies, $http, $q, AuthServerProvider, Config) {
         var stompClient = null;
         var subscriber = null;
         var listener = $q.defer();
@@ -70,7 +70,7 @@
         function sendActivity() {
             if (stompClient !== null && stompClient.connected) {
                 stompClient
-                    .send('/topic/activity',
+                    .send(Config.ENV.SERVER_URL  + '/topic/activity',
                     {},
                     angular.toJson({'page': $rootScope.toState.name}));
             }
@@ -78,7 +78,7 @@
 
         function subscribe () {
             connected.promise.then(function() {
-                subscriber = stompClient.subscribe('/topic/tracker', function(data) {
+                subscriber = stompClient.subscribe(Config.ENV.SERVER_URL  + '/topic/tracker', function(data) {
                     listener.notify(angular.fromJson(data.body));
                 });
             }, null, null);

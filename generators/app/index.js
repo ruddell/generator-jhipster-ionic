@@ -199,10 +199,10 @@ module.exports = yeoman.Base.extend({
         {filter: function (name) {
           return (name.indexOf('login') == -1);
         }});
-    if (this.enableWebsocket) {
-     fse.copySync(this.jhipsterHome+ '/src/main/webapp/app/admin/admin.state.js','./app/main/jhipster/admin/admin.state.js');
-     fse.copySync(this.jhipsterHome+ '/src/main/webapp/app/admin/tracker','./app/main/jhipster/admin/tracker');
- }
+      if (this.enableWebsocket) {
+        fse.copySync(this.jhipsterHome+ '/src/main/webapp/app/admin/admin.state.js','./app/main/jhipster/admin/admin.state.js');
+        fse.copySync(this.jhipsterHome+ '/src/main/webapp/app/admin/tracker','./app/main/jhipster/admin/tracker');
+      }
       //copy over JHipster images
       fse.copy(this.jhipsterHome + '/src/main/webapp/content/images/hipster.png', './app/main/assets/images/hipster.png', {});
       fse.copy(this.jhipsterHome + '/src/main/webapp/content/images/hipster2x.png', './app/main/assets/images/hipster2x.png', {});
@@ -243,13 +243,16 @@ module.exports = yeoman.Base.extend({
       copyTemplate('custom/account/_settings.html', 'app/main/jhipster/account/settings/settings.html', 'stripHtml', this, {}, true);
       copyTemplate('custom/account/_reset.request.html', 'app/main/jhipster/account/reset/request/reset.request.html', 'stripHtml', this, {}, true);
       copyTemplate('custom/account/_reset.finish.html', 'app/main/jhipster/account/reset/finish/reset.finish.html', 'stripHtml', this, {}, true);
-      //admin template
+
+      //websocket files
       if (this.enableWebsocket) {
-      copyTemplate('custom/admin/_tracker.html', 'app/main/jhipster/admin/tracker/tracker.html', 'stripHtml', this, {}, true);
-  }
+        copyTemplate('custom/admin/_tracker.html', 'app/main/jhipster/admin/tracker/tracker.html', 'stripHtml', this, {}, true);
+        this.template('jhipster/_tracker.service.js', 'app/main/jhipster/admin/tracker/tracker.service.js');
+      }
       //add the $ionicHistory.clearCache() when changing languages to refresh view titles
       if (this.enableTranslation) {
         copyTemplate('custom/account/_settings.controller.js', 'app/main/jhipster/account/settings/settings.controller.js', 'stripJs', this, {}, true);
+        this.template('m-ionic/gulp/building.js', 'gulp/building.js');
       }
 
       //remove default urlRouterProvider
@@ -277,21 +280,19 @@ module.exports = yeoman.Base.extend({
 
     // setup CORS proxies to JHipster default ports
       this.template('m-ionic/gulp/watching.js', 'gulp/watching.js');
-      this.template('m-ionic/gulp/building.js', 'gulp/building.js');
     //  setup config constants server urls so that testing on a device is simple
       this.template('m-ionic/constants/_env-dev.json', 'app/main/constants/env-dev.json');
       this.template('m-ionic/constants/_env-prod.json', 'app/main/constants/env-prod.json');
     // fix the two files that use $http instead of resource
+    //  todo add auth.session.service and remove JhiTracker if no websockets
       this.template('jhipster/_auth.jwt.service.js', 'app/main/jhipster/services/auth/auth.jwt.service.js');
       this.template('jhipster/_profile.service.js', 'app/main/jhipster/services/profiles/profile.service.js');
       //social login fix
       if (this.enableSocialSignIn) {
         this.template('jhipster/_social.directive.js', 'app/main/jhipster/account/social/directive/social.directive.js');
         this.template('jhipster/_social.service.js', 'app/main/jhipster/account/social/social.service.js');
-        }
-      //tracker fix
-      this.template('jhipster/_tracker.service.js', 'app/main/jhipster/admin/tracker/tracker.service.js');
-    //  copy styles into main.scss
+      }
+      //  copy styles into main.scss
       fse.readFile(this.templatePath('jhipster/_styles.scss'), 'utf8', function (err, data) {
         // console.log(data) // => css!
         fse.appendFile('app/main/styles/main.scss', data, function (err) {
