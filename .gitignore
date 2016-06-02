@@ -6,3 +6,5 @@ atlassian-ide-plugin.xml
 /.project
 test/temp/
 npm-debug.log
+nbproject
+.DS_Store

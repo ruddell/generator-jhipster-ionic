@@ -1,0 +1,17 @@
+<ion-view view-title="{{'tracker.title' | translate}}">
+    <ion-content>
+        <div class="row header">
+            <div class="col" translate="tracker.table.userlogin">User</div>
+            <div class="col" translate="tracker.table.ipaddress">IP Address</div>
+            <div class="col" translate="tracker.table.page">Current page</div>
+            <div class="col" translate="tracker.table.time">Time</div>
+        </div>
+        <div class="row" ng-repeat="activity in vm.activities">
+            <div class="col">{{activity.userLogin}}</div>
+            <div class="col">{{activity.ipAddress}}</div>
+            <div class="col">{{activity.page}}</div>
+            <div class="col">{{activity.time}}</div>
+        </div>
+    </ion-content>
+</ion-view>
+
