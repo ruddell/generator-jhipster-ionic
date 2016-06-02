@@ -39,7 +39,7 @@ http://localhost:3000/oauth  | http://localhost:8080/oauth
 
 To install everything needed, run:
 ```bash
- npm install -g generator-jhipster generator-m-ionic cordova ionic yo bower gulp
+ npm install -g cordova ionic yo bower gulp
 ```
 This module also requires an existing JHipster project to copy the authentication files from.
 
