@@ -152,7 +152,7 @@ module.exports = yeoman.Base.extend({
       this.enableSocialSignIn = this.appConfig.enableSocialSignIn;
       this.applicationType = this.appConfig.applicationType;
       this.enableTranslation = this.appConfig.enableTranslation;
-      this.enableWebsocket = this.appConfig.websocket;
+      this.enableWebsocket = this.appConfig.websocket != 'no';
       this.appConfig.jhipsterHome = this.jhipsterHome;
 
       this.jhiPrefix = this.appConfig.jhiPrefix || this.config.get('jhiPrefix') || this.options['jhi-prefix'] || 'jhi';
@@ -205,8 +205,8 @@ module.exports = yeoman.Base.extend({
         {filter: function (name) {
           return (name.indexOf('login') == -1);
         }});
+      fse.copySync(this.jhipsterHome+ '/src/main/webapp/app/admin/admin.state.js','./app/main/jhipster/admin/admin.state.js');
       if (this.enableWebsocket) {
-        fse.copySync(this.jhipsterHome+ '/src/main/webapp/app/admin/admin.state.js','./app/main/jhipster/admin/admin.state.js');
         fse.copySync(this.jhipsterHome+ '/src/main/webapp/app/admin/tracker','./app/main/jhipster/admin/tracker');
       }
       //copy over JHipster images
