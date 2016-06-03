@@ -37,6 +37,7 @@ describe('JHipster Ionic JWT generator test', function () {
           return helpers
             .run(path.join( __dirname, '../generators/app'))
             .inTmpDir(function (dir) {
+              process.chdir(directory);
               console.log(process.cwd());
               console.log("Running jhipster-ionic")
               fse.mkdirsSync(directory + '/jhipster-ionic-app');
@@ -84,7 +85,6 @@ describe('JHipster Ionic JWT generator test', function () {
       helpers
         .run(path.join( __dirname, '../node_modules/generator-jhipster/generators/client'))
         .inTmpDir(function (dir) {
-          console.log(process.cwd());
           console.log("Running JHipster");
           directory = process.cwd();
           fse.mkdirsSync(process.cwd() + '/jhipster-client');
