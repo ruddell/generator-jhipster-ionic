@@ -25,21 +25,20 @@ http://localhost:3000/oauth  | http://localhost:8080/oauth
   - Session
   - OAuth
   - JWT
-  - Social Login
+  - Works with Social Login
 - App Types
   - Monolith
   - Gateway/Microservices
-- Translation:
+- Translation
 - Websockets (see Websocket section for setup)
 
 # Prerequisites
 - JHipster ([Installing JHipster](https://jhipster.github.io/installation.html))
 - M-Ionic ([Installing M-Ionic](https://github.com/mwaylabs/generator-m-ionic/blob/master/docs/start/installation_prerequisites.md))
-- Cordova
 
 To install everything needed, run:
 ```bash
- npm install -g cordova ionic yo bower gulp
+ npm install -g ionic yo bower gulp
 ```
 This module also requires an existing JHipster project to copy the authentication files from.
 
@@ -84,12 +83,12 @@ Translations are copied over from the JHipster project into the app/i18n/ folder
 # Websocket
 If your ionic client shows 403 forbidden or "Origin header value 'http://localhost:3000' not allowed." in JHipster application, then you must configure
    WebsocketConfiguration.java as follows:
-   ```java
-        public void registerStompEndpoints(StompEndpointRegistry registry) {
-                 registry.addEndpoint("/websocket/tracker")
-                 /*add the line below */
-                .setAllowedOrigins("*")
-                .withSockJS().setInterceptors(httpSessionHandshakeInterceptor());
+```java
+public void registerStompEndpoints(StompEndpointRegistry registry) {
+         registry.addEndpoint("/websocket/tracker")
+         /*add the line below */
+        .setAllowedOrigins("*")
+        .withSockJS().setInterceptors(httpSessionHandshakeInterceptor());
 }
 ```
 # On Device
@@ -118,6 +117,11 @@ gulp --cordova 'run ios --device'
 - [JHipster Module Generator](https://github.com/jhipster/generator-jhipster-module)
 - [Original JHipster Docker-Compose Module](https://github.com/jhipster/generator-jhipster-docker-compose)
 
+# Release Notes
+- v2.1 - Add Social Login and Websocket support
+- v2 - Add Translation support
+- v1.1 - Set up a CORS proxy for developing locally.
+- v1 - Basic Ionic application with JHipster authentication features.
 # License
 
 Apache-2.0 © [Jon Ruddell]
