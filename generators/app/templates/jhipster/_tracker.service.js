@@ -70,7 +70,7 @@
         function sendActivity() {
             if (stompClient !== null && stompClient.connected) {
                 stompClient
-                    .send(Config.ENV.SERVER_URL  + '/topic/activity',
+                    .send('/topic/activity',
                     {},
                     angular.toJson({'page': $rootScope.toState.name}));
             }
@@ -78,7 +78,7 @@
 
         function subscribe () {
             connected.promise.then(function() {
-                subscriber = stompClient.subscribe(Config.ENV.SERVER_URL  + '/topic/tracker', function(data) {
+                subscriber = stompClient.subscribe('/topic/tracker', function(data) {
                     listener.notify(angular.fromJson(data.body));
                 });
             }, null, null);

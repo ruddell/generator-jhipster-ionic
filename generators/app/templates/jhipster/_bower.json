@@ -21,7 +21,7 @@
     "angular-translate-loader-partial": "2.11.0",
     "angular-translate-storage-cookie": "2.11.0",
     <%_ } _%>
-    <%_ if (enableWebsocket == 'spring-websocket') { _%>
+    <%_ if (enableWebsocket) { _%>
     "sockjs-client": "1.0.3",
     "stomp-websocket": "2.3.4",
     <%_ } _%>
