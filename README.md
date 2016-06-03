@@ -25,12 +25,14 @@ http://localhost:3000/oauth  | http://localhost:8080/oauth
   - Session
   - OAuth
   - JWT
-  - Works with Social Login
 - App Types
   - Monolith
   - Gateway/Microservices
 - Translation
 - Websockets (see Websocket section for setup)
+
+##### Needs Work
+- Social Login
 
 # Prerequisites
 - JHipster ([Installing JHipster](https://jhipster.github.io/installation.html))
