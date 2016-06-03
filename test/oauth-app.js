@@ -3,14 +3,13 @@ var path = require('path');
 var fse = require('fs-extra');
 var assert = require('yeoman-assert');
 var helpers = require('yeoman-test');
-var process = require('process');
 
 var deps = [
   [helpers.createDummyGenerator(), 'jhipster:modules']
 ];
 
-describe('JHipster Ionic Oauth2 generator test', function () {
-  describe('default Ouaht2 generator test', function () {
+describe('JHipster Ionic Oauth generator test', function () {
+  describe('default Oauth generator test', function () {
     var directory;
     var jhipDir;
     var jhipIonicDir;
@@ -19,12 +18,12 @@ describe('JHipster Ionic Oauth2 generator test', function () {
       helpers
         .run(path.join( __dirname, '../node_modules/generator-jhipster/generators/client'))
         .inTmpDir(function (dir) {
-          console.log("Running jhipster")
-          directory = dir;
-          fse.mkdirsSync(dir + '/jhipster-client');
-          jhipDir = dir + '/jhipster-client';
-          process.chdir('/private' + jhipDir);
-          fse.copySync(path.join(__dirname, '../test/templates/oauth/default'), dir + '/jhipster-client')
+          console.log("Running JHipster");
+          directory = process.cwd();
+          fse.mkdirsSync(process.cwd() + '/jhipster-client');
+          jhipDir = process.cwd() + '/jhipster-client';
+          process.chdir(jhipDir);
+          fse.copySync(path.join(__dirname, '../test/templates/oauth/default'), jhipDir)
         })
         .withOptions({
           testmode: true
@@ -40,8 +39,8 @@ describe('JHipster Ionic Oauth2 generator test', function () {
               console.log("Running jhipster-ionic")
               fse.mkdirsSync(directory + '/jhipster-ionic-app');
               jhipIonicDir = directory + '/jhipster-ionic-app';
-              process.chdir('/private' + jhipIonicDir);
-              fse.copySync(path.join(__dirname, '../test/templates/oauth/default'), directory + '/jhipster-ionic-app')
+              process.chdir(jhipIonicDir);
+              fse.copySync(path.join(__dirname, '../test/templates/oauth/default'), jhipIonicDir)
             })
             .withOptions({
               testmode: true,
@@ -60,17 +59,16 @@ describe('JHipster Ionic Oauth2 generator test', function () {
         });
     });
 
-    it('should generate a JHipster project and a JHipster-Ionic project with default oauth settings', function () {
-      console.log(process.cwd());
+    it('should generate a JHipster project and a JHipster-Ionic project with default Oauth settings', function () {
       //check for the JHipster project
       assert.file([
-        '../jhipster-client/src/main/webapp/index.html'
+        jhipDir + '/src/main/webapp/index.html'
       ]);
       //check for the JHipster-Ionic project
       assert.file([
-        'app/app.js',
-        'app/index.html',
-        'app/main/main.js'
+        jhipIonicDir + '/app/app.js',
+        jhipIonicDir + '/app/index.html',
+        jhipIonicDir + '/app/main/main.js'
       ]);
     });
   });
@@ -84,12 +82,12 @@ describe('JHipster Ionic Oauth2 generator test', function () {
       helpers
         .run(path.join( __dirname, '../node_modules/generator-jhipster/generators/client'))
         .inTmpDir(function (dir) {
-          console.log("Running jhipster")
-          directory = dir;
-          fse.mkdirsSync(dir + '/jhipster-client');
-          jhipDir = dir + '/jhipster-client';
-          process.chdir('/private' + jhipDir);
-          fse.copySync(path.join(__dirname, '../test/templates/oauth/all'), dir + '/jhipster-client')
+          console.log("Running JHipster");
+          directory = process.cwd();
+          fse.mkdirsSync(process.cwd() + '/jhipster-client');
+          jhipDir = process.cwd() + '/jhipster-client';
+          process.chdir(jhipDir);
+          fse.copySync(path.join(__dirname, '../test/templates/oauth/all'), jhipDir)
         })
         .withOptions({
           testmode: true,
@@ -106,8 +104,8 @@ describe('JHipster Ionic Oauth2 generator test', function () {
               console.log("Running jhipster-ionic")
               fse.mkdirsSync(directory + '/jhipster-ionic-app');
               jhipIonicDir = directory + '/jhipster-ionic-app';
-              process.chdir('/private' + jhipIonicDir);
-              fse.copySync(path.join(__dirname, '../test/templates/oauth/all'), directory + '/jhipster-ionic-app')
+              process.chdir(jhipIonicDir);
+              fse.copySync(path.join(__dirname, '../test/templates/oauth/default'), jhipIonicDir)
             })
             .withOptions({
               testmode: true,
@@ -126,17 +124,16 @@ describe('JHipster Ionic Oauth2 generator test', function () {
         });
     });
 
-    it('should generate a JHipster project and a JHipster-Ionic project with all options and oauth', function () {
-      console.log(process.cwd());
+    it('should generate a JHipster project and a JHipster-Ionic project with all options and Oauth', function () {
       //check for the JHipster project
       assert.file([
-        '../jhipster-client/src/main/webapp/index.html'
+        jhipDir + '/src/main/webapp/index.html'
       ]);
       //check for the JHipster-Ionic project
       assert.file([
-        'app/app.js',
-        'app/index.html',
-        'app/main/main.js'
+        jhipIonicDir + '/app/app.js',
+        jhipIonicDir + '/app/index.html',
+        jhipIonicDir + '/app/main/main.js'
       ]);
     });
   });
@@ -149,12 +146,12 @@ describe('JHipster Ionic Oauth2 generator test', function () {
       helpers
         .run(path.join( __dirname, '../node_modules/generator-jhipster/generators/client'))
         .inTmpDir(function (dir) {
-          console.log("Running jhipster")
-          directory = dir;
-          fse.mkdirsSync(dir + '/jhipster-client');
-          jhipDir = dir + '/jhipster-client';
-          process.chdir('/private' + jhipDir);
-          fse.copySync(path.join(__dirname, '../test/templates/oauth/social'), dir + '/jhipster-client')
+          console.log("Running JHipster");
+          directory = process.cwd();
+          fse.mkdirsSync(process.cwd() + '/jhipster-client');
+          jhipDir = process.cwd() + '/jhipster-client';
+          process.chdir(jhipDir);
+          fse.copySync(path.join(__dirname, '../test/templates/oauth/social'), jhipDir)
         })
         .withOptions({
           testmode: true
@@ -170,8 +167,8 @@ describe('JHipster Ionic Oauth2 generator test', function () {
               console.log("Running jhipster-ionic")
               fse.mkdirsSync(directory + '/jhipster-ionic-app');
               jhipIonicDir = directory + '/jhipster-ionic-app';
-              process.chdir('/private' + jhipIonicDir);
-              fse.copySync(path.join(__dirname, '../test/templates/oauth/social'), directory + '/jhipster-ionic-app')
+              process.chdir(jhipIonicDir);
+              fse.copySync(path.join(__dirname, '../test/templates/oauth/default'), jhipIonicDir)
             })
             .withOptions({
               testmode: true,
@@ -190,17 +187,16 @@ describe('JHipster Ionic Oauth2 generator test', function () {
         });
     });
 
-    it('should generate a JHipster project and a JHipster-Ionic project with social login and oauth', function () {
-      console.log(process.cwd());
+    it('should generate a JHipster project and a JHipster-Ionic project with social login and Oauth', function () {
       //check for the JHipster project
       assert.file([
-        '../jhipster-client/src/main/webapp/index.html'
+        jhipDir + '/src/main/webapp/index.html'
       ]);
       //check for the JHipster-Ionic project
       assert.file([
-        'app/app.js',
-        'app/index.html',
-        'app/main/main.js'
+        jhipIonicDir + '/app/app.js',
+        jhipIonicDir + '/app/index.html',
+        jhipIonicDir + '/app/main/main.js'
       ]);
     });
   });
@@ -214,12 +210,12 @@ describe('JHipster Ionic Oauth2 generator test', function () {
       helpers
         .run(path.join( __dirname, '../node_modules/generator-jhipster/generators/client'))
         .inTmpDir(function (dir) {
-          console.log("Running jhipster")
-          directory = dir;
-          fse.mkdirsSync(dir + '/jhipster-client');
-          jhipDir = dir + '/jhipster-client';
-          process.chdir('/private' + jhipDir);
-          fse.copySync(path.join(__dirname, '../test/templates/oauth/i18n'), dir + '/jhipster-client')
+          console.log("Running JHipster");
+          directory = process.cwd();
+          fse.mkdirsSync(process.cwd() + '/jhipster-client');
+          jhipDir = process.cwd() + '/jhipster-client';
+          process.chdir(jhipDir);
+          fse.copySync(path.join(__dirname, '../test/templates/oauth/i18n'), jhipDir)
         })
         .withOptions({
           testmode: true
@@ -235,8 +231,8 @@ describe('JHipster Ionic Oauth2 generator test', function () {
               console.log("Running jhipster-ionic")
               fse.mkdirsSync(directory + '/jhipster-ionic-app');
               jhipIonicDir = directory + '/jhipster-ionic-app';
-              process.chdir('/private' + jhipIonicDir);
-              fse.copySync(path.join(__dirname, '../test/templates/oauth/i18n'), directory + '/jhipster-ionic-app')
+              process.chdir(jhipIonicDir);
+              fse.copySync(path.join(__dirname, '../test/templates/oauth/default'), jhipIonicDir)
             })
             .withOptions({
               testmode: true,
@@ -255,17 +251,16 @@ describe('JHipster Ionic Oauth2 generator test', function () {
         });
     });
 
-    it('should generate a JHipster project and a JHipster-Ionic project with i18n and oauth', function () {
-      console.log(process.cwd());
+    it('should generate a JHipster project and a JHipster-Ionic project with i18n and Oauth', function () {
       //check for the JHipster project
       assert.file([
-        '../jhipster-client/src/main/webapp/index.html'
+        jhipDir + '/src/main/webapp/index.html'
       ]);
       //check for the JHipster-Ionic project
       assert.file([
-        'app/app.js',
-        'app/index.html',
-        'app/main/main.js'
+        jhipIonicDir + '/app/app.js',
+        jhipIonicDir + '/app/index.html',
+        jhipIonicDir + '/app/main/main.js'
       ]);
     });
   });
@@ -279,12 +274,12 @@ describe('JHipster Ionic Oauth2 generator test', function () {
       helpers
         .run(path.join( __dirname, '../node_modules/generator-jhipster/generators/client'))
         .inTmpDir(function (dir) {
-          console.log("Running jhipster")
-          directory = dir;
-          fse.mkdirsSync(dir + '/jhipster-client');
-          jhipDir = dir + '/jhipster-client';
-          process.chdir('/private' + jhipDir);
-          fse.copySync(path.join(__dirname, '../test/templates/oauth/websocket'), dir + '/jhipster-client')
+          console.log("Running JHipster");
+          directory = process.cwd();
+          fse.mkdirsSync(process.cwd() + '/jhipster-client');
+          jhipDir = process.cwd() + '/jhipster-client';
+          process.chdir(jhipDir);
+          fse.copySync(path.join(__dirname, '../test/templates/oauth/websocket'), jhipDir)
         })
         .withOptions({
           testmode: true,
@@ -301,8 +296,8 @@ describe('JHipster Ionic Oauth2 generator test', function () {
               console.log("Running jhipster-ionic")
               fse.mkdirsSync(directory + '/jhipster-ionic-app');
               jhipIonicDir = directory + '/jhipster-ionic-app';
-              process.chdir('/private' + jhipIonicDir);
-              fse.copySync(path.join(__dirname, '../test/templates/oauth/websocket'), directory + '/jhipster-ionic-app')
+              process.chdir(jhipIonicDir);
+              fse.copySync(path.join(__dirname, '../test/templates/oauth/default'), jhipIonicDir)
             })
             .withOptions({
               testmode: true,
@@ -321,17 +316,16 @@ describe('JHipster Ionic Oauth2 generator test', function () {
         });
     });
 
-    it('should generate a JHipster project and a JHipster-Ionic project with Websockets and oauth', function () {
-      console.log(process.cwd());
+    it('should generate a JHipster project and a JHipster-Ionic project with Websockets and Oauth', function () {
       //check for the JHipster project
       assert.file([
-        '../jhipster-client/src/main/webapp/index.html'
+        jhipDir + '/src/main/webapp/index.html'
       ]);
       //check for the JHipster-Ionic project
       assert.file([
-        'app/app.js',
-        'app/index.html',
-        'app/main/main.js'
+        jhipIonicDir + '/app/app.js',
+        jhipIonicDir + '/app/index.html',
+        jhipIonicDir + '/app/main/main.js'
       ]);
     });
   });
