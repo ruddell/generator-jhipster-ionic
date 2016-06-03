@@ -20,11 +20,11 @@ describe('JHipster Ionic JWT generator test', function () {
         .run(path.join( __dirname, '../node_modules/generator-jhipster/generators/client'))
         .inTmpDir(function (dir) {
           console.log("Running jhipster")
-          directory = dir;
-          fse.mkdirsSync(dir + '/jhipster-client');
-          jhipDir = dir + '/jhipster-client';
-          process.chdir('/private' + jhipDir);
-          fse.copySync(path.join(__dirname, '../test/templates/jwt/default'), dir + '/jhipster-client')
+          directory = process.cwd();
+          fse.mkdirsSync(process.cwd() + '/jhipster-client');
+          jhipDir = process.cwd() + '/jhipster-client';
+          process.chdir(jhipDir);
+          fse.copySync(path.join(__dirname, '../test/templates/jwt/default'), jhipDir)
         })
         .withOptions({
           testmode: true
@@ -40,8 +40,8 @@ describe('JHipster Ionic JWT generator test', function () {
               console.log("Running jhipster-ionic")
               fse.mkdirsSync(directory + '/jhipster-ionic-app');
               jhipIonicDir = directory + '/jhipster-ionic-app';
-              process.chdir('/private' + jhipIonicDir);
-              fse.copySync(path.join(__dirname, '../test/templates/jwt/default'), directory + '/jhipster-ionic-app')
+              process.chdir(jhipIonicDir);
+              fse.copySync(path.join(__dirname, '../test/templates/jwt/default'), jhipIonicDir)
             })
             .withOptions({
               testmode: true,
@@ -61,7 +61,6 @@ describe('JHipster Ionic JWT generator test', function () {
     });
 
     it('should generate a JHipster project and a JHipster-Ionic project with default JWT settings', function () {
-      console.log(process.cwd());
       //check for the JHipster project
       assert.file([
         '../jhipster-client/src/main/webapp/index.html'
@@ -127,7 +126,6 @@ describe('JHipster Ionic JWT generator test', function () {
     });
 
     it('should generate a JHipster project and a JHipster-Ionic project with all options and JWT', function () {
-      console.log(process.cwd());
       //check for the JHipster project
       assert.file([
         '../jhipster-client/src/main/webapp/index.html'
@@ -191,7 +189,6 @@ describe('JHipster Ionic JWT generator test', function () {
     });
 
     it('should generate a JHipster project and a JHipster-Ionic project with social login and JWT', function () {
-      console.log(process.cwd());
       //check for the JHipster project
       assert.file([
         '../jhipster-client/src/main/webapp/index.html'
@@ -256,7 +253,6 @@ describe('JHipster Ionic JWT generator test', function () {
     });
 
     it('should generate a JHipster project and a JHipster-Ionic project with i18n and JWT', function () {
-      console.log(process.cwd());
       //check for the JHipster project
       assert.file([
         '../jhipster-client/src/main/webapp/index.html'
@@ -322,7 +318,6 @@ describe('JHipster Ionic JWT generator test', function () {
     });
 
     it('should generate a JHipster project and a JHipster-Ionic project with Websockets and JWT', function () {
-      console.log(process.cwd());
       //check for the JHipster project
       assert.file([
         '../jhipster-client/src/main/webapp/index.html'
