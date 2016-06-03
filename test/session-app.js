@@ -46,7 +46,8 @@ describe('JHipster Ionic session generator test', function () {
             .withOptions({
               testmode: true,
               skipInstall: true,
-              force: true
+              force: true,
+              cordova: false
             })
             .withPrompts({
               message: 'simple message to say hello'
@@ -111,7 +112,8 @@ describe('JHipster Ionic session generator test', function () {
             .withOptions({
               testmode: true,
               skipInstall: true,
-              force: true
+              force: true,
+              cordova: false
             })
             .withPrompts({
               message: 'simple message to say hello'
@@ -174,7 +176,8 @@ describe('JHipster Ionic session generator test', function () {
             .withOptions({
               testmode: true,
               skipInstall: true,
-              force: true
+              force: true,
+              cordova: false
             })
             .withPrompts({
               message: 'simple message to say hello'
@@ -238,7 +241,8 @@ describe('JHipster Ionic session generator test', function () {
             .withOptions({
               testmode: true,
               skipInstall: true,
-              force: true
+              force: true,
+              cordova: false
             })
             .withPrompts({
               message: 'simple message to say hello'
@@ -303,7 +307,8 @@ describe('JHipster Ionic session generator test', function () {
             .withOptions({
               testmode: true,
               skipInstall: true,
-              force: true
+              force: true,
+              cordova: false
             })
             .withPrompts({
               message: 'simple message to say hello'

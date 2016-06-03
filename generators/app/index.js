@@ -132,11 +132,13 @@ module.exports = yeoman.Base.extend({
   writing: {
     //sets up a cordova project if the directory is empty
     initCordova: function () {
-      var done = this.async();
-      this.spawnCommand('cordova', ['create', '.'])
-        .on('close', function () {
-          done();
-        });
+      if (this.options['cordova'] != false) {
+        var done = this.async();
+        this.spawnCommand('cordova', ['create', '.'])
+          .on('close', function () {
+            done();
+          });
+      }
     },
 
     //combines the config of the generator-m-ionic and generator-jhipster projects
@@ -173,7 +175,9 @@ module.exports = yeoman.Base.extend({
       config.answers.appName = this.baseName;
       config.answers.appModule = this.baseName;
       config.answers.appId = this.packageName;
-
+      if (this.options['cordova'] == false){
+        config.answers.cordova = false;
+      }
       var finalConfig = {'generator-m-ionic': config, 'generator-jhipster': this.appConfig};
       fse.writeJson('.yo-rc.json', finalConfig, function(){
         //once the .yo-rc.json is written, call 'yo m ionic'
