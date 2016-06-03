@@ -1,6 +1,6 @@
 {
   "name": "generator-jhipster-ionic",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Generates an ionic frontend from an existing JHipster project",
   "keywords": [
     "yeoman-generator",
@@ -26,11 +26,12 @@
     "chalk": "1.1.1",
     "mkdirp": "0.5.1",
     "generator-jhipster": ">3.1.0",
+    "generator-m-ionic": "1.8.0",
     "fs-extra": "0.26.4",
-    "shelljs": "0.6.0"
+    "shelljs": "0.6.0",
+    "cordova": "6.2.0"
   },
   "devDependencies": {
-    "fs-extra": "0.26.4",
     "gulp": "^3.9.0",
     "gulp-bump": "1.0.0",
     "gulp-eslint": "1.0.0",
@@ -45,8 +46,7 @@
     "gulp-shell": "^0.5.1",
     "mocha": "2.3.4",
     "yeoman-assert": "2.1.1",
-    "yeoman-test": "1.0.0",
-    "shelljs": "0.6.0"
+    "yeoman-test": "1.0.0"
   },
   "scripts": {
     "test": "mocha test/*"
