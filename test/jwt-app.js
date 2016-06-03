@@ -63,13 +63,13 @@ describe('JHipster Ionic JWT generator test', function () {
     it('should generate a JHipster project and a JHipster-Ionic project with default JWT settings', function () {
       //check for the JHipster project
       assert.file([
-        '../jhipster-client/src/main/webapp/index.html'
+        jhipDir + '/src/main/webapp/index.html'
       ]);
       //check for the JHipster-Ionic project
       assert.file([
-        'app/app.js',
-        'app/index.html',
-        'app/main/main.js'
+        jhipIonicDir + '/app/app.js',
+        jhipIonicDir + '/app/index.html',
+        jhipIonicDir + '/app/main/main.js'
       ]);
     });
   });
