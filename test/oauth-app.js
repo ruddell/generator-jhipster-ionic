@@ -3,14 +3,13 @@ var path = require('path');
 var fse = require('fs-extra');
 var assert = require('yeoman-assert');
 var helpers = require('yeoman-test');
-var process = require('process');
 
 var deps = [
   [helpers.createDummyGenerator(), 'jhipster:modules']
 ];
 
-describe('JHipster Ionic OAUTH generator test', function () {
-  describe('default OAUTH generator test', function () {
+describe('JHipster Ionic Oauth generator test', function () {
+  describe('default Oauth generator test', function () {
     var directory;
     var jhipDir;
     var jhipIonicDir;
@@ -60,7 +59,7 @@ describe('JHipster Ionic OAUTH generator test', function () {
         });
     });
 
-    it('should generate a JHipster project and a JHipster-Ionic project with default OAUTH settings', function () {
+    it('should generate a JHipster project and a JHipster-Ionic project with default Oauth settings', function () {
       //check for the JHipster project
       assert.file([
         jhipDir + '/src/main/webapp/index.html'
@@ -125,7 +124,7 @@ describe('JHipster Ionic OAUTH generator test', function () {
         });
     });
 
-    it('should generate a JHipster project and a JHipster-Ionic project with all options and OAUTH', function () {
+    it('should generate a JHipster project and a JHipster-Ionic project with all options and Oauth', function () {
       //check for the JHipster project
       assert.file([
         jhipDir + '/src/main/webapp/index.html'
@@ -188,7 +187,7 @@ describe('JHipster Ionic OAUTH generator test', function () {
         });
     });
 
-    it('should generate a JHipster project and a JHipster-Ionic project with social login and OAUTH', function () {
+    it('should generate a JHipster project and a JHipster-Ionic project with social login and Oauth', function () {
       //check for the JHipster project
       assert.file([
         jhipDir + '/src/main/webapp/index.html'
@@ -252,7 +251,7 @@ describe('JHipster Ionic OAUTH generator test', function () {
         });
     });
 
-    it('should generate a JHipster project and a JHipster-Ionic project with i18n and OAUTH', function () {
+    it('should generate a JHipster project and a JHipster-Ionic project with i18n and Oauth', function () {
       //check for the JHipster project
       assert.file([
         jhipDir + '/src/main/webapp/index.html'
@@ -317,7 +316,7 @@ describe('JHipster Ionic OAUTH generator test', function () {
         });
     });
 
-    it('should generate a JHipster project and a JHipster-Ionic project with Websockets and OAUTH', function () {
+    it('should generate a JHipster project and a JHipster-Ionic project with Websockets and Oauth', function () {
       //check for the JHipster project
       assert.file([
         jhipDir + '/src/main/webapp/index.html'

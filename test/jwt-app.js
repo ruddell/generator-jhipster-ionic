@@ -3,7 +3,6 @@ var path = require('path');
 var fse = require('fs-extra');
 var assert = require('yeoman-assert');
 var helpers = require('yeoman-test');
-var process = require('process');
 
 var deps = [
   [helpers.createDummyGenerator(), 'jhipster:modules']
