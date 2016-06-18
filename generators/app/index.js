@@ -304,10 +304,10 @@ module.exports = yeoman.Base.extend({
       }
       this.template('jhipster/_profile.service.js', 'app/main/jhipster/services/profiles/profile.service.js');
       //social login fix
-      if (this.enableSocialSignIn) {
-        this.template('jhipster/_social.directive.js', 'app/main/jhipster/account/social/directive/social.directive.js');
-        this.template('jhipster/_social.service.js', 'app/main/jhipster/account/social/social.service.js');
-      }
+      // if (this.enableSocialSignIn) {
+        // copyTemplate('jhipster/_social.directive.js', 'app/main/jhipster/account/social/directive/social.directive.js', 'stripJs', this, {}, true);
+        // copyTemplate('jhipster/_social.service.js', 'app/main/jhipster/account/social/social.service.js', 'stripJs', this, {}, true);
+      // }
       //  copy styles into main.scss
       fse.readFile(this.templatePath('jhipster/_styles.scss'), 'utf8', function (err, data) {
         // console.log(data) // => css!

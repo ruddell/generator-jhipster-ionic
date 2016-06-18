@@ -31,7 +31,7 @@ http://localhost:3000/oauth  | http://localhost:8080/oauth
 - Translation
 - Websockets (see Websocket section for setup)
 
-##### Needs Work
+##### Unsupported
 - Social Login
 
 # Prerequisites
@@ -120,7 +120,7 @@ gulp --cordova 'run ios --device'
 - [Original JHipster Docker-Compose Module](https://github.com/jhipster/generator-jhipster-docker-compose)
 
 # Release Notes
-- v2.1 - Add Social Login and Websocket support
+- v2.1 - Add Websocket support
 - v2 - Add Translation support
 - v1.1 - Set up a CORS proxy for developing locally.
 - v1 - Basic Ionic application with JHipster authentication features.
