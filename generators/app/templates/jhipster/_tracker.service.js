@@ -6,9 +6,9 @@
         .module('main')
         .factory('JhiTrackerService', JhiTrackerService);
 
-    JhiTrackerService.$inject = ['$rootScope', '$window', '$cookies', '$http', '$q', 'AuthServerProvider', 'Config'];
+    JhiTrackerService.$inject = ['$rootScope', '$window', '$http', '$q', '$localStorage', AuthServerProvider', 'Config'];
 
-    function JhiTrackerService ($rootScope, $window, $cookies, $http, $q, AuthServerProvider, Config) {
+    function JhiTrackerService ($rootScope, $window, $http, $q, '$localStorage', AuthServerProvider, Config) {
         var stompClient = null;
         var subscriber = null;
         var listener = $q.defer();
@@ -39,6 +39,7 @@
             stompClient = Stomp.over(socket);
             var stateChangeStart;
             var headers = {};
+            headers['X-CSRF-TOKEN-IONIC'] = $localStorage['X-CSRF-TOKEN'];
             stompClient.connect(headers, function() {
                 connected.resolve('success');
                 sendActivity();
