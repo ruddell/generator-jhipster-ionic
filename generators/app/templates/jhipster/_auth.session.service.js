@@ -5,9 +5,9 @@
         .module('main')
         .factory('AuthServerProvider', AuthServerProvider);
 
-    AuthServerProvider.$inject = ['$http', '$localStorage', 'Config'<% if (enableWebsocket) { %>, 'JhiTrackerService'<% } %>];
+    AuthServerProvider.$inject = ['$http', '$localStorage', '$ionicHistory', 'Config'<% if (enableWebsocket) { %>, 'JhiTrackerService'<% } %>];
 
-    function AuthServerProvider ($http, $localStorage, Config<% if (enableWebsocket) { %>, JhiTrackerService<% } %>) {
+    function AuthServerProvider ($http, $localStorage, $ionicHistory, Config<% if (enableWebsocket) { %>, JhiTrackerService<% } %>) {
         var service = {
             getToken: getToken,
             hasValidToken: hasValidToken,
@@ -28,6 +28,8 @@
         }
 
         function login (credentials) {
+            $ionicHistory.clearCache();
+            $ionicHistory.clearHistory();
             var data = 'j_username=' + encodeURIComponent(credentials.username) +
                 '&j_password=' + encodeURIComponent(credentials.password) +
                 '&remember-me=' + credentials.rememberMe + '&submit=Login';
@@ -44,8 +46,11 @@
         function logout () {<% if (enableWebsocket) { %>
             JhiTrackerService.disconnect();<% } %>
             // logout from the server
+            $ionicHistory.clearCache();
+            $ionicHistory.clearHistory();
             $http.post(Config.ENV.SERVER_URL + 'api/logout').success(function (response) {
                 delete $localStorage.authenticationToken;
+                delete $localStorage['X-CSRF-TOKEN'];
                 // to get a new csrf token call the api
                 $http.get(Config.ENV.SERVER_URL + 'api/account');
                 return response;
