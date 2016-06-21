@@ -6,9 +6,9 @@
         .module('main')
         .factory('JhiTrackerService', JhiTrackerService);
 
-    JhiTrackerService.$inject = ['$rootScope', '$window', '$http', '$q', '$localStorage', AuthServerProvider', 'Config'];
+    JhiTrackerService.$inject = ['$rootScope', '$window', '$http', '$q', '$localStorage'<% if (authenticationType === 'jwt') { %>, 'AuthServerProvider'<% } %>, 'Config'];
 
-    function JhiTrackerService ($rootScope, $window, $http, $q, '$localStorage', AuthServerProvider, Config) {
+    function JhiTrackerService ($rootScope, $window, $http, $q, $localStorage<% if (authenticationType === 'jwt') { %>, AuthServerProvider<% } %>, Config) {
         var stompClient = null;
         var subscriber = null;
         var listener = $q.defer();
@@ -31,15 +31,17 @@
             var loc = $window.location;
             //var url = '//' + loc.host + loc.pathname + 'websocket/tracker';
             var url = Config.ENV.SERVER_URL  + 'websocket/tracker';
-            var authToken = AuthServerProvider.getToken();
+            var authToken = '';
+            <% if (authenticationType === 'jwt') { %>authToken = AuthServerProvider.getToken();
+            <% } else { %>authToken = angular.fromJson($localStorage.authenticationToken).access_token;<% } %>
             if(authToken){
-                url += '?access_token=' + authToken;
+              url += '?access_token=' + authToken;
             }
             var socket = new SockJS(url);
             stompClient = Stomp.over(socket);
             var stateChangeStart;
             var headers = {};
-            headers['X-CSRF-TOKEN-IONIC'] = $localStorage['X-CSRF-TOKEN'];
+            headers['X-CSRF-TOKEN'] = $localStorage['X-CSRF-TOKEN'];
             stompClient.connect(headers, function() {
                 connected.resolve('success');
                 sendActivity();

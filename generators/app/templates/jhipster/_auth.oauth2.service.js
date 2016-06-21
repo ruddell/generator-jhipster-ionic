@@ -6,9 +6,9 @@
         .module('main')
         .factory('AuthServerProvider', AuthServerProvider);
 
-    AuthServerProvider.$inject = ['$http', '$localStorage', 'Base64', 'Config'];
+    AuthServerProvider.$inject = ['$http', '$localStorage', 'Base64', 'Config', '$ionicHistory'];
 
-    function AuthServerProvider ($http, $localStorage, Base64, Config) {
+    function AuthServerProvider ($http, $localStorage, Base64, Config, $ionicHistory) {
         var service = {
             getToken: getToken,
             hasValidToken: hasValidToken,
@@ -28,6 +28,8 @@
         }
 
         function login (credentials) {
+            $ionicHistory.clearCache();
+            $ionicHistory.clearHistory();
             var data = 'username=' +  encodeURIComponent(credentials.username) + '&password=' +
                 encodeURIComponent(credentials.password) + '&grant_type=password&scope=read%20write&' +
                 'client_secret=my-secret-token-to-change-in-production&client_id=<%= angularAppName.toLowerCase() %>';
@@ -50,6 +52,8 @@
         }
 
         function logout () {
+            $ionicHistory.clearCache();
+            $ionicHistory.clearHistory();
             $http.post(Config.ENV.SERVER_URL + 'api/logout').then(function() {
                 delete $localStorage.authenticationToken;
             });

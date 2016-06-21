@@ -5,9 +5,9 @@
         .module('main')
         .factory('AuthServerProvider', AuthServerProvider);
 
-    AuthServerProvider.$inject = ['$http', '$localStorage', '$sessionStorage', '$q', 'Config'];
+    AuthServerProvider.$inject = ['$http', '$localStorage', '$sessionStorage', '$q', 'Config', '$ionicHistory'];
 
-    function AuthServerProvider ($http, $localStorage, $sessionStorage, $q, Config) {
+    function AuthServerProvider ($http, $localStorage, $sessionStorage, $q, Config, $ionicHistory) {
         var service = {
             getToken: getToken,
             hasValidToken: hasValidToken,
@@ -29,6 +29,8 @@
         }
 
         function login (credentials) {
+            $ionicHistory.clearCache();
+            $ionicHistory.clearHistory();
 
             var data = {
                 username: credentials.username,
@@ -72,6 +74,8 @@
         }
 
         function logout () {
+            $ionicHistory.clearCache();
+            $ionicHistory.clearHistory();
             delete $localStorage.authenticationToken;
             delete $sessionStorage.authenticationToken;
         }
