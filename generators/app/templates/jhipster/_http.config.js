@@ -18,8 +18,8 @@
         $httpProvider.interceptors.push('errorHandlerInterceptor');
         $httpProvider.interceptors.push('authExpiredInterceptor');
         $httpProvider.interceptors.push('notificationInterceptor');
-        <% if (authenticationType === 'session') { %>$httpProvider.interceptors.push('authInterceptor');
-        $httpProvider.defaults.headers.common['X-Requested-With'] = '<%= packageName %>';<% } %>
+        $httpProvider.interceptors.push('authInterceptor');
+        $httpProvider.defaults.headers.common['X-Requested-With'] = '<%= packageName %>';
 
       // jhipster-needle-angularjs-add-interceptor JHipster will add new application http interceptor here
 
