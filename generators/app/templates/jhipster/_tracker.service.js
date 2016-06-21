@@ -39,7 +39,7 @@
             stompClient = Stomp.over(socket);
             var stateChangeStart;
             var headers = {};
-	    headers['X-CSRF-TOKEN-IONIC'] = $localStorage['X-CSRF-TOKEN'];
+            headers['X-CSRF-TOKEN-IONIC'] = $localStorage['X-CSRF-TOKEN'];
             stompClient.connect(headers, function() {
                 connected.resolve('success');
                 sendActivity();
