@@ -146,6 +146,7 @@ module.exports = yeoman.Base.extend({
       var done = this.async();
       this.baseName = this.appConfig.baseName;
       this.packageName = this.appConfig.packageName;
+      this.packageFolder = this.appConfig.packageFolder;
       this.angularAppBaseName  = snakeToCamel(this.appConfig.baseName);
       this.angularAppName = this.angularAppBaseName + 'App';
       this.searchEngine = this.appConfig.searchEngine;
@@ -289,9 +290,12 @@ module.exports = yeoman.Base.extend({
       }
       this.template('jhipster/_profile.service.js', 'app/main/jhipster/services/profiles/profile.service.js');
       copyTemplate('jhipster/_http.config.js', 'app/main/jhipster/blocks/config/http.config.js', 'stripJs', this, {}, true);
+
+      //fix CSRF tokens for Session Authentication
       if (this.authenticationType === 'session') {
         copyTemplate('jhipster/_auth.session.interceptor.js', 'app/main/jhipster/blocks/interceptor/auth.session.interceptor.js', 'stripJs', this, {}, true);
         copyTemplate('jhipster/_auth.session.expired.interceptor.js', 'app/main/jhipster/blocks/interceptor/auth-expired.interceptor.js', 'stripJs', this, {}, true);
+        copyTemplate('jhipster/_CsrfCookieGeneratorFilter.java', this.jhipsterHome + '/src/main/java/' + this.packageFolder + '/web/filter/CsrfCookieGeneratorFilter.java', 'copy', this, {}, true);
       }
 
       //social login fix
