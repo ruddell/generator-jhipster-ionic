@@ -146,6 +146,7 @@ module.exports = yeoman.Base.extend({
       var done = this.async();
       this.baseName = this.appConfig.baseName;
       this.packageName = this.appConfig.packageName;
+      this.packageFolder = this.appConfig.packageFolder;
       this.angularAppBaseName  = snakeToCamel(this.appConfig.baseName);
       this.angularAppName = this.angularAppBaseName + 'App';
       this.searchEngine = this.appConfig.searchEngine;
@@ -265,21 +266,6 @@ module.exports = yeoman.Base.extend({
         this.template('m-ionic/gulp/building.js', 'gulp/building.js');
       }
 
-      //remove default urlRouterProvider
-      jhipsterUtils.replaceContent({
-        file: 'app/main/jhipster/blocks/config/http.config.js',
-        pattern: '$urlRouterProvider.otherwise(\'/\');',
-        content: '',
-        regex: false
-      }, this);
-
-      //remove default urlRouterProvider
-      jhipsterUtils.replaceContent({
-        file: 'app/main/jhipster/blocks/config/http.config.js',
-        pattern: '$urlRouterProvider.otherwise(\'/\');',
-        content: '',
-        regex: false
-      }, this);
       //add other folders to templates dir so html can be loaded from a JHipster structure
       jhipsterUtils.replaceContent({
         file: 'gulpfile.js',
@@ -303,6 +289,16 @@ module.exports = yeoman.Base.extend({
         this.template('jhipster/_auth.oauth2.service.js', 'app/main/jhipster/services/auth/auth.oauth2.service.js');
       }
       this.template('jhipster/_profile.service.js', 'app/main/jhipster/services/profiles/profile.service.js');
+      copyTemplate('jhipster/_http.config.js', 'app/main/jhipster/blocks/config/http.config.js', 'stripJs', this, {}, true);
+
+      //fix CSRF tokens for Session Authentication
+      if (this.authenticationType === 'session') {
+        copyTemplate('jhipster/_auth.session.interceptor.js', 'app/main/jhipster/blocks/interceptor/auth.session.interceptor.js', 'stripJs', this, {}, true);
+        copyTemplate('jhipster/_auth.session.expired.interceptor.js', 'app/main/jhipster/blocks/interceptor/auth-expired.interceptor.js', 'stripJs', this, {}, true);
+        copyTemplate('jhipster/_account.service.js', 'app/main/jhipster/services/auth/account.service.js', 'copy', this, {}, true);
+        copyTemplate('jhipster/_CsrfCookieGeneratorFilter.java', this.jhipsterHome + '/src/main/java/' + this.packageFolder + '/web/filter/CsrfCookieGeneratorFilter.java', 'copy', this, {}, true);
+      }
+
       //social login fix
       // if (this.enableSocialSignIn) {
         // copyTemplate('jhipster/_social.directive.js', 'app/main/jhipster/account/social/directive/social.directive.js', 'stripJs', this, {}, true);
