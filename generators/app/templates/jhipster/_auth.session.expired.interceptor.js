@@ -16,7 +16,9 @@
     return service;
 
     function responseError(response) {
-      getCSRFIonic(response);
+      if (response.status !== 404 && response.status !== -1) {
+        getCSRFIonic(response);
+      }
       // If we have an unauthorized request we redirect to the login page
       // Don't do this check on the account API to avoid infinite loop
       if (response.status === 401 && angular.isDefined(response.data.path) && response.data.path.indexOf('/api/account') === -1) {
@@ -38,12 +40,14 @@
     }
 
     function getCSRFIonic(response) {
-      $localStorage['X-CSRF-TOKEN'] = response.headers('X-CSRF-TOKEN-IONIC');
-      if (response.headers('X-CSRF-TOKEN-IONIC') == null) {
-        var $http = $injector.get('$http');
-        $http.get(Config.ENV.SERVER_URL + 'api/account').then(function (res, headers) {
-          getCSRFIonic(res);
-        });
+      if (response.status !== 404 && response.status !== -1) {
+        $localStorage['X-CSRF-TOKEN'] = response.headers('X-CSRF-TOKEN-IONIC');
+        if (response.headers('X-CSRF-TOKEN-IONIC') == null) {
+          var $http = $injector.get('$http');
+          $http.get(Config.ENV.SERVER_URL + 'api/account').then(function (res, headers) {
+            getCSRFIonic(res);
+          });
+        }
       }
     }
 

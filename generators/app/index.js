@@ -311,6 +311,18 @@ module.exports = yeoman.Base.extend({
           // console.log(err) // => no error!
         })
       })
+
+    //  remove the ion-nav-bar from index because we are using the side-menu option (prevents random color every time from m-ionic)
+      try {
+        jhipsterUtils.replaceContent({
+          file: 'app/index.html',
+          pattern: '<!-- the[\\s\\S]*bar>',
+          content: '',
+          regex: true
+        }, this);
+      } catch (e) {
+        this.log(chalk.yellow('\nUnable to find ') + filePath + chalk.yellow(' or missing required pattern. File rewrite failed.\n') + e);
+      }
     },
     //fixes and wiring for the JHipster code to work correctly in the Ionic project
     jhipsterToIonic: function () {
