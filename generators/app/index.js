@@ -295,6 +295,7 @@ module.exports = yeoman.Base.extend({
       if (this.authenticationType === 'session') {
         copyTemplate('jhipster/_auth.session.interceptor.js', 'app/main/jhipster/blocks/interceptor/auth.session.interceptor.js', 'stripJs', this, {}, true);
         copyTemplate('jhipster/_auth.session.expired.interceptor.js', 'app/main/jhipster/blocks/interceptor/auth-expired.interceptor.js', 'stripJs', this, {}, true);
+        copyTemplate('jhipster/_account.service.js', 'app/main/jhipster/services/auth/account.service.js', 'copy', this, {}, true);
         copyTemplate('jhipster/_CsrfCookieGeneratorFilter.java', this.jhipsterHome + '/src/main/java/' + this.packageFolder + '/web/filter/CsrfCookieGeneratorFilter.java', 'copy', this, {}, true);
       }
 
