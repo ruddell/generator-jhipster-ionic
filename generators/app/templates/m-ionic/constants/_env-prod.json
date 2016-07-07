@@ -1,4 +1,4 @@
 {
-  "SERVER_URL": "http://192.168.99.1:8080/",
-  "SOME_OTHER_URL": ""
+    "SERVER_URL": "http://192.168.99.1:8080/",
+    "SOME_OTHER_URL": ""
 }

@@ -21,7 +21,7 @@
         $httpProvider.interceptors.push('authInterceptor');
         $httpProvider.defaults.headers.common['X-Requested-With'] = '<%= packageName %>';
 
-      // jhipster-needle-angularjs-add-interceptor JHipster will add new application http interceptor here
+        // jhipster-needle-angularjs-add-interceptor JHipster will add new application http interceptor here
 
         $urlMatcherFactoryProvider.type('boolean', {
             name : 'boolean',

@@ -24,43 +24,43 @@
             unsubscribe: unsubscribe
         };
 
-    function connect () {
-      //building absolute path so that websocket doesnt fail when deploying with a context path
-      var loc = $window.location;
-      //var url = '//' + loc.host + loc.pathname + 'websocket/tracker';
-      var url = Config.ENV.SERVER_URL  + 'websocket/tracker';
-      var authToken = '';
-    <% if (authenticationType === 'jwt') { %>authToken = AuthServerProvider.getToken();
-      <% } else { %>
-        if (angular.fromJson($localStorage.authenticationToken)) {
-          authToken = angular.fromJson($localStorage.authenticationToken).access_token;
-        } <% } %>
-      if(authToken){
-        url += '?access_token=' + authToken;
-      }
-      var socket = new SockJS(url);
-      stompClient = Stomp.over(socket);
-      var stateChangeStart;
-      var headers = {};
-      headers['X-CSRF-TOKEN'] = $localStorage['X-CSRF-TOKEN'];
-      stompClient.connect(headers, function() {
-        connected.resolve('success');
-        sendActivity();
-        if (!alreadyConnectedOnce) {
-          stateChangeStart = $rootScope.$on('$stateChangeStart', function () {
-            sendActivity();
-          });
-          alreadyConnectedOnce = true;
-        }
-      });
-      $rootScope.$on('$destroy', function () {
-        if(angular.isDefined(stateChangeStart) && stateChangeStart !== null){
-          stateChangeStart();
-        }
-      });
-    }
-
         return service;
+
+        function connect () {
+            //building absolute path so that websocket doesnt fail when deploying with a context path
+            var loc = $window.location;
+            //var url = '//' + loc.host + loc.pathname + 'websocket/tracker';
+            var url = Config.ENV.SERVER_URL  + 'websocket/tracker';
+            var authToken = '';
+        <% if (authenticationType === 'jwt') { %>authToken = AuthServerProvider.getToken();
+            <% } else { %>
+                if (angular.fromJson($localStorage.authenticationToken)) {
+                    authToken = angular.fromJson($localStorage.authenticationToken).access_token;
+                } <% } %>
+            if(authToken){
+                url += '?access_token=' + authToken;
+            }
+            var socket = new SockJS(url);
+            stompClient = Stomp.over(socket);
+            var stateChangeStart;
+            var headers = {};
+            headers['X-CSRF-TOKEN'] = $localStorage['X-CSRF-TOKEN'];
+            stompClient.connect(headers, function() {
+                connected.resolve('success');
+                sendActivity();
+                if (!alreadyConnectedOnce) {
+                    stateChangeStart = $rootScope.$on('$stateChangeStart', function () {
+                        sendActivity();
+                    });
+                    alreadyConnectedOnce = true;
+                }
+            });
+            $rootScope.$on('$destroy', function () {
+                if(angular.isDefined(stateChangeStart) && stateChangeStart !== null){
+                    stateChangeStart();
+                }
+            });
+        }
 
         function disconnect () {
             if (stompClient !== null) {
@@ -77,8 +77,8 @@
             if (stompClient !== null && stompClient.connected) {
                 stompClient
                     .send('/topic/activity',
-                    {},
-                    angular.toJson({'page': $rootScope.toState.name}));
+                        {},
+                        angular.toJson({'page': $rootScope.toState.name}));
             }
         }
 

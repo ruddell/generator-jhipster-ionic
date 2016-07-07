@@ -1,27 +1,27 @@
 <% if (enableTranslation) { %><ion-view view-title="{{'global.menu.home' | translate}}">
-  <% } else { %><ion-view view-title="Home"><% } %>
-  <ion-content>
-    <div class="card">
-      <div class="item item-divider">
-        <span translate="home.title">Welcome, Java Hipster!</span>
-      </div>
-      <div class="item item-text-wrap">
-        <div ng-switch="vm.isAuthenticated()">
-          <div class="alert alert-success" ng-switch-when="true" translate="home.logged.message" translate-values="{username: '{{vm.account.login}}'}">
-            You are logged in as user "{{vm.account.login}}".
-          </div>
+    <% } else { %><ion-view view-title="Home"><% } %>
+    <ion-content>
+        <div class="card">
+            <div class="item item-divider">
+                <span translate="home.title">Welcome, Java Hipster!</span>
+            </div>
+            <div class="item item-text-wrap">
+                <div ng-switch="vm.isAuthenticated()">
+                    <div class="alert alert-success" ng-switch-when="true" translate="home.logged.message" translate-values="{username: '{{vm.account.login}}'}">
+                        You are logged in as user "{{vm.account.login}}".
+                    </div>
 
-          <div class="alert alert-warning" ng-switch-when="false" translate="global.messages.info.authenticated" translate-compile>>
-            <a class="alert-link" href="" ng-click="vm.login()">Sign in</a>, or try the default accounts:<br/>- Admin (login="admin" and password="admin") <br/>- User (login="user" and password="user").
-          </div>
+                    <div class="alert alert-warning" ng-switch-when="false" translate="global.messages.info.authenticated" translate-compile>>
+                        <a class="alert-link" href="" ng-click="vm.login()">Sign in</a>, or try the default accounts:<br/>- Admin (login="admin" and password="admin") <br/>- User (login="user" and password="user").
+                    </div>
 
-          <div class="alert alert-warning" ng-switch-when="false" translate="global.messages.info.register" translate-compile>>
-            <a class="alert-link" ui-sref="register">Register a new account</a>
-          </div>
+                    <div class="alert alert-warning" ng-switch-when="false" translate="global.messages.info.register" translate-compile>>
+                        <a class="alert-link" ui-sref="register">Register a new account</a>
+                    </div>
+                </div>
+
+                <img width="100%" src="main/assets/images/hipster2x.png">
+            </div>
         </div>
-
-        <img width="100%" src="main/assets/images/hipster2x.png">
-      </div>
-    </div>
-  </ion-content>
+    </ion-content>
 </ion-view>

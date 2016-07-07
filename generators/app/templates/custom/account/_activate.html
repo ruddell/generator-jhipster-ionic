@@ -1,18 +1,18 @@
 <% if (enableTranslation) { %><ion-view view-title="{{'activation.title' | translate}}">
-  <% } else { %><ion-view view-title="Activation"><% } %>
-  <ion-content>
-    <div class="card">
-      <div class="item item-text-wrap">
+    <% } else { %><ion-view view-title="Activation"><% } %>
+    <ion-content>
+        <div class="card">
+            <div class="item item-text-wrap">
 
-        <div class="alert alert-success" ng-show="vm.success" translate="activate.messages.success" translate-compile>
-          <strong>Your user has been activated.</strong> Please <a class="alert-link" href="" ng-click="vm.login()">sign in</a>.
+                <div class="alert alert-success" ng-show="vm.success" translate="activate.messages.success" translate-compile>
+                    <strong>Your user has been activated.</strong> Please <a class="alert-link" href="" ng-click="vm.login()">sign in</a>.
+                </div>
+
+                <div class="alert alert-danger" ng-show="vm.error" translate="activate.messages.error">
+                    <strong>Your user could not be activated.</strong> Please use the registration form to sign up.
+                </div>
+
+            </div>
         </div>
-
-        <div class="alert alert-danger" ng-show="vm.error" translate="activate.messages.error">
-          <strong>Your user could not be activated.</strong> Please use the registration form to sign up.
-        </div>
-
-      </div>
-    </div>
-  </ion-content>
+    </ion-content>
 </ion-view>

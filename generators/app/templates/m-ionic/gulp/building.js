@@ -10,74 +10,74 @@ var del = require('del');
 var vinylPaths = require('vinyl-paths');
 
 var buildDependencies = [
-  options['force-build'] ? 'linting' : 'linting-throw',
-  'build-app',
-  'build-templates',
-  'build-assets',
-  'build-i18n'
+    options['force-build'] ? 'linting' : 'linting-throw',
+    'build-app',
+    'build-templates',
+    'build-assets',
+    'build-i18n'
 ];
 
 gulp.task('build', buildDependencies, function () {
-  return gulp.src(paths.dist + '/**/*')
-    .pipe($.size({showFiles: true}));
+    return gulp.src(paths.dist + '/**/*')
+        .pipe($.size({showFiles: true}));
 });
 
 gulp.task('clean', function () {
-  // pattern is windows-friendly according to https://github.com/mwaylabs/generator-m-ionic/issues/223#issuecomment-196060284
-  return gulp.src(['.tmp/**/*.*', paths.dist + '/**/*.*'])
-    .pipe(vinylPaths(del));
+    // pattern is windows-friendly according to https://github.com/mwaylabs/generator-m-ionic/issues/223#issuecomment-196060284
+    return gulp.src(['.tmp/**/*.*', paths.dist + '/**/*.*'])
+        .pipe(vinylPaths(del));
 });
 
 // concatenate files in build:blocks inside index.html
 // and copy to build folder destinations
 gulp.task('build-app', ['clean', 'inject-all'], function () {
-  var jsFilter = $.filter('**/*.js', {restore: true});
-  var cssFilter = $.filter('**/*.css', {restore: true});
+    var jsFilter = $.filter('**/*.js', {restore: true});
+    var cssFilter = $.filter('**/*.css', {restore: true});
 
-  var stream = gulp.src('app/index.html') // main html file
-    .pipe($.useref({searchPath: '{.tmp,app}'})); // all assets (without index.html)
+    var stream = gulp.src('app/index.html') // main html file
+        .pipe($.useref({searchPath: '{.tmp,app}'})); // all assets (without index.html)
 
-  if (options.minify) {
-    stream
-      .pipe(jsFilter)
-      .pipe($.ngAnnotate({
-        add: true,
-        sourcemap: true
-      }))
-      .pipe($.uglify())
-      .pipe(jsFilter.restore)
-      .pipe(cssFilter)
-      .pipe($.csso())
-      .pipe(cssFilter.restore);
-  }
+    if (options.minify) {
+        stream
+            .pipe(jsFilter)
+            .pipe($.ngAnnotate({
+                add: true,
+                sourcemap: true
+            }))
+            .pipe($.uglify())
+            .pipe(jsFilter.restore)
+            .pipe(cssFilter)
+            .pipe($.csso())
+            .pipe(cssFilter.restore);
+    }
 
-  stream.pipe(gulp.dest(paths.dist));
+    stream.pipe(gulp.dest(paths.dist));
 
-  return stream;
+    return stream;
 });
 
 // copy templates
 gulp.task('build-templates', ['clean'], function () {
-  return gulp.src(paths.templates)
-  .pipe($.if(options.minify, $.htmlmin({
-    removeComments: true,
-    removeCommentsFromCDATA: true,
-    collapseWhitespace: true,
-    conservativeCollapse: true,
-    collapseInlineTagWhitespace: true
-  })))
-  .pipe(gulp.dest(paths.dist));
+    return gulp.src(paths.templates)
+        .pipe($.if(options.minify, $.htmlmin({
+            removeComments: true,
+            removeCommentsFromCDATA: true,
+            collapseWhitespace: true,
+            conservativeCollapse: true,
+            collapseInlineTagWhitespace: true
+        })))
+        .pipe(gulp.dest(paths.dist));
 });
 
 // copy assets, wait for fonts
 gulp.task('build-assets', ['clean', 'bower-fonts'], function () {
-  return gulp.src('app/*/assets/**/*')
-    .pipe($.if(options.minify, $.imagemin()))
-    .pipe(gulp.dest(paths.dist));
+    return gulp.src('app/*/assets/**/*')
+        .pipe($.if(options.minify, $.imagemin()))
+        .pipe(gulp.dest(paths.dist));
 });
 
 //copy i18n
 gulp.task('build-i18n', ['clean'], function () {
-  return gulp.src('app/i18n/**/*')
-    .pipe(gulp.dest(paths.dist+'/i18n'));
+    return gulp.src('app/i18n/**/*')
+        .pipe(gulp.dest(paths.dist+'/i18n'));
 });

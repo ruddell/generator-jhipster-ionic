@@ -13,8 +13,8 @@
                 interceptor: {
                     response: function(response) {
                         // expose response
-                      $localStorage['X-CSRF-TOKEN'] = response.headers('X-CSRF-TOKEN-IONIC');
-                      return response;
+                        $localStorage['X-CSRF-TOKEN'] = response.headers('X-CSRF-TOKEN-IONIC');
+                        return response;
                     }
                 }
             }

@@ -2,8 +2,8 @@
     'use strict';
 
     angular
-            .module('main')
-            .factory('SocialService', SocialService);
+        .module('main')
+        .factory('SocialService', SocialService);
 
     SocialService.$inject = ['Config'];
     function SocialService(Config) {
@@ -23,7 +23,7 @@
                     return 'public_profile,email';
                 case 'twitter':
                     return '';
-                    // jhipster-needle-add-social-button
+                // jhipster-needle-add-social-button
                 default:
                     return 'Provider setting not defined';
             }
