@@ -16,7 +16,7 @@
         return service;
 
         function responseError(response) {
-            if (response.status !== 404 && response.status !== -1) {
+            if (response.status === 403) {
                 getCSRFIonic(response);
             }
             // If we have an unauthorized request we redirect to the login page
@@ -40,7 +40,7 @@
         }
 
         function getCSRFIonic(response) {
-            if (response.status !== 404 && response.status !== -1) {
+            if (response.status === 403) {
                 $localStorage['X-CSRF-TOKEN'] = response.headers('X-CSRF-TOKEN-IONIC');
                 if (response.headers('X-CSRF-TOKEN-IONIC') == null) {
                     var $http = $injector.get('$http');

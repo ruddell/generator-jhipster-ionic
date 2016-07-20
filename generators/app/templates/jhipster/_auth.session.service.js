@@ -8,6 +8,7 @@
     AuthServerProvider.$inject = ['$http', '$localStorage', '$ionicHistory', 'Config'<% if (enableWebsocket) { %>, 'JhiTrackerService'<% } %>];
 
     function AuthServerProvider ($http, $localStorage, $ionicHistory, Config<% if (enableWebsocket) { %>, JhiTrackerService<% } %>) {
+        var numError = 0;
         var service = {
             getToken: getToken,
             hasValidToken: hasValidToken,
@@ -39,7 +40,17 @@
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             }).success(function (response) {
+                numError = 0;
+                $http.post(Config.ENV.SERVER_URL + 'api/account').error(function (data, code, headers) {
+                    $localStorage['X-CSRF-TOKEN'] = headers('x-csrf-token-ionic');
+                });
                 return response;
+            }).error(function (error, code, headers) {
+                numError += 1;
+                $localStorage['X-CSRF-TOKEN'] = headers('x-csrf-token-ionic');
+                if (numError < 2) {
+                    login(credentials);
+                }
             });
         }
 
@@ -48,13 +59,14 @@
             // logout from the server
             $ionicHistory.clearCache();
             $ionicHistory.clearHistory();
-            $http.post(Config.ENV.SERVER_URL + 'api/logout').success(function (response) {
-                delete $localStorage.authenticationToken;
-                delete $localStorage['X-CSRF-TOKEN'];
-                // to get a new csrf token call the api
-                $http.get(Config.ENV.SERVER_URL + 'api/account');
-                return response;
-            });
+            $http.post(Config.ENV.SERVER_URL + 'api/logout')
+                .success(function (response) {
+                    // to get a new csrf token call the api
+                    $http.post(Config.ENV.SERVER_URL + 'api/account').error(function (data, code, headers) {
+                        $localStorage['X-CSRF-TOKEN'] = headers('x-csrf-token-ionic');
+                    });
+                    return response;
+                });
 
         }
     }

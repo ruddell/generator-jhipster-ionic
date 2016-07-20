@@ -36,7 +36,7 @@
             <% } else { %>
                 if (angular.fromJson($localStorage.authenticationToken)) {
                     authToken = angular.fromJson($localStorage.authenticationToken).access_token;
-                } <% } %>
+                }<% } %>
             if(authToken){
                 url += '?access_token=' + authToken;
             }
