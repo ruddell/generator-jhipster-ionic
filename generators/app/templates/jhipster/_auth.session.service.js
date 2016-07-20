@@ -48,13 +48,20 @@
             // logout from the server
             $ionicHistory.clearCache();
             $ionicHistory.clearHistory();
-            $http.post(Config.ENV.SERVER_URL + 'api/logout').success(function (response) {
-                delete $localStorage.authenticationToken;
-                delete $localStorage['X-CSRF-TOKEN'];
-                // to get a new csrf token call the api
-                $http.get(Config.ENV.SERVER_URL + 'api/account');
-                return response;
-            });
+            $http.post(Config.ENV.SERVER_URL + 'api/logout')
+                .success(function (response) {
+                    // to get a new csrf token call the api
+                    $http.post(Config.ENV.SERVER_URL + 'api/account').error(function (data, code, headers) {
+                        $localStorage['X-CSRF-TOKEN'] = headers('x-csrf-token-ionic');
+                    });
+                    return response;
+                })
+                .error(function (response, code, headers) {
+                    if (code === 403) {
+                        $localStorage['X-CSRF-TOKEN'] = headers('x-csrf-token-ionic');
+                        logout();
+                    }
+                });
 
         }
     }
