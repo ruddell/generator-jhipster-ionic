@@ -155,7 +155,8 @@ module.exports = yeoman.Base.extend({
       this.enableSocialSignIn = this.appConfig.enableSocialSignIn;
       this.applicationType = this.appConfig.applicationType;
       this.enableTranslation = this.appConfig.enableTranslation;
-      this.enableWebsocket = this.appConfig.websocket != 'no';
+      this.enableWebsocket = this.appConfig.websocket;
+      if (this.enableWebsocket === 'no') this.enableWebsocket = false;
       this.appConfig.jhipsterHome = this.jhipsterHome;
 
       this.jhiPrefix = this.appConfig.jhiPrefix || this.config.get('jhiPrefix') || this.options['jhi-prefix'] || 'jhi';
