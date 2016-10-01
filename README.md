@@ -17,7 +17,7 @@ Gulp Path | Proxies To JHipster
 ------------- | -------------
 http://localhost:3000/api  | http://localhost:8080/api
 http://localhost:3000/oauth  | http://localhost:8080/oauth
-
+**Please note:** If you are running microservices, you will need to add proxy paths for each of the microservice routes.
 
  
 ##### Supports:
