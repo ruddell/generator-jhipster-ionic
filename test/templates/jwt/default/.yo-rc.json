@@ -1,26 +1,4 @@
 {
-  "generator-m-ionic": {
-    "answers": {
-      "appName": "jwt",
-      "appId": "com.mycompany.myapp",
-      "ionicCss": false,
-      "bowerPackages": [
-        "angular-resource#^1.5.5",
-        "ngstorage#^0.3.10",
-        "angular-cookies#^1.5.5",
-        "angular-aria#1.5.2",
-        "ngInfiniteScroll#1.2.2",
-        "angular-bootstrap#1.2.5",
-        "angular-cache-buster#0.4.3",
-        "angular-sanitize#1.5.2",
-        "angular-aria#1.5.2"
-      ],
-      "platforms": [],
-      "plugins": [],
-      "appModule": "jwt",
-      "ecosystems": []
-    }
-  },
   "generator-jhipster": {
     "jhipsterVersion": "3.4.0",
     "baseName": "jwt",
@@ -35,11 +13,14 @@
     "devDatabaseType": "h2Disk",
     "prodDatabaseType": "mysql",
     "searchEngine": "no",
+    "messageBroker": false,
     "buildTool": "maven",
     "enableSocialSignIn": false,
     "jwtSecretKey": "8de3d96e5c2663eb9cf67d3036596f727da03fc4",
     "useSass": false,
+    "clientPackageManager": "yarn",
     "applicationType": "monolith",
+    "clientFramework": "angular1",
     "testFrameworks": [
       "gatling"
     ],
