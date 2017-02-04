@@ -130,6 +130,15 @@ module.exports = yeoman.Base.extend({
   },
 
   writing: {
+    validateAuthType: function () {
+      if (this.appConfig.authenticationType === 'session') {
+        this.env.error("Session authentication is not supported by the jhipster-ionic generator.")
+      }
+      if (this.appConfig.clientFramework === 'angular2') {
+        this.env.error("Angular 2 is not supported by the jhipster-ionic generator.")
+      }
+    },
+
     //sets up a cordova project if the directory is empty
     initCordova: function () {
       if (this.options['cordova'] != false) {
@@ -281,23 +290,13 @@ module.exports = yeoman.Base.extend({
       this.template('m-ionic/constants/_env-dev.json', 'app/main/constants/env-dev.json');
       this.template('m-ionic/constants/_env-prod.json', 'app/main/constants/env-prod.json');
     // fix the two files that use $http instead of resource
-    //  todo add auth.session/oauth2.js and remove JhiTracker if no websockets
       if (this.authenticationType === 'jwt') {
         this.template('jhipster/_auth.jwt.service.js', 'app/main/jhipster/services/auth/auth.jwt.service.js');
-      } else if (this.authenticationType === 'session') {
-        this.template('jhipster/_auth.session.service.js', 'app/main/jhipster/services/auth/auth.session.service.js');
       } else if (this.authenticationType === 'oauth2') {
         this.template('jhipster/_auth.oauth2.service.js', 'app/main/jhipster/services/auth/auth.oauth2.service.js');
       }
       this.template('jhipster/_profile.service.js', 'app/main/jhipster/services/profiles/profile.service.js');
       copyTemplate('jhipster/_http.config.js', 'app/main/jhipster/blocks/config/http.config.js', 'stripJs', this, {}, true);
-
-      //fix CSRF tokens for Session Authentication
-      if (this.authenticationType === 'session') {
-        copyTemplate('jhipster/_auth.session.interceptor.js', 'app/main/jhipster/blocks/interceptor/auth.session.interceptor.js', 'stripJs', this, {}, true);
-        copyTemplate('jhipster/_auth.session.expired.interceptor.js', 'app/main/jhipster/blocks/interceptor/auth-expired.interceptor.js', 'stripJs', this, {}, true);
-        copyTemplate('jhipster/_CustomAccessDeniedHandler.java', this.jhipsterHome + '/src/main/java/' + this.packageFolder + '/security/CustomAccessDeniedHandler.java', 'copy', this, {}, true);
-      }
 
       //social login fix
       // if (this.enableSocialSignIn) {
