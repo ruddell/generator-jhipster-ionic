@@ -26,6 +26,7 @@ describe('JHipster Ionic Oauth generator test', function () {
           fse.copySync(path.join(__dirname, '../test/templates/oauth/default'), jhipDir)
         })
         .withOptions({
+          client: "angular1",
           testmode: true
         })
         .withPrompts({
@@ -90,6 +91,7 @@ describe('JHipster Ionic Oauth generator test', function () {
           fse.copySync(path.join(__dirname, '../test/templates/oauth/all'), jhipDir)
         })
         .withOptions({
+          client: "angular1",
           testmode: true,
           websocket: 'spring-websocket'
         })
@@ -154,6 +156,7 @@ describe('JHipster Ionic Oauth generator test', function () {
   //         fse.copySync(path.join(__dirname, '../test/templates/oauth/social'), jhipDir)
   //       })
   //       .withOptions({
+  //         client: "angular1",
   //         testmode: true
   //       })
   //       .withPrompts({
@@ -218,6 +221,7 @@ describe('JHipster Ionic Oauth generator test', function () {
           fse.copySync(path.join(__dirname, '../test/templates/oauth/i18n'), jhipDir)
         })
         .withOptions({
+          client: "angular1",
           testmode: true
         })
         .withPrompts({
@@ -282,6 +286,7 @@ describe('JHipster Ionic Oauth generator test', function () {
           fse.copySync(path.join(__dirname, '../test/templates/oauth/websocket'), jhipDir)
         })
         .withOptions({
+          client: "angular1",
           testmode: true,
           websocket: 'spring-websocket'
         })

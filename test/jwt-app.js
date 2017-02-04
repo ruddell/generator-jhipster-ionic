@@ -27,6 +27,7 @@ describe('JHipster Ionic JWT generator test', function () {
           fse.copySync(path.join(__dirname, '../test/templates/jwt/default'), jhipDir)
         })
         .withOptions({
+          client: "angular1",
           testmode: true
         })
         .withPrompts({
@@ -94,6 +95,7 @@ describe('JHipster Ionic JWT generator test', function () {
         })
         .withOptions({
           testmode: true,
+          client: "angular1",
           websocket: 'spring-websocket'
         })
         .withPrompts({
@@ -157,6 +159,7 @@ describe('JHipster Ionic JWT generator test', function () {
   //         fse.copySync(path.join(__dirname, '../test/templates/jwt/social'), jhipDir)
   //       })
   //       .withOptions({
+  //         client: "angular1",
   //         testmode: true
   //       })
   //       .withPrompts({
@@ -221,6 +224,7 @@ describe('JHipster Ionic JWT generator test', function () {
           fse.copySync(path.join(__dirname, '../test/templates/jwt/i18n'), jhipDir)
         })
         .withOptions({
+          client: "angular1",
           testmode: true
         })
         .withPrompts({
@@ -285,6 +289,7 @@ describe('JHipster Ionic JWT generator test', function () {
           fse.copySync(path.join(__dirname, '../test/templates/jwt/websocket'), jhipDir)
         })
         .withOptions({
+          client: "angular1",
           testmode: true,
           websocket: 'spring-websocket'
         })

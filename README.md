@@ -4,7 +4,10 @@
 
 # Introduction
 
-The goal of this module is to generate an  M-Ionic frontend from an existing JHipster project.  
+The goal of this module is to generate an M-Ionic frontend from an existing JHipster project.  
+
+An example from start to finish can be seen: 
+[![Youtube Demo](https://cloud.githubusercontent.com/assets/4294623/22621563/641a78c8-eadb-11e6-878b-b2299dd19e78.jpeg)](https://www.youtube.com/watch?v=XZIKsBdxuOg)
 
 ###Key Features
 Login, Registration, Settings, Password Change, and Password Reset all function the same as in a regular JHipster 
@@ -22,8 +25,7 @@ http://localhost:3000/oauth  | http://localhost:8080/oauth
  
 ##### Supports:
 - Auth
-  - Session
-  - OAuth
+  - OAuth2
   - JWT
 - App Types
   - Monolith
@@ -32,6 +34,7 @@ http://localhost:3000/oauth  | http://localhost:8080/oauth
 - Websockets (see Websocket section for setup)
 
 ##### Unsupported
+- Session Auth
 - Social Login
 
 # Prerequisites
@@ -42,7 +45,8 @@ To install everything needed, run:
 ```bash
  npm install -g ionic yo bower gulp generator-m-ionic cordova
 ```
-This module also requires an existing JHipster project to copy the authentication files from.
+This module also requires an existing AngularJS JHipster project to copy the authentication files from.  It will not 
+work with Angular 2.
 
 # Installation
 
@@ -66,24 +70,31 @@ Follow the prompts and enter the path to your JHipster project's parent director
 which to generate the Ionic project.  A Cordova project and an M-Ionic front-end are generated in the current directory.
   JHipster files are then be copied and formatted into the Ionic project.
 
-Currently all JHipster files are copied to the 'app/main/jhipster' folder (except translations, see below).  The rest of the app follows [M-Ionic's project structure](https://github.com/mwaylabs/generator-m-ionic/blob/master/docs/start/file_structure.md).
+Currently all JHipster files are copied to the 'app/main/jhipster' folder (except translations, see below).  The rest of 
+the app follows [M-Ionic's project structure](https://github.com/mwaylabs/generator-m-ionic/blob/master/docs/start/file_structure.md).
 
 To run your app with live-reload and a CORS proxy, run:
 ```bash
 gulp watch
 ```
-CORS settings can be found in gulp/watching.js.  Endpoints are set up for /oauth and /api to http://localhost:8080. If you are running microservices, 
-you will need to add proxy paths for each of the microservice routes.
+CORS settings can be found in gulp/watching.js.  Endpoints are set up for /oauth and /api to http://localhost:8080. 
+If you are running microservices, you will need to add proxy paths for each of the microservice routes.  If you need 
+CORS on your server backend, uncomment the CORS section in `src/main/resources/config/application.yml` of your JHipster
+ project.
 
-M-Ionic provides a massive tool set for an Ionic app.  For example, cordova commands have a wrapper through gulp.  Check out [M-Ionic's Dev Intro](https://github.com/mwaylabs/generator-m-ionic/blob/master/docs/start/development_intro.md) to see how to use them.
+M-Ionic provides a massive tool set for an Ionic app.  For example, cordova commands have a wrapper through gulp. Check 
+out [M-Ionic's Dev Intro](https://github.com/mwaylabs/generator-m-ionic/blob/master/docs/start/development_intro.md) to 
+see how to use them.
 
 
 # Translation
 
-Translations are copied over from the JHipster project into the app/i18n/ folder.  If you update your translations, either manually copy them over or re-run the generator.
+Translations are copied over from the JHipster project into the app/i18n/ folder.  If you update your translations, 
+either manually copy them over or re-run the generator.
 
 # Websocket
-If your ionic client shows 403 forbidden or "Origin header value 'http://localhost:3000' not allowed." in JHipster application, then you must configure
+If your ionic client shows 403 forbidden or "Origin header value 'http://localhost:3000' not allowed." in JHipster
+ application, then you must configure
    WebsocketConfiguration.java as follows:
 ```java
 public void registerStompEndpoints(StompEndpointRegistry registry) {
@@ -99,7 +110,8 @@ To run the app on a device/emulator:
 - Set up config.xml
 - Add the platforms you need
   - iOS: Ensure you have the proper provisioning profile
-- Make sure to specify the API url in *constants/env-prod.json* and build with --env=prod to inject the URL into all files contacting the API.
+- Make sure to specify the API url in *constants/env-prod.json* and build with --env=prod to inject the URL into all 
+files contacting the API.
 - Run the cordova command (use the wrapper to build the project before deploying it)
 ```bash
 gulp --cordova 'run ios --device'
@@ -109,7 +121,8 @@ gulp --cordova 'run ios --device'
 - Entity CRUD Pages
 - Admin Pages
 - Re-enable ESLint - app folder is ignored in .eslintignore
-- Rewrite files as they are copied instead of prompting the user to overwrite them (reason --force is in the initial command).
+- Rewrite files as they are copied instead of prompting the user to overwrite them (reason --force is in the initial 
+command).
 
 # Thanks To
 

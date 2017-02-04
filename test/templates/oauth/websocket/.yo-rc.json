@@ -13,11 +13,14 @@
     "devDatabaseType": "h2Disk",
     "prodDatabaseType": "mysql",
     "searchEngine": "no",
+    "messageBroker": false,
     "buildTool": "maven",
     "enableSocialSignIn": false,
     "jwtSecretKey": "021bcac21bc0544a33bd071fb07224f311b77833",
     "useSass": false,
+    "clientPackageManager": "yarn",
     "applicationType": "monolith",
+    "clientFramework": "angular1",
     "testFrameworks": [
       "gatling"
     ],
