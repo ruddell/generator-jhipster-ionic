@@ -6,7 +6,8 @@
 
 The goal of this module is to generate an M-Ionic frontend from an existing JHipster project.  
 
-An example from start to finish can be seen: 
+An example from start to finish can be seen:
+ 
 [![Youtube Demo](https://cloud.githubusercontent.com/assets/4294623/22621563/641a78c8-eadb-11e6-878b-b2299dd19e78.jpeg)](https://www.youtube.com/watch?v=XZIKsBdxuOg)
 
 ###Key Features
