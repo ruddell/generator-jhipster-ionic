@@ -28,6 +28,7 @@
     "generator-jhipster": ">3.1.0",
     "generator-m-ionic": "1.8.0",
     "fs-extra": "0.26.4",
+    "lodash": "4.15.0",
     "shelljs": "0.6.0",
     "cordova": "6.2.0"
   },

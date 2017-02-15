@@ -1,14 +1,13 @@
 'use strict';
-var yeoman = require('yeoman-generator');
-var chalk = require('chalk');
-var shelljs = require('shelljs');
-var packagejs = require(__dirname + '/../../package.json');
-var fse = require('fs-extra');
-var jhipsterUtils = require(__dirname+ '/../../node_modules/generator-jhipster/generators/util.js');
-// Stores JHipster variables
-var jhipsterVar = {moduleName: 'ionic'};
-
-// Stores JHipster functions
+var yeoman = require('yeoman-generator'),
+    chalk = require('chalk'),
+    shelljs = require('shelljs'),
+    _ = require('lodash'),
+    packagejs = require(__dirname + '/../../package.json'),
+    fse = require('fs-extra'),
+    jhipsterUtils = require(__dirname+ '/../../node_modules/generator-jhipster/generators/util.js'),
+    // Stores JHipster variables
+    jhipsterVar = {moduleName: 'ionic'};
 
 module.exports = yeoman.Base.extend({
 
@@ -157,7 +156,7 @@ module.exports = yeoman.Base.extend({
       this.packageName = this.appConfig.packageName;
       this.packageFolder = this.appConfig.packageFolder;
       this.angularAppBaseName  = snakeToCamel(this.appConfig.baseName);
-      this.angularAppName = this.angularAppBaseName + 'App';
+      this.angularAppName = getAngularAppName(this.angularAppBaseName)
       this.searchEngine = this.appConfig.searchEngine;
       this.authenticationType = this.appConfig.authenticationType;
       this.serverPort = this.appConfig.serverPort;
@@ -508,3 +507,11 @@ function copyTemplate (source, dest, action, generator, opt, template) {
       _this.template(source, dest, _this, _opt);
   }
 };
+
+/**
+ * get the angular app name for the app.
+ */
+function getAngularAppName (baseName) {
+    return _.camelCase(baseName, true) + (baseName.endsWith('App') ? '' : 'App');
+};
+
