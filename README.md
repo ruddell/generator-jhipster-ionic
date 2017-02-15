@@ -134,6 +134,8 @@ command).
 - [Original JHipster Docker-Compose Module](https://github.com/jhipster/generator-jhipster-docker-compose)
 
 # Release Notes
+- v2.2.1 - Fix angular apps with capitalized base names
+- v2.2.0 - Prevent generation JHipster apps with Session or NG2 selected
 - v2.1 - Add Websocket support
 - v2 - Add Translation support
 - v1.1 - Set up a CORS proxy for developing locally.
