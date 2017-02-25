@@ -40,7 +40,7 @@ http://localhost:3000/oauth  | http://localhost:8080/oauth
 
 # Prerequisites
 - JHipster ([Installing JHipster](https://jhipster.github.io/installation.html))
-- M-Ionic ([Installing M-Ionic](https://github.com/mwaylabs/generator-m-ionic/blob/master/docs/start/installation_prerequisites.md))
+- M-Ionic ([Installing M-Ionic](https://github.com/mwaylabs/generator-m-ionic/blob/master/docs/guides/installation_prerequisites.md))
 
 To install everything needed, run:
 ```bash
@@ -72,7 +72,7 @@ which to generate the Ionic project.  A Cordova project and an M-Ionic front-end
   JHipster files are then be copied and formatted into the Ionic project.
 
 Currently all JHipster files are copied to the 'app/main/jhipster' folder (except translations, see below).  The rest of 
-the app follows [M-Ionic's project structure](https://github.com/mwaylabs/generator-m-ionic/blob/master/docs/start/file_structure.md).
+the app follows [M-Ionic's project structure](https://github.com/mwaylabs/generator-m-ionic/blob/master/docs/guides/file_structure.md).
 
 To run your app with live-reload and a CORS proxy, run:
 ```bash
@@ -84,7 +84,7 @@ CORS on your server backend, uncomment the CORS section in `src/main/resources/c
  project.
 
 M-Ionic provides a massive tool set for an Ionic app.  For example, cordova commands have a wrapper through gulp. Check 
-out [M-Ionic's Dev Intro](https://github.com/mwaylabs/generator-m-ionic/blob/master/docs/start/development_intro.md) to 
+out [M-Ionic's Dev Intro](https://github.com/mwaylabs/generator-m-ionic/blob/master/docs/guides/development_intro.md) to 
 see how to use them.
 
 
