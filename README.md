@@ -40,7 +40,7 @@ http://localhost:3000/oauth  | http://localhost:8080/oauth
 
 # Prerequisites
 - JHipster ([Installing JHipster](https://jhipster.github.io/installation.html))
-- M-Ionic ([Installing M-Ionic](https://github.com/mwaylabs/generator-m-ionic/blob/master/docs/start/installation_prerequisites.md))
+- M-Ionic ([Installing M-Ionic](https://github.com/mwaylabs/generator-m-ionic/blob/master/docs/guides/installation_prerequisites.md))
 
 To install everything needed, run:
 ```bash
