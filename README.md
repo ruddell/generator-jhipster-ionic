@@ -1,6 +1,15 @@
 # generator-jhipster-ionic
 [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
-> Generates an Ionic frontend from an existing JHipster project, supports all authentication types and translation.
+> Generates an Ionic v1 frontend from an existing JHipster AngularJS project, supports all authentication types and translation.
+
+# Looking to the Future
+
+I have shifted my focus to a __new JHipster mobile generator utilizing React Native__
+- https://github.com/ruddell/ignite-jhipster 
+
+
+Ionic 2 and Angular 2 are both released and I do not plan on upgrading this module to use them.  I will try to fix any bugs,
+ but I will not be adding any new features.  Thanks for all of the support and I hope this project helped.
 
 # Introduction
 
@@ -118,13 +127,6 @@ files contacting the API.
 gulp --cordova 'run ios --device'
 ```
 
-# To Do
-- Entity CRUD Pages
-- Admin Pages
-- Re-enable ESLint - app folder is ignored in .eslintignore
-- Rewrite files as they are copied instead of prompting the user to overwrite them (reason --force is in the initial 
-command).
-
 # Thanks To
 
 - [JHipster](https://github.com/jhipster/generator-jhipster)
@@ -134,6 +136,7 @@ command).
 - [Original JHipster Docker-Compose Module](https://github.com/jhipster/generator-jhipster-docker-compose)
 
 # Release Notes
+- v2.2.2 - Fix bower versioning to exact versions, add note to top about maintenence.
 - v2.2.1 - Fix angular apps with capitalized base names
 - v2.2.0 - Prevent generation JHipster apps with Session or NG2 selected
 - v2.1 - Add Websocket support
