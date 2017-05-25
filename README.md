@@ -2,14 +2,13 @@
 [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
 > Generates an Ionic v1 frontend from an existing JHipster AngularJS project, supports all authentication types and translation.
 
-# Looking to the Future
+# Please Read
 
-I have shifted my focus to a __new JHipster mobile generator utilizing React Native__
-- https://github.com/ruddell/ignite-jhipster 
+Ionic 2 and Angular 2 are both released and I do not plan on upgrading this module to use them.
+Because of that, I will no longer be maintaining or providing support for this project.
+Thanks for all of the support and I hope this project helped.
 
-
-Ionic 2 and Angular 2 are both released and I do not plan on upgrading this module to use them.  I will try to fix any bugs,
- but I will not be adding any new features.  Thanks for all of the support and I hope this project helped.
+I have shifted my focus to a __new JHipster mobile generator utilizing React Native__, [Ignite JHipster](https://github.com/ruddell/ignite-jhipster)
 
 # Introduction
 
@@ -122,6 +121,7 @@ To run the app on a device/emulator:
   - iOS: Ensure you have the proper provisioning profile
 - Make sure to specify the API url in *constants/env-prod.json* and build with --env=prod to inject the URL into all 
 files contacting the API.
+  - Note that you can not use `http://localhost:8080` as your API url when running on device.  You must specify an IP to your JHipster backend that is accessible on your device (public domain/IP or local IP of JHipster backend)
 - Run the cordova command (use the wrapper to build the project before deploying it)
 ```bash
 gulp --cordova 'run ios --device'
